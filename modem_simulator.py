@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Modem Login Simulator
-Simuliert einen klassischen Modem-Login aus der Vergangenheit
+SCO UNIX System V/386 Modem Login Simulator
+Simuliert einen klassischen Modem-Login zu einem SCO UNIX System aus den 1990er Jahren
 """
 
 import sys
@@ -18,7 +18,8 @@ class ModemSimulator:
 
         # Standardbenutzer für Demo (in der Praxis sollten Passwörter gehasht werden)
         self.users = {
-            "admin": "admin123",
+            "root": "root",
+            "sysadmin": "admin123",
             "user": "password",
             "guest": "guest"
         }
@@ -102,14 +103,15 @@ class ModemSimulator:
         """Zeigt den Login-Bildschirm"""
         self.print_instant("\n" + "="*60)
         self.print_instant("")
-        self.print_instant("     ██████╗ ██████╗ ███████╗    ██████╗ ██████╗ ███████╗")
-        self.print_instant("     ██╔══██╗██╔══██╗██╔════╝    ██╔══██╗██╔══██╗██╔════╝")
-        self.print_instant("     ██████╔╝██████╔╝███████╗    ██████╔╝██████╔╝███████╗")
-        self.print_instant("     ██╔══██╗██╔══██╗╚════██║    ██╔══██╗██╔══██╗╚════██║")
-        self.print_instant("     ██████╔╝██████╔╝███████║    ██████╔╝██████╔╝███████║")
-        self.print_instant("     ╚═════╝ ╚═════╝ ╚══════╝    ╚═════╝ ╚═════╝ ╚══════╝")
+        self.print_instant("     ███████╗ ██████╗ ██████╗     ██╗   ██╗███╗   ██╗██╗██╗  ██╗")
+        self.print_instant("     ██╔════╝██╔════╝██╔═══██╗    ██║   ██║████╗  ██║██║╚██╗██╔╝")
+        self.print_instant("     ███████╗██║     ██║   ██║    ██║   ██║██╔██╗ ██║██║ ╚███╔╝ ")
+        self.print_instant("     ╚════██║██║     ██║   ██║    ██║   ██║██║╚██╗██║██║ ██╔██╗ ")
+        self.print_instant("     ███████║╚██████╗╚██████╔╝    ╚██████╔╝██║ ╚████║██║██╔╝ ██╗")
+        self.print_instant("     ╚══════╝ ╚═════╝ ╚═════╝      ╚═════╝ ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝")
         self.print_instant("")
-        self.print_instant("     Bulletin Board System - Willkommen!")
+        self.print_instant("     SCO UNIX System V/386 Release 3.2")
+        self.print_instant("     Copyright (C) 1976-1995 The Santa Cruz Operation, Inc.")
         self.print_instant("="*60)
         self.print_instant(f"\nSystem Zeit: {datetime.now().strftime('%d.%m.%Y %H:%M:%S')}")
         self.print_instant("Letzte erfolgreiche Verbindung: 13.11.2025 14:32:18")
@@ -158,103 +160,135 @@ class ModemSimulator:
     def show_welcome_message(self):
         """Zeigt Willkommensnachricht nach Login"""
         self.print_instant("\n" + "="*60)
-        self.print_instant("  WILLKOMMEN IM SYSTEM")
+        self.print_instant("  SCO UNIX System V/386 Release 3.2")
         self.print_instant("="*60)
-        self.print_instant(f"\nEingeloggt als: {self.username}")
-        self.print_instant(f"Login-Zeit: {datetime.now().strftime('%H:%M:%S')}")
-        self.print_instant(f"Terminal: VT100 Emulation")
-        self.print_instant(f"\nSie haben 3 neue Nachrichten.")
-        self.print_instant("Letzte Aktivität: Heute, 09:15 Uhr")
+        self.print_instant(f"\nLast login: {datetime.now().strftime('%a %b %d %H:%M:%S')} on tty1a")
+        self.print_instant(f"Terminal: vt100")
+        self.print_instant(f"\nYou have mail.")
         self.print_instant("\n" + "-"*60)
-        self.print_instant("Verfügbare Befehle: help, mail, files, news, who, logout")
+        self.print_instant("SCO UNIX System V/386 Release 3.2 (scohost)")
         self.print_instant("-"*60 + "\n")
 
     def execute_command(self, command):
-        """Führt Benutzer-Befehle aus"""
-        cmd = command.strip().lower()
+        """Führt Unix-Befehle aus"""
+        parts = command.strip().split()
+        if not parts:
+            return True
 
-        if cmd == "help" or cmd == "?":
-            self.print_instant("\nVerfügbare Befehle:")
-            self.print_instant("-" * 40)
-            self.print_instant("  help, ?     - Zeigt diese Hilfe")
-            self.print_instant("  mail        - Zeigt E-Mail Posteingang")
-            self.print_instant("  files       - Zeigt verfügbare Dateien")
-            self.print_instant("  news        - Zeigt aktuelle Nachrichten")
-            self.print_instant("  who         - Zeigt aktive Benutzer")
-            self.print_instant("  time        - Zeigt aktuelle Zeit")
-            self.print_instant("  about       - Über dieses System")
-            self.print_instant("  logout      - Beendet die Sitzung")
-            self.print_instant("-" * 40)
+        cmd = parts[0].lower()
+        args = parts[1:] if len(parts) > 1 else []
 
-        elif cmd == "mail":
-            self.print_instant("\n+++ E-MAIL POSTEINGANG +++")
-            self.print_instant("-" * 50)
-            self.print_instant("  [1] Von: sysadmin@bbs.local")
-            self.print_instant("      Betreff: Systemwartung am Wochenende")
-            self.print_instant("      Datum: 12.11.2025 18:34")
-            self.print_instant("")
-            self.print_instant("  [2] Von: newsletter@bbs.local")
-            self.print_instant("      Betreff: Neue Software verfügbar")
-            self.print_instant("      Datum: 11.11.2025 14:22")
-            self.print_instant("")
-            self.print_instant("  [3] Von: user2@bbs.local")
-            self.print_instant("      Betreff: Re: Treffen nächste Woche?")
-            self.print_instant("      Datum: 10.11.2025 09:15")
-            self.print_instant("-" * 50)
+        if cmd == "ls":
+            if "-l" in args:
+                self.print_instant("total 48")
+                self.print_instant("drwxr-xr-x   2 root     sys         512 Nov 12 14:32 bin")
+                self.print_instant("drwxr-xr-x   4 root     sys        1024 Nov 13 09:15 etc")
+                self.print_instant("drwxr-xr-x   3 root     sys         512 Nov 10 16:45 home")
+                self.print_instant("drwxr-xr-x   8 root     sys        2048 Nov 11 11:20 usr")
+                self.print_instant("drwxr-xr-x   2 root     sys         512 Nov 13 10:05 tmp")
+                self.print_instant("drwxr-xr-x   3 root     sys        1024 Nov 12 18:30 var")
+                self.print_instant("-rw-r--r--   1 root     sys        1847 Nov 10 14:22 .profile")
+                self.print_instant("-rw-------   1 root     sys         256 Nov 13 08:45 .history")
+            else:
+                self.print_instant("bin\tetc\thome\tusr\ttmp\tvar\t.profile")
 
-        elif cmd == "files":
-            self.print_instant("\n+++ DATEI VERZEICHNIS +++")
-            self.print_instant("-" * 50)
-            self.print_instant("  [DIR]  GAMES/          Spiele und Unterhaltung")
-            self.print_instant("  [DIR]  UTILS/          Nützliche Programme")
-            self.print_instant("  [DIR]  DOCS/           Dokumentation")
-            self.print_instant("  [FILE] README.TXT      Willkommens-Datei (2 KB)")
-            self.print_instant("  [FILE] NEWS.TXT        Neuigkeiten (5 KB)")
-            self.print_instant("  [FILE] USERS.LST       Benutzerliste (1 KB)")
-            self.print_instant("-" * 50)
-            self.print_instant("Gesamt: 3 Verzeichnisse, 3 Dateien")
+        elif cmd == "pwd":
+            self.print_instant("/")
 
-        elif cmd == "news":
-            self.print_instant("\n+++ AKTUELLE NACHRICHTEN +++")
-            self.print_instant("-" * 50)
-            self.print_instant("13.11.2025 - Neue 28.8k Modems verfügbar!")
-            self.print_instant("12.11.2025 - Systemupgrade erfolgreich")
-            self.print_instant("10.11.2025 - Neue Dateien im GAMES Bereich")
-            self.print_instant("08.11.2025 - Wartungsarbeiten abgeschlossen")
-            self.print_instant("-" * 50)
+        elif cmd == "date":
+            self.print_instant(datetime.now().strftime('%a %b %d %H:%M:%S %Z %Y'))
 
         elif cmd == "who":
-            self.print_instant("\n+++ AKTIVE BENUTZER +++")
-            self.print_instant("-" * 50)
-            self.print_instant(f"  {self.username:<12} Terminal 1   Login: {datetime.now().strftime('%H:%M')}")
-            self.print_instant(f"  user2        Terminal 3   Login: 14:22")
-            self.print_instant(f"  guest001     Terminal 5   Login: 15:01")
-            self.print_instant("-" * 50)
-            self.print_instant("Gesamt: 3 Benutzer online")
+            self.print_instant(f"{self.username:<12} tty1a        {datetime.now().strftime('%b %d %H:%M')}")
+            self.print_instant(f"operator     tty2         {datetime.now().strftime('%b %d')} 09:15")
+            self.print_instant(f"admin        tty3         {datetime.now().strftime('%b %d')} 14:22")
 
-        elif cmd == "time":
-            self.print_instant(f"\nAktuelle Systemzeit: {datetime.now().strftime('%d.%m.%Y %H:%M:%S')}")
+        elif cmd == "w" or cmd == "whoami":
+            if cmd == "whoami":
+                self.print_instant(self.username)
+            else:
+                current_time = datetime.now().strftime('%H:%M:%S')
+                self.print_instant(f" {current_time}  up 23 days,  4:32,  3 users")
+                self.print_instant(f"User     tty       login@  idle   what")
+                self.print_instant(f"{self.username:<8} tty1a     {datetime.now().strftime('%H:%M')}    0     -sh")
+                self.print_instant(f"operator tty2      09:15    1:45  /usr/bin/vi")
+                self.print_instant(f"admin    tty3      14:22    0:12  /bin/sh")
 
-        elif cmd == "about":
-            self.print_instant("\n+++ ÜBER DIESES SYSTEM +++")
-            self.print_instant("-" * 50)
-            self.print_instant("BBS System v2.4")
-            self.print_instant("Betriebssystem: UNIX System V")
-            self.print_instant("Modem: US Robotics Sportster 14.4k")
-            self.print_instant("Online seit: Januar 1995")
-            self.print_instant("\nEin Retro-Modem-Simulator von 2025")
-            self.print_instant("Simuliert die Erfahrung der frühen Internet-Ära")
-            self.print_instant("-" * 50)
+        elif cmd == "uptime":
+            self.print_instant(f" {datetime.now().strftime('%H:%M:%S')}  up 23 days,  4:32,  3 users,  load average: 0.15, 0.21, 0.18")
+
+        elif cmd == "df":
+            self.print_instant("Filesystem            kbytes    used   avail capacity  Mounted on")
+            self.print_instant("/dev/root              51200   28672   22528    56%    /")
+            self.print_instant("/dev/u                256000  189440   66560    74%    /u")
+            self.print_instant("/dev/swap              65536   12288   53248    19%    swap")
+
+        elif cmd == "ps":
+            if "-ef" in args or "-aux" in args:
+                self.print_instant("  UID   PID  PPID  C    STIME TTY      TIME COMMAND")
+                self.print_instant("  root     1     0  0 Nov 01  ?        0:03 /etc/init")
+                self.print_instant("  root    23     1  0 Nov 01  ?        0:00 /etc/cron")
+                self.print_instant("  root    45     1  0 Nov 01  ?        0:12 /etc/syslogd")
+                self.print_instant(f"  {self.username:<8}{random.randint(100,999)}     1  0 {datetime.now().strftime('%H:%M')}  tty1a    0:00 -sh")
+                self.print_instant("  root   156     1  0 Nov 02  ?        1:23 /usr/lib/sendmail")
+                self.print_instant("  root   234     1  0 Nov 03  ?        0:45 /usr/sbin/inetd")
+            else:
+                self.print_instant("  PID TTY      TIME COMMAND")
+                self.print_instant(f" {random.randint(100,999)} tty1a    0:00 sh")
+                self.print_instant(f" {random.randint(100,999)} tty1a    0:00 ps")
+
+        elif cmd == "uname":
+            if "-a" in args:
+                self.print_instant("SCO_SV scohost 3.2 2 i386")
+            else:
+                self.print_instant("SCO_SV")
+
+        elif cmd == "cat":
+            if args:
+                if args[0] == "/etc/motd":
+                    self.print_instant("\nSCO UNIX System V/386 Release 3.2")
+                    self.print_instant("Copyright (C) 1976-1995 The Santa Cruz Operation, Inc.")
+                    self.print_instant("\nWelcome to SCO UNIX!")
+                    self.print_instant("For technical support, contact your system administrator.")
+                elif args[0] == ".profile":
+                    self.print_instant("# .profile for root")
+                    self.print_instant("PATH=/bin:/usr/bin:/etc:/usr/sbin")
+                    self.print_instant("export PATH")
+                    self.print_instant("PS1='# '")
+                    self.print_instant("TERM=vt100")
+                    self.print_instant("export TERM")
+                else:
+                    self.print_instant(f"cat: cannot open {args[0]}: No such file or directory")
+            else:
+                self.print_instant("Usage: cat filename")
+
+        elif cmd == "clear":
+            # Einfaches Clear durch viele Leerzeilen
+            print("\n" * 50)
+
+        elif cmd == "help":
+            self.print_instant("\nVerfügbare UNIX-Befehle:")
+            self.print_instant("-" * 60)
+            self.print_instant("  ls [-l]         - Verzeichnisinhalt anzeigen")
+            self.print_instant("  pwd             - Aktuelles Verzeichnis anzeigen")
+            self.print_instant("  date            - Datum und Uhrzeit anzeigen")
+            self.print_instant("  who             - Eingeloggte Benutzer anzeigen")
+            self.print_instant("  w               - Benutzer und ihre Aktivitäten")
+            self.print_instant("  whoami          - Aktuellen Benutzernamen anzeigen")
+            self.print_instant("  uptime          - System-Laufzeit anzeigen")
+            self.print_instant("  df              - Dateisystem-Belegung anzeigen")
+            self.print_instant("  ps [-ef]        - Prozesse anzeigen")
+            self.print_instant("  uname [-a]      - System-Informationen anzeigen")
+            self.print_instant("  cat <file>      - Dateiinhalt anzeigen")
+            self.print_instant("  clear           - Bildschirm löschen")
+            self.print_instant("  exit, logout    - Abmelden")
+            self.print_instant("-" * 60)
 
         elif cmd == "logout" or cmd == "exit" or cmd == "quit":
             return False
 
-        elif cmd == "":
-            pass  # Leere Eingabe ignorieren
-
         else:
-            self.print_instant(f"\nUnbekannter Befehl: '{command}'")
-            self.print_instant("Geben Sie 'help' für eine Liste der Befehle ein.")
+            self.print_instant(f"{cmd}: not found")
 
         return True
 
@@ -264,7 +298,13 @@ class ModemSimulator:
 
         while True:
             try:
-                command = input(f"\n{self.username}@BBS> ")
+                # Unix root prompt
+                if self.username == "root":
+                    prompt = "# "
+                else:
+                    prompt = "$ "
+
+                command = input(prompt)
 
                 if not self.execute_command(command):
                     break
@@ -328,15 +368,15 @@ class ModemSimulator:
 
 def main():
     """Haupteinstiegspunkt"""
-    print("\nStarte Modem-Simulator...")
+    print("\nStarte SCO UNIX Modem-Simulator...")
     print("(Drücken Sie Ctrl+C zum Abbrechen)\n")
     time.sleep(1)
 
     simulator = ModemSimulator()
     simulator.run()
 
-    print("\nVielen Dank für die Nutzung des Modem-Simulators!")
-    print("Demo-Zugangsdaten: admin/admin123, user/password, guest/guest\n")
+    print("\nVielen Dank für die Nutzung des SCO UNIX Simulators!")
+    print("Demo-Zugangsdaten: root/root, sysadmin/admin123, user/password, guest/guest\n")
 
 if __name__ == "__main__":
     main()

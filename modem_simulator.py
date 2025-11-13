@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 SCO UNIX System V/386 Modem Login Simulator
-Simuliert einen klassischen Modem-Login zu einem SCO UNIX System aus den 1990er Jahren
+Simulates a classic modem login to a SCO UNIX System from the 1990s era
 """
 
 import sys
@@ -16,7 +16,7 @@ class ModemSimulator:
         self.logged_in = False
         self.username = None
 
-        # Standardbenutzer für Demo (in der Praxis sollten Passwörter gehasht werden)
+        # Default users for demo (in production passwords should be hashed)
         self.users = {
             "root": "root",
             "sysadmin": "admin123",
@@ -25,7 +25,7 @@ class ModemSimulator:
         }
 
     def slow_print(self, text, delay=0.05):
-        """Gibt Text Zeichen für Zeichen aus für authentischen Retro-Effekt"""
+        """Prints text character by character for authentic retro effect"""
         for char in text:
             sys.stdout.write(char)
             sys.stdout.flush()
@@ -33,21 +33,21 @@ class ModemSimulator:
         print()
 
     def print_instant(self, text):
-        """Gibt Text sofort aus"""
+        """Prints text instantly"""
         print(text)
 
     def simulate_modem_dial(self):
-        """Simuliert den Modem-Einwahlprozess"""
+        """Simulates the modem dial-in process"""
         self.print_instant("\n" + "="*60)
-        self.print_instant("     MODEM KOMMUNIKATIONS SIMULATOR v2.4")
+        self.print_instant("     MODEM COMMUNICATIONS SIMULATOR v2.4")
         self.print_instant("     Copyright (C) 1995-1998")
         self.print_instant("="*60 + "\n")
 
         time.sleep(0.5)
-        self.slow_print("Initialisiere Modem...", 0.03)
+        self.slow_print("Initializing modem...", 0.03)
         time.sleep(0.3)
 
-        # AT-Befehle
+        # AT commands
         at_commands = [
             ("AT", "OK"),
             ("ATZ", "OK"),
@@ -64,9 +64,9 @@ class ModemSimulator:
                 self.slow_print(response, 0.02)
             time.sleep(0.3)
 
-        # Wählgeräusche simulieren
+        # Simulate dialing sounds
         self.print_instant("")
-        self.slow_print("Wähle Nummer...", 0.04)
+        self.slow_print("Dialing...", 0.04)
         time.sleep(0.5)
 
         dial_sounds = ["BEEP", "BEEP", "BEEP", "BEEP", "BEEP", "BEEP", "BEEP"]
@@ -77,10 +77,10 @@ class ModemSimulator:
         print("\n")
 
         time.sleep(0.5)
-        self.slow_print("Verbinde...", 0.04)
+        self.slow_print("Connecting...", 0.04)
         time.sleep(0.8)
 
-        # Modem-Handshake Geräusche als Text
+        # Modem handshake sounds as text
         handshake = [
             "RRRRR.....",
             "KSSSSSHHHHhhhh....",
@@ -100,7 +100,7 @@ class ModemSimulator:
         time.sleep(0.5)
 
     def show_login_screen(self):
-        """Zeigt den Login-Bildschirm"""
+        """Displays the login screen"""
         self.print_instant("\n" + "="*60)
         self.print_instant("")
         self.print_instant("     ███████╗ ██████╗ ██████╗     ██╗   ██╗███╗   ██╗██╗██╗  ██╗")
@@ -113,22 +113,22 @@ class ModemSimulator:
         self.print_instant("     SCO UNIX System V/386 Release 3.2")
         self.print_instant("     Copyright (C) 1976-1995 The Santa Cruz Operation, Inc.")
         self.print_instant("="*60)
-        self.print_instant(f"\nSystem Zeit: {datetime.now().strftime('%d.%m.%Y %H:%M:%S')}")
-        self.print_instant("Letzte erfolgreiche Verbindung: 13.11.2025 14:32:18")
+        self.print_instant(f"\nSystem time: {datetime.now().strftime('%b %d %H:%M:%S %Y')}")
+        self.print_instant("Last successful connection: Nov 13 14:32:18 2025")
         self.print_instant("\n" + "-"*60)
 
     def login(self):
-        """Führt den Login-Prozess durch"""
+        """Performs the login process"""
         max_attempts = 3
         attempts = 0
 
         while attempts < max_attempts and not self.logged_in:
             print("\n")
-            username = input("Benutzername: ")
-            password = getpass.getpass("Passwort: ")
+            username = input("login: ")
+            password = getpass.getpass("Password: ")
 
-            # Simuliere Verarbeitungszeit
-            sys.stdout.write("Authentifiziere")
+            # Simulate processing time
+            sys.stdout.write("Authenticating")
             for _ in range(3):
                 time.sleep(0.3)
                 sys.stdout.write(".")
@@ -139,26 +139,26 @@ class ModemSimulator:
             if username in self.users and self.users[username] == password:
                 self.logged_in = True
                 self.username = username
-                self.slow_print(f"\n*** Login erfolgreich! Willkommen {username}! ***", 0.03)
+                self.slow_print(f"\n*** Login successful for {username} ***", 0.03)
                 time.sleep(0.5)
                 return True
             else:
                 attempts += 1
                 remaining = max_attempts - attempts
                 if remaining > 0:
-                    self.slow_print(f"\n*** FEHLER: Ungültige Anmeldedaten ***", 0.03)
-                    self.slow_print(f"Verbleibende Versuche: {remaining}", 0.03)
+                    self.slow_print(f"\nLogin incorrect", 0.03)
+                    self.slow_print(f"Remaining attempts: {remaining}", 0.03)
                     time.sleep(0.5)
 
         if not self.logged_in:
-            self.slow_print("\n*** Maximale Anzahl von Versuchen erreicht ***", 0.03)
-            self.slow_print("Verbindung wird getrennt...", 0.03)
+            self.slow_print("\n*** Too many login failures ***", 0.03)
+            self.slow_print("Disconnecting...", 0.03)
             time.sleep(1)
             self.disconnect()
             return False
 
     def show_welcome_message(self):
-        """Zeigt Willkommensnachricht nach Login"""
+        """Displays welcome message after login"""
         self.print_instant("\n" + "="*60)
         self.print_instant("  SCO UNIX System V/386 Release 3.2")
         self.print_instant("="*60)
@@ -170,7 +170,7 @@ class ModemSimulator:
         self.print_instant("-"*60 + "\n")
 
     def execute_command(self, command):
-        """Führt Unix-Befehle aus"""
+        """Executes Unix commands"""
         parts = command.strip().split()
         if not parts:
             return True
@@ -263,25 +263,25 @@ class ModemSimulator:
                 self.print_instant("Usage: cat filename")
 
         elif cmd == "clear":
-            # Einfaches Clear durch viele Leerzeilen
+            # Simple clear using many blank lines
             print("\n" * 50)
 
         elif cmd == "help":
-            self.print_instant("\nVerfügbare UNIX-Befehle:")
+            self.print_instant("\nAvailable UNIX commands:")
             self.print_instant("-" * 60)
-            self.print_instant("  ls [-l]         - Verzeichnisinhalt anzeigen")
-            self.print_instant("  pwd             - Aktuelles Verzeichnis anzeigen")
-            self.print_instant("  date            - Datum und Uhrzeit anzeigen")
-            self.print_instant("  who             - Eingeloggte Benutzer anzeigen")
-            self.print_instant("  w               - Benutzer und ihre Aktivitäten")
-            self.print_instant("  whoami          - Aktuellen Benutzernamen anzeigen")
-            self.print_instant("  uptime          - System-Laufzeit anzeigen")
-            self.print_instant("  df              - Dateisystem-Belegung anzeigen")
-            self.print_instant("  ps [-ef]        - Prozesse anzeigen")
-            self.print_instant("  uname [-a]      - System-Informationen anzeigen")
-            self.print_instant("  cat <file>      - Dateiinhalt anzeigen")
-            self.print_instant("  clear           - Bildschirm löschen")
-            self.print_instant("  exit, logout    - Abmelden")
+            self.print_instant("  ls [-l]         - list directory contents")
+            self.print_instant("  pwd             - print working directory")
+            self.print_instant("  date            - print system date and time")
+            self.print_instant("  who             - display logged in users")
+            self.print_instant("  w               - display users and their activities")
+            self.print_instant("  whoami          - print effective user name")
+            self.print_instant("  uptime          - display system uptime")
+            self.print_instant("  df              - report filesystem disk space usage")
+            self.print_instant("  ps [-ef]        - report process status")
+            self.print_instant("  uname [-a]      - print system information")
+            self.print_instant("  cat <file>      - concatenate and print files")
+            self.print_instant("  clear           - clear the terminal screen")
+            self.print_instant("  exit, logout    - log out of the system")
             self.print_instant("-" * 60)
 
         elif cmd == "logout" or cmd == "exit" or cmd == "quit":
@@ -293,7 +293,7 @@ class ModemSimulator:
         return True
 
     def interactive_shell(self):
-        """Interaktive Shell nach erfolgreichem Login"""
+        """Interactive shell after successful login"""
         self.show_welcome_message()
 
         while True:
@@ -311,8 +311,8 @@ class ModemSimulator:
 
             except KeyboardInterrupt:
                 print("\n")
-                confirm = input("Möchten Sie wirklich ausloggen? (j/n): ")
-                if confirm.lower() in ['j', 'y', 'yes', 'ja']:
+                confirm = input("Do you really want to logout? (y/n): ")
+                if confirm.lower() in ['y', 'yes']:
                     break
             except EOFError:
                 break
@@ -320,63 +320,63 @@ class ModemSimulator:
         self.logout()
 
     def logout(self):
-        """Logout-Prozess"""
+        """Logout process"""
         self.print_instant("\n" + "="*60)
-        self.slow_print("Beende Sitzung...", 0.03)
+        self.slow_print("Closing session...", 0.03)
         time.sleep(0.5)
-        self.slow_print(f"Auf Wiedersehen, {self.username}!", 0.03)
-        self.slow_print(f"Verbindungszeit: {random.randint(5, 45)} Minuten", 0.03)
+        self.slow_print(f"Goodbye, {self.username}!", 0.03)
+        self.slow_print(f"Connect time: {random.randint(5, 45)} minutes", 0.03)
         time.sleep(0.5)
         self.disconnect()
 
     def disconnect(self):
-        """Trennt die Modem-Verbindung"""
-        self.slow_print("\nTrenne Verbindung...", 0.03)
+        """Disconnects the modem connection"""
+        self.slow_print("\nDisconnecting...", 0.03)
         time.sleep(0.5)
         self.slow_print("+++ATH0", 0.03)
         time.sleep(0.3)
         self.slow_print("NO CARRIER", 0.03)
         time.sleep(0.3)
         self.print_instant("\n" + "="*60)
-        self.print_instant("  Verbindung getrennt")
+        self.print_instant("  Connection closed")
         self.print_instant("="*60 + "\n")
         self.connected = False
         self.logged_in = False
 
     def run(self):
-        """Hauptprogramm"""
+        """Main program"""
         try:
-            # Modem-Einwahl simulieren
+            # Simulate modem dial-in
             self.simulate_modem_dial()
 
-            # Login-Bildschirm anzeigen
+            # Display login screen
             self.show_login_screen()
 
-            # Login durchführen
+            # Perform login
             if self.login():
-                # Interaktive Shell starten
+                # Start interactive shell
                 self.interactive_shell()
 
         except KeyboardInterrupt:
-            print("\n\nProgramm durch Benutzer unterbrochen.")
+            print("\n\nProgram interrupted by user.")
             if self.connected:
                 self.disconnect()
         except Exception as e:
-            print(f"\nFehler: {e}")
+            print(f"\nError: {e}")
             if self.connected:
                 self.disconnect()
 
 def main():
-    """Haupteinstiegspunkt"""
-    print("\nStarte SCO UNIX Modem-Simulator...")
-    print("(Drücken Sie Ctrl+C zum Abbrechen)\n")
+    """Main entry point"""
+    print("\nStarting SCO UNIX Modem Simulator...")
+    print("(Press Ctrl+C to abort)\n")
     time.sleep(1)
 
     simulator = ModemSimulator()
     simulator.run()
 
-    print("\nVielen Dank für die Nutzung des SCO UNIX Simulators!")
-    print("Demo-Zugangsdaten: root/root, sysadmin/admin123, user/password, guest/guest\n")
+    print("\nThank you for using the SCO UNIX Simulator!")
+    print("Demo credentials: root/root, sysadmin/admin123, user/password, guest/guest\n")
 
 if __name__ == "__main__":
     main()

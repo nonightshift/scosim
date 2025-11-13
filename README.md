@@ -1,14 +1,15 @@
-# Modem Login Simulator
+# SCO UNIX System V/386 Modem Login Simulator
 
-Ein Python-basierter Kommandozeilensimulator, der die authentische Erfahrung eines Modem-Logins aus den 1990er Jahren nachbildet. Perfekt für Nostalgie, Bildungszwecke oder einfach zum Spaß!
+Ein Python-basierter Kommandozeilensimulator, der die authentische Erfahrung eines Modem-Logins zu einem SCO UNIX System V/386 aus den 1990er Jahren nachbildet. Perfekt für Nostalgie, Bildungszwecke oder einfach zum Spaß!
 
 ## Features
 
 - **Authentische Modem-Einwahl**: Simuliert den kompletten Einwahlprozess mit AT-Befehlen und Modem-Geräuschen
-- **Retro BBS-Login**: Klassischer Login-Bildschirm mit ASCII-Art
-- **Interaktive Shell**: Verschiedene Befehle zum Erkunden des Systems
+- **SCO UNIX System**: Klassischer Login-Bildschirm mit ASCII-Art für SCO UNIX System V/386
+- **UNIX Shell**: Echte UNIX-Kommandos mit authentischen Ausgaben
 - **Realistische Verzögerungen**: Simuliert die langsame Verbindungsgeschwindigkeit der damaligen Zeit
 - **Passwort-Authentifizierung**: Sicheres Login-System mit mehreren Demo-Benutzern
+- **Root-Zugang**: Simuliert einen root-Login mit # Prompt
 
 ## Was wird simuliert?
 
@@ -18,10 +19,11 @@ Der Simulator bildet folgende Elemente nach:
 2. **Wählvorgang**: Akustische Wählsignale (als Text dargestellt)
 3. **Handshake**: Die charakteristischen Modem-Geräusche beim Verbindungsaufbau
 4. **Verbindungsaufbau**: "CONNECT 14400/V.32bis" Nachricht
-5. **BBS-System**: Bulletin Board System mit ASCII-Art Logo
+5. **SCO UNIX System**: SCO UNIX System V/386 mit ASCII-Art Logo
 6. **Login-Prozess**: Benutzername/Passwort Eingabe mit Authentifizierung
-7. **Interaktive Shell**: Verschiedene Befehle wie Mail, Files, News, etc.
-8. **Verbindungsabbau**: Ordentliches Logout mit "NO CARRIER" Nachricht
+7. **UNIX Shell**: Echte UNIX-Kommandos wie ls, ps, df, who, uname, etc.
+8. **Root-Prompt**: Authentischer # Prompt für root-Benutzer
+9. **Verbindungsabbau**: Ordentliches Logout mit "NO CARRIER" Nachricht
 
 ## Installation
 
@@ -59,31 +61,38 @@ oder (wenn ausführbar gemacht):
 
 ### Demo-Zugangsdaten
 
-Das System enthält drei vorkonfigurierte Benutzer-Accounts:
+Das System enthält vier vorkonfigurierte Benutzer-Accounts:
 
-| Benutzername | Passwort   |
-|--------------|-----------|
-| admin        | admin123  |
-| user         | password  |
-| guest        | guest     |
+| Benutzername | Passwort   | Beschreibung        |
+|--------------|-----------|---------------------|
+| root         | root      | Root-Benutzer (#)   |
+| sysadmin     | admin123  | Systemadministrator |
+| user         | password  | Normaler Benutzer   |
+| guest        | guest     | Gast-Benutzer       |
 
-### Verfügbare Befehle
+### Verfügbare UNIX-Befehle
 
-Nach erfolgreichem Login stehen folgende Befehle zur Verfügung:
+Nach erfolgreichem Login stehen folgende UNIX-Befehle zur Verfügung:
 
-- `help` oder `?` - Zeigt die Hilfe mit allen verfügbaren Befehlen
-- `mail` - Zeigt den E-Mail Posteingang mit Beispiel-Nachrichten
-- `files` - Zeigt ein Dateiverzeichnis mit Ordnern und Dateien
-- `news` - Zeigt aktuelle System-Nachrichten
-- `who` - Zeigt eine Liste der aktuell eingeloggten Benutzer
-- `time` - Zeigt die aktuelle Systemzeit
-- `about` - Informationen über das System
-- `logout` - Beendet die Sitzung und trennt die Verbindung
+- `ls [-l]` - Verzeichnisinhalt anzeigen
+- `pwd` - Aktuelles Verzeichnis anzeigen
+- `date` - Datum und Uhrzeit anzeigen
+- `who` - Eingeloggte Benutzer anzeigen
+- `w` - Benutzer und ihre Aktivitäten
+- `whoami` - Aktuellen Benutzernamen anzeigen
+- `uptime` - System-Laufzeit anzeigen
+- `df` - Dateisystem-Belegung anzeigen
+- `ps [-ef]` - Prozesse anzeigen
+- `uname [-a]` - System-Informationen anzeigen
+- `cat <file>` - Dateiinhalt anzeigen (z.B. /etc/motd, .profile)
+- `clear` - Bildschirm löschen
+- `help` - Zeigt diese Hilfe
+- `exit` / `logout` - Beendet die Sitzung und trennt die Verbindung
 
 ## Beispiel-Sitzung
 
 ```
-Starte Modem-Simulator...
+Starte SCO UNIX Modem-Simulator...
 (Drücken Sie Ctrl+C zum Abbrechen)
 
 ============================================================
@@ -118,25 +127,53 @@ CONNECT 14400/V.32bis
 
 ============================================================
 
-     ██████╗ ██████╗ ███████╗    ██████╗ ██████╗ ███████╗
-     ██╔══██╗██╔══██╗██╔════╝    ██╔══██╗██╔══██╗██╔════╝
-     ██████╔╝██████╔╝███████╗    ██████╔╝██████╔╝███████╗
-     ██╔══██╗██╔══██╗╚════██║    ██╔══██╗██╔══██╗╚════██║
-     ██████╔╝██████╔╝███████║    ██████╔╝██████╔╝███████║
-     ╚═════╝ ╚═════╝ ╚══════╝    ╚═════╝ ╚═════╝ ╚══════╝
+     ███████╗ ██████╗ ██████╗     ██╗   ██╗███╗   ██╗██╗██╗  ██╗
+     ██╔════╝██╔════╝██╔═══██╗    ██║   ██║████╗  ██║██║╚██╗██╔╝
+     ███████╗██║     ██║   ██║    ██║   ██║██╔██╗ ██║██║ ╚███╔╝
+     ╚════██║██║     ██║   ██║    ██║   ██║██║╚██╗██║██║ ██╔██╗
+     ███████║╚██████╗╚██████╔╝    ╚██████╔╝██║ ╚████║██║██╔╝ ██╗
+     ╚══════╝ ╚═════╝ ╚═════╝      ╚═════╝ ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝
 
-     Bulletin Board System - Willkommen!
+     SCO UNIX System V/386 Release 3.2
+     Copyright (C) 1976-1995 The Santa Cruz Operation, Inc.
 ============================================================
 
-Benutzername: admin
+Benutzername: root
 Passwort:
 Authentifiziere...
 
-*** Login erfolgreich! Willkommen admin! ***
+*** Login erfolgreich! Willkommen root! ***
 
-admin@BBS> help
-admin@BBS> mail
-admin@BBS> logout
+============================================================
+  SCO UNIX System V/386 Release 3.2
+============================================================
+
+Last login: Wed Nov 13 15:42:18 on tty1a
+Terminal: vt100
+
+You have mail.
+
+------------------------------------------------------------
+SCO UNIX System V/386 Release 3.2 (scohost)
+------------------------------------------------------------
+
+# uname -a
+SCO_SV scohost 3.2 2 i386
+# whoami
+root
+# ls -l
+total 48
+drwxr-xr-x   2 root     sys         512 Nov 12 14:32 bin
+drwxr-xr-x   4 root     sys        1024 Nov 13 09:15 etc
+drwxr-xr-x   3 root     sys         512 Nov 10 16:45 home
+drwxr-xr-x   8 root     sys        2048 Nov 11 11:20 usr
+drwxr-xr-x   2 root     sys         512 Nov 13 10:05 tmp
+drwxr-xr-x   3 root     sys        1024 Nov 12 18:30 var
+-rw-r--r--   1 root     sys        1847 Nov 10 14:22 .profile
+-rw-------   1 root     sys         256 Nov 13 08:45 .history
+# uptime
+ 15:42:35  up 23 days,  4:32,  3 users,  load average: 0.15, 0.21, 0.18
+# logout
 ```
 
 ## Technische Details
@@ -146,10 +183,10 @@ admin@BBS> logout
 Der Simulator ist als Python-Klasse `ModemSimulator` implementiert mit folgenden Hauptkomponenten:
 
 - **simulate_modem_dial()**: Simuliert den kompletten Modem-Einwahlprozess
-- **show_login_screen()**: Zeigt den BBS-Login-Bildschirm
+- **show_login_screen()**: Zeigt den SCO UNIX Login-Bildschirm
 - **login()**: Verarbeitet die Benutzer-Authentifizierung
-- **interactive_shell()**: Hauptschleife für die Benutzerinteraktion
-- **execute_command()**: Verarbeitet eingegebene Befehle
+- **interactive_shell()**: Hauptschleife für die UNIX Shell mit root/user Prompt
+- **execute_command()**: Verarbeitet UNIX-Befehle (ls, ps, who, etc.)
 - **disconnect()**: Trennt die Modem-Verbindung
 
 ### Spezielle Effekte
@@ -195,12 +232,14 @@ self.slow_print("Langsamer", delay=0.1)
 
 ## Hintergrund
 
-Dieser Simulator wurde erstellt, um die Erfahrung der frühen Internet-Ära zu bewahren, als Menschen sich per Modem über Telefonleitungen ins Internet einwählten. In den 1990er Jahren waren:
+Dieser Simulator wurde erstellt, um die Erfahrung der frühen Internet-Ära zu bewahren, als Menschen sich per Modem über Telefonleitungen zu UNIX-Systemen einwählten. In den 1990er Jahren waren:
 
+- **SCO UNIX**: SCO (Santa Cruz Operation) UNIX System V/386 war eines der populärsten kommerziellen UNIX-Systeme für Intel x86 Prozessoren
 - **Modem-Geschwindigkeiten**: 14.4k, 28.8k, später 56k
-- **BBS-Systeme**: Bulletin Board Systems waren vor dem World Wide Web populär
+- **Terminal-Zugang**: Einwahl per Modem zu UNIX-Systemen war eine gängige Remote-Access-Methode
 - **AT-Befehle**: Hayes-kompatible AT-Befehle zur Modem-Steuerung
 - **Verbindungsgeräusche**: Die charakteristischen Piep- und Rauschgeräusche beim Verbindungsaufbau
+- **VT100-Terminals**: VT100-kompatible Terminal-Emulation war der Standard
 
 ## Lizenz
 
@@ -232,13 +271,14 @@ export LANG=de_DE.UTF-8
 
 Mögliche Erweiterungen für die Zukunft:
 
-- [ ] Mehr interaktive Befehle (Chat, Games, Downloads)
+- [ ] Mehr UNIX-Befehle (vi, grep, find, etc.)
+- [ ] Dateisystem-Simulation mit echten Verzeichnisoperationen
 - [ ] Konfigurationsdatei für Benutzer und Einstellungen
 - [ ] Verschiedene Modem-Geschwindigkeiten wählbar
 - [ ] Sound-Effekte (echte Modem-Geräusche)
 - [ ] Multi-User Support mit echter Netzwerk-Kommunikation
-- [ ] Datei-Upload/Download Simulation
-- [ ] ASCII-Art Spiele und Programme
+- [ ] Mail-System Simulation (mailx)
+- [ ] UNIX-Prozess-Simulation mit echten Interaktionen
 
 ## Feedback
 

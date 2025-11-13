@@ -1,0 +1,15 @@
+# Modem Simulator - Python Requirements
+#
+# Dieses Projekt verwendet nur die Python Standard-Bibliothek
+# und benötigt keine externen Abhängigkeiten.
+#
+# Minimale Python-Version: 3.6+
+#
+# Verwendete Standard-Module:
+# - sys: System-spezifische Parameter und Funktionen
+# - time: Zeit-Verzögerungen und -Funktionen
+# - random: Zufallszahlen-Generierung
+# - getpass: Sichere Passwort-Eingabe
+# - datetime: Datum und Zeit Operationen
+
+# Keine externen Pakete erforderlich

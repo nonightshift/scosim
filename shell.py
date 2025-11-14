@@ -7,26 +7,93 @@ import sys
 import readline
 import atexit
 import os
+import json
+import importlib
 from vfs import VirtualFileSystem
-from commands.filesystem import execute_cd, execute_pwd, execute_mkdir, execute_ls
-from commands.info import execute_date, execute_who, execute_w, execute_whoami, execute_uptime, execute_df, execute_ps, execute_uname
-from commands.file_ops import execute_cat
-from commands.tar_ops import execute_tar
-from commands.system import execute_clear, execute_help, execute_alias
 
 
 class Shell:
     """Interactive shell with bash-like history"""
 
-    def __init__(self, username, vfs=None):
+    def __init__(self, username, vfs=None, commands_config_path="commands.json"):
         self.username = username
         self.vfs = vfs if vfs else VirtualFileSystem()
         self.aliases = {}
         self.history_file = os.path.expanduser('~/.scosim_history')
         self.history_max_size = 1000
+        self.commands = {}
+        self.commands_config_path = commands_config_path
+
+        # Load dynamic commands
+        self._load_commands()
 
         # Initialize readline for history support
         self._setup_history()
+
+    def _load_commands(self):
+        """Load commands dynamically from commands.json"""
+        try:
+            if not os.path.exists(self.commands_config_path):
+                print(f"Warning: {self.commands_config_path} not found, using default command set")
+                self._load_default_commands()
+                return
+
+            with open(self.commands_config_path, 'r', encoding='utf-8') as f:
+                config = json.load(f)
+
+            for cmd_config in config.get("commands", []):
+                name = cmd_config.get("name")
+                module_path = cmd_config.get("module")
+                function_name = cmd_config.get("function")
+
+                if not all([name, module_path, function_name]):
+                    print(f"Warning: Invalid command configuration for {name}")
+                    continue
+
+                try:
+                    # Dynamically import the module and get the function
+                    module = importlib.import_module(module_path)
+                    func = getattr(module, function_name)
+                    self.commands[name] = func
+                except (ImportError, AttributeError) as e:
+                    print(f"Warning: Could not load command '{name}': {e}")
+
+        except Exception as e:
+            print(f"Error loading commands.json: {e}")
+            print("Falling back to default commands...")
+            self._load_default_commands()
+
+    def _load_default_commands(self):
+        """Load default commands as fallback"""
+        try:
+            from commands.filesystem import execute_cd, execute_pwd, execute_mkdir, execute_ls, execute_rm
+            from commands.info import execute_date, execute_who, execute_w, execute_whoami, execute_uptime, execute_df, execute_ps, execute_uname
+            from commands.file_ops import execute_cat
+            from commands.tar_ops import execute_tar
+            from commands.system import execute_clear, execute_help, execute_alias
+
+            self.commands = {
+                "cd": execute_cd,
+                "pwd": execute_pwd,
+                "mkdir": execute_mkdir,
+                "ls": execute_ls,
+                "rm": execute_rm,
+                "cat": execute_cat,
+                "tar": execute_tar,
+                "date": execute_date,
+                "who": execute_who,
+                "w": execute_w,
+                "whoami": execute_whoami,
+                "uptime": execute_uptime,
+                "df": execute_df,
+                "ps": execute_ps,
+                "uname": execute_uname,
+                "clear": execute_clear,
+                "help": execute_help,
+                "alias": execute_alias,
+            }
+        except ImportError as e:
+            print(f"Error loading default commands: {e}")
 
     def _setup_history(self):
         """Setup readline history with bash-like behavior"""
@@ -56,8 +123,6 @@ class Shell:
 
     def execute_command(self, command):
         """Execute Unix commands"""
-        # Add to history (readline handles this automatically when using input())
-
         parts = command.strip().split()
         if not parts:
             return True
@@ -74,67 +139,25 @@ class Shell:
 
         args = parts[1:] if len(parts) > 1 else []
 
-        # Directory navigation commands
-        if cmd == "cd":
-            execute_cd(self.vfs, args, self.print_instant)
-
-        elif cmd == "pwd":
-            execute_pwd(self.vfs, args, self.print_instant)
-
-        elif cmd == "mkdir":
-            execute_mkdir(self.vfs, args, self.print_instant)
-
-        elif cmd == "ls":
-            execute_ls(self.vfs, args, self.print_instant)
-
-        # System info commands
-        elif cmd == "date":
-            execute_date(self.vfs, args, self.print_instant)
-
-        elif cmd == "who":
-            execute_who(self.username, args, self.print_instant)
-
-        elif cmd == "w":
-            execute_w(self.username, args, self.print_instant)
-
-        elif cmd == "whoami":
-            execute_whoami(self.username, args, self.print_instant)
-
-        elif cmd == "uptime":
-            execute_uptime(self.vfs, args, self.print_instant)
-
-        elif cmd == "df":
-            execute_df(self.vfs, args, self.print_instant)
-
-        elif cmd == "ps":
-            execute_ps(self.username, args, self.print_instant)
-
-        elif cmd == "uname":
-            execute_uname(self.vfs, args, self.print_instant)
-
-        # File operations
-        elif cmd == "cat":
-            execute_cat(self.vfs, args, self.print_instant)
-
-        elif cmd == "tar":
-            execute_tar(self.vfs, args, self.print_instant)
-
-        # System commands
-        elif cmd == "clear":
-            execute_clear(self.vfs, args, self.print_instant)
-
-        elif cmd == "help":
-            execute_help(self.vfs, args, self.print_instant)
-
-        elif cmd == "alias":
-            execute_alias(self.aliases, args, self.print_instant)
-
+        # Handle special built-in commands
+        if cmd in ["logout", "exit", "quit"]:
+            return False
         elif cmd == "history":
             self._show_history(args)
+            return True
 
-        elif cmd == "logout" or cmd == "exit" or cmd == "quit":
-            return False
-
+        # Dynamic command dispatch
+        if cmd in self.commands:
+            func = self.commands[cmd]
+            # Check if command needs username (like who, whoami, w, ps)
+            if cmd in ["who", "w", "whoami", "ps"]:
+                func(self.username, args, self.print_instant)
+            # Check if command needs aliases dict (like alias command)
+            elif cmd == "alias":
+                func(self.aliases, args, self.print_instant)
+            else:
+                # Standard commands that need vfs
+                func(self.vfs, args, self.print_instant)
         else:
             self.print_instant(f"{cmd}: not found")
 

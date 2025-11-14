@@ -3,6 +3,8 @@ Virtual Filesystem Module
 Implements a virtual filesystem for the SCO UNIX simulator
 """
 
+import json
+import os
 from datetime import datetime
 
 
@@ -45,11 +47,57 @@ class VNode:
 
 class VirtualFileSystem:
     """Virtual filesystem implementation"""
-    def __init__(self):
+    def __init__(self, fs_config_path="filesystem.json"):
         # Create root directory
         self.root = VNode("/", is_dir=True, parent=None)
         self.current_dir = self.root
-        self._initialize_standard_structure()
+        self.fs_config_path = fs_config_path
+
+        # Load filesystem structure from JSON if available, otherwise use default
+        if os.path.exists(fs_config_path):
+            self._load_from_json()
+        else:
+            self._initialize_standard_structure()
+
+    def _load_from_json(self):
+        """Load filesystem structure from JSON file"""
+        try:
+            with open(self.fs_config_path, 'r', encoding='utf-8') as f:
+                fs_data = json.load(f)
+
+            # Load the root structure
+            self._build_tree_from_json(fs_data, self.root)
+        except Exception as e:
+            print(f"Error loading filesystem.json: {e}")
+            print("Falling back to default structure...")
+            self._initialize_standard_structure()
+
+    def _build_tree_from_json(self, data, parent_node):
+        """Recursively build filesystem tree from JSON data"""
+        # Process children if they exist
+        if "children" in data and data["children"]:
+            for child_data in data["children"]:
+                name = child_data.get("name", "unnamed")
+                is_dir = child_data.get("is_dir", False)
+                permissions = child_data.get("permissions", "rwxr-xr-x" if is_dir else "rw-r--r--")
+                owner = child_data.get("owner", "root")
+                group = child_data.get("group", "sys")
+
+                # Create the node
+                child_node = VNode(name, is_dir=is_dir, parent=parent_node,
+                                 permissions=permissions, owner=owner, group=group)
+
+                # Set content for files
+                if not is_dir and "content" in child_data:
+                    child_node.content = child_data["content"]
+                    child_node.size = len(child_node.content)
+
+                # Add child to parent
+                parent_node.add_child(child_node)
+
+                # Recursively process children
+                if is_dir and "children" in child_data:
+                    self._build_tree_from_json(child_data, child_node)
 
     def _initialize_standard_structure(self):
         """Initialize standard SCO Unix directory structure"""
@@ -185,6 +233,42 @@ export TERM
             return False, f"{path}: Not a directory"
 
         self.current_dir = target
+        return True, None
+
+    def remove(self, path, recursive=False, force=False):
+        """Remove a file or directory"""
+        # Resolve the path to get the node
+        target = self.resolve_path(path)
+
+        if target is None:
+            return False, f"rm: cannot remove '{path}': No such file or directory"
+
+        # Prevent removing root
+        if target == self.root:
+            return False, "rm: cannot remove '/': Permission denied"
+
+        # Check if it's a directory
+        if target.is_dir:
+            # Check if directory is empty
+            if target.children and not recursive:
+                return False, f"rm: cannot remove '{path}': Is a directory"
+
+        # Get parent directory
+        parent = target.parent
+        if parent is None:
+            return False, f"rm: cannot remove '{path}': Permission denied"
+
+        # Remove the node from its parent
+        parent.remove_child(target.name)
+
+        # If we're in the directory being removed or a subdirectory, change to parent
+        current = self.current_dir
+        while current is not None:
+            if current == target:
+                self.current_dir = parent
+                break
+            current = current.parent
+
         return True, None
 
     def list_dir(self, path=None, long_format=False):

@@ -1,0 +1,166 @@
+{
+  "name": "/",
+  "is_dir": true,
+  "permissions": "rwxr-xr-x",
+  "owner": "root",
+  "group": "sys",
+  "children": [
+    {
+      "name": "bin",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys"
+    },
+    {
+      "name": "etc",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys"
+    },
+    {
+      "name": "home",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys",
+      "children": [
+        {
+          "name": "dxmail",
+          "is_dir": true,
+          "permissions": "rwxr-xr-x",
+          "owner": "dxmail",
+          "group": "mail",
+          "children": [
+            {
+              "name": "bin",
+              "is_dir": true,
+              "permissions": "rwxr-xr-x",
+              "owner": "dxmail",
+              "group": "mail"
+            },
+            {
+              "name": "etc",
+              "is_dir": true,
+              "permissions": "rwxr-xr-x",
+              "owner": "dxmail",
+              "group": "mail"
+            },
+            {
+              "name": "lib",
+              "is_dir": true,
+              "permissions": "rwxr-xr-x",
+              "owner": "dxmail",
+              "group": "mail",
+              "children": [
+                {
+                  "name": "queue",
+                  "is_dir": true,
+                  "permissions": "rwxr-xr-x",
+                  "owner": "dxmail",
+                  "group": "mail",
+                  "children": [
+                    {
+                      "name": "trash",
+                      "is_dir": true,
+                      "permissions": "rwxr-xr-x",
+                      "owner": "dxmail",
+                      "group": "mail"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "hacky",
+          "is_dir": true,
+          "permissions": "rwxr-xr-x",
+          "owner": "hacky",
+          "group": "users"
+        }
+      ]
+    },
+    {
+      "name": "usr",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys"
+    },
+    {
+      "name": "tmp",
+      "is_dir": true,
+      "permissions": "rwxrwxrwx",
+      "owner": "root",
+      "group": "sys"
+    },
+    {
+      "name": "var",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys"
+    },
+    {
+      "name": "dev",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys"
+    },
+    {
+      "name": "lib",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys"
+    },
+    {
+      "name": "sbin",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys"
+    },
+    {
+      "name": "boot",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys"
+    },
+    {
+      "name": "mnt",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys"
+    },
+    {
+      "name": "opt",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys"
+    },
+    {
+      "name": ".profile",
+      "is_dir": false,
+      "permissions": "rw-r--r--",
+      "owner": "root",
+      "group": "sys",
+      "content": "# System V .profile\nexport PATH=/bin:/usr/bin:/sbin:/usr/sbin\nexport PS1=\"$ \"\n"
+    },
+    {
+      "name": ".history",
+      "is_dir": false,
+      "permissions": "rw-------",
+      "owner": "root",
+      "group": "sys",
+      "content": ""
+    }
+  ]
+}

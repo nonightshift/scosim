@@ -55,3 +55,26 @@ def execute_ls(vfs, args, print_func):
             else:
                 # Print entries in columns (tab-separated)
                 print_func("\t".join(entries))
+
+
+def execute_rm(vfs, args, print_func):
+    """Execute rm command - remove files or directories"""
+    if not args:
+        print_func("Usage: rm [-r] file ...")
+        return
+
+    # Parse options
+    recursive = "-r" in args or "-rf" in args or "-fr" in args
+    force = "-f" in args or "-rf" in args or "-fr" in args
+
+    # Get file paths (filter out options)
+    paths = [arg for arg in args if not arg.startswith("-")]
+
+    if not paths:
+        print_func("rm: missing operand")
+        return
+
+    for path in paths:
+        success, error = vfs.remove(path, recursive, force)
+        if not success and not force:
+            print_func(error)

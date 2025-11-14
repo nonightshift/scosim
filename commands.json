@@ -1,0 +1,112 @@
+{
+  "commands": [
+    {
+      "name": "cd",
+      "module": "commands.filesystem",
+      "function": "execute_cd",
+      "description": "Change directory"
+    },
+    {
+      "name": "pwd",
+      "module": "commands.filesystem",
+      "function": "execute_pwd",
+      "description": "Print working directory"
+    },
+    {
+      "name": "mkdir",
+      "module": "commands.filesystem",
+      "function": "execute_mkdir",
+      "description": "Make directory"
+    },
+    {
+      "name": "ls",
+      "module": "commands.filesystem",
+      "function": "execute_ls",
+      "description": "List directory contents"
+    },
+    {
+      "name": "rm",
+      "module": "commands.filesystem",
+      "function": "execute_rm",
+      "description": "Remove files or directories"
+    },
+    {
+      "name": "cat",
+      "module": "commands.file_ops",
+      "function": "execute_cat",
+      "description": "Display file contents"
+    },
+    {
+      "name": "tar",
+      "module": "commands.tar_ops",
+      "function": "execute_tar",
+      "description": "Archive utility"
+    },
+    {
+      "name": "date",
+      "module": "commands.info",
+      "function": "execute_date",
+      "description": "Display current date and time"
+    },
+    {
+      "name": "who",
+      "module": "commands.info",
+      "function": "execute_who",
+      "description": "Show who is logged in"
+    },
+    {
+      "name": "w",
+      "module": "commands.info",
+      "function": "execute_w",
+      "description": "Show who is logged in and what they are doing"
+    },
+    {
+      "name": "whoami",
+      "module": "commands.info",
+      "function": "execute_whoami",
+      "description": "Print effective user name"
+    },
+    {
+      "name": "uptime",
+      "module": "commands.info",
+      "function": "execute_uptime",
+      "description": "Show how long system has been running"
+    },
+    {
+      "name": "df",
+      "module": "commands.info",
+      "function": "execute_df",
+      "description": "Report filesystem disk space usage"
+    },
+    {
+      "name": "ps",
+      "module": "commands.info",
+      "function": "execute_ps",
+      "description": "Report process status"
+    },
+    {
+      "name": "uname",
+      "module": "commands.info",
+      "function": "execute_uname",
+      "description": "Print system information"
+    },
+    {
+      "name": "clear",
+      "module": "commands.system",
+      "function": "execute_clear",
+      "description": "Clear the terminal screen"
+    },
+    {
+      "name": "help",
+      "module": "commands.system",
+      "function": "execute_help",
+      "description": "Display help information"
+    },
+    {
+      "name": "alias",
+      "module": "commands.system",
+      "function": "execute_alias",
+      "description": "Create command alias"
+    }
+  ]
+}

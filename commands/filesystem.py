@@ -35,6 +35,10 @@ def execute_ls(vfs, args, print_func):
     """Execute ls command - list directory contents"""
     # Parse ls options
     long_format = "-l" in args
+    show_hidden = "-a" in args
+    sort_by_time = "-t" in args
+    reverse_sort = "-r" in args
+
     # Remove options from args to get paths
     paths = [arg for arg in args if not arg.startswith("-")]
 
@@ -42,7 +46,7 @@ def execute_ls(vfs, args, print_func):
         paths = [None]  # Current directory
 
     for path in paths:
-        entries, error = vfs.list_dir(path, long_format)
+        entries, error = vfs.list_dir(path, long_format, show_hidden, sort_by_time, reverse_sort)
         if error:
             print_func(error)
         else:
@@ -54,7 +58,8 @@ def execute_ls(vfs, args, print_func):
                     print_func(entry)
             else:
                 # Print entries in columns (tab-separated)
-                print_func("\t".join(entries))
+                if entries:
+                    print_func("\t".join(entries))
 
 
 def execute_rm(vfs, args, print_func):

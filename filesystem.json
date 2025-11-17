@@ -12,7 +12,55 @@
       "permissions": "rwxr-xr-x",
       "owner": "root",
       "group": "sys",
-      "mtime": "1995-11-18 09:30:22"
+      "mtime": "1995-11-18 09:30:22",
+      "children": [
+        {"name": "sh", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 45056, "mtime": "1995-10-15 10:20:00"},
+        {"name": "ksh", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 98304, "mtime": "1995-10-15 10:20:15"},
+        {"name": "csh", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 76800, "mtime": "1995-10-15 10:20:30"},
+        {"name": "ls", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 24576, "mtime": "1995-10-15 10:21:00"},
+        {"name": "cat", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 12288, "mtime": "1995-10-15 10:21:15"},
+        {"name": "cp", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-15 10:21:30"},
+        {"name": "mv", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 14336, "mtime": "1995-10-15 10:21:45"},
+        {"name": "rm", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 13312, "mtime": "1995-10-15 10:22:00"},
+        {"name": "mkdir", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 10240, "mtime": "1995-10-15 10:22:15"},
+        {"name": "rmdir", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 10240, "mtime": "1995-10-15 10:22:30"},
+        {"name": "pwd", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 8192, "mtime": "1995-10-15 10:22:45"},
+        {"name": "cd", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 8192, "mtime": "1995-10-15 10:23:00"},
+        {"name": "echo", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 9216, "mtime": "1995-10-15 10:23:15"},
+        {"name": "grep", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 32768, "mtime": "1995-10-15 10:23:30"},
+        {"name": "sed", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 40960, "mtime": "1995-10-15 10:23:45"},
+        {"name": "awk", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 49152, "mtime": "1995-10-15 10:24:00"},
+        {"name": "find", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 28672, "mtime": "1995-10-15 10:24:15"},
+        {"name": "sort", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 20480, "mtime": "1995-10-15 10:24:30"},
+        {"name": "uniq", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 12288, "mtime": "1995-10-15 10:24:45"},
+        {"name": "wc", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 11264, "mtime": "1995-10-15 10:25:00"},
+        {"name": "head", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 10240, "mtime": "1995-10-15 10:25:15"},
+        {"name": "tail", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 12288, "mtime": "1995-10-15 10:25:30"},
+        {"name": "more", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 18432, "mtime": "1995-10-15 10:25:45"},
+        {"name": "pg", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 20480, "mtime": "1995-10-15 10:26:00"},
+        {"name": "tar", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 36864, "mtime": "1995-10-15 10:26:15"},
+        {"name": "cpio", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 32768, "mtime": "1995-10-15 10:26:30"},
+        {"name": "compress", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 24576, "mtime": "1995-10-15 10:26:45"},
+        {"name": "uncompress", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 20480, "mtime": "1995-10-15 10:27:00"},
+        {"name": "chmod", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 14336, "mtime": "1995-10-15 10:27:15"},
+        {"name": "chown", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 13312, "mtime": "1995-10-15 10:27:30"},
+        {"name": "chgrp", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 12288, "mtime": "1995-10-15 10:27:45"},
+        {"name": "ln", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 11264, "mtime": "1995-10-15 10:28:00"},
+        {"name": "df", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-15 10:28:15"},
+        {"name": "du", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 18432, "mtime": "1995-10-15 10:28:30"},
+        {"name": "ps", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 32768, "mtime": "1995-10-15 10:28:45"},
+        {"name": "kill", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 10240, "mtime": "1995-10-15 10:29:00"},
+        {"name": "date", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 14336, "mtime": "1995-10-15 10:29:15"},
+        {"name": "who", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-15 10:29:30"},
+        {"name": "w", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 18432, "mtime": "1995-10-15 10:29:45"},
+        {"name": "login", "is_dir": false, "permissions": "rwsr-xr-x", "owner": "root", "group": "sys", "size": 24576, "mtime": "1995-10-15 10:30:00"},
+        {"name": "su", "is_dir": false, "permissions": "rwsr-xr-x", "owner": "root", "group": "sys", "size": 20480, "mtime": "1995-10-15 10:30:15"},
+        {"name": "stty", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 22528, "mtime": "1995-10-15 10:30:30"},
+        {"name": "test", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-15 10:30:45"},
+        {"name": "expr", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 18432, "mtime": "1995-10-15 10:31:00"},
+        {"name": "true", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 4096, "mtime": "1995-10-15 10:31:15"},
+        {"name": "false", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 4096, "mtime": "1995-10-15 10:31:30"}
+      ]
     },
     {
       "name": "etc",
@@ -20,7 +68,485 @@
       "permissions": "rwxr-xr-x",
       "owner": "root",
       "group": "sys",
-      "mtime": "1995-12-05 14:20:15"
+      "mtime": "1995-12-05 14:20:15",
+      "children": [
+        {
+          "name": "passwd",
+          "is_dir": false,
+          "permissions": "rw-r--r--",
+          "owner": "root",
+          "group": "sys",
+          "content": "root:x:0:0:root:/:/bin/sh\ndaemon:x:1:1:daemon:/:/bin/sh\nbin:x:2:2:bin:/bin:\nsys:x:3:3:sys:/usr/sys:\nadm:x:4:4:adm:/var/adm:\nuucp:x:5:5:uucp:/usr/lib/uucp:\nnobody:x:60001:60001:nobody:/:\ndxmail:x:100:12:DX/Mail User:/home/dxmail:/bin/ksh\nhacky:x:101:100:Hacker User:/home/hacky:/bin/ksh\noperator:x:102:0:System Operator:/:/bin/sh\nadmin:x:103:0:Administrator:/usr/admin:/bin/ksh\n",
+          "mtime": "1995-12-10 18:30:00"
+        },
+        {
+          "name": "group",
+          "is_dir": false,
+          "permissions": "rw-r--r--",
+          "owner": "root",
+          "group": "sys",
+          "content": "root::0:root\nother::1:\nbin::2:root,bin,daemon\nsys::3:root,bin,sys,adm\nadm::4:root,adm,daemon\nuucp::5:uucp\nmail::12:dxmail\ntty::7:\nmem::8:\nkmem::9:\nusers::100:hacky\n",
+          "mtime": "1995-11-20 12:15:00"
+        },
+        {
+          "name": "shadow",
+          "is_dir": false,
+          "permissions": "r--------",
+          "owner": "root",
+          "group": "sys",
+          "content": "root:$1$T8kV9Xk2$pQ7mN3vR8sL1wX4yZ9bC0.:9450:0:99999:7:::\ndxmail:*LK*:::::::\nhacky:$1$hF2jK9mN$qR8sT3vW4xY5zA6bC7dE1.:9450:0:99999:7:::\n",
+          "mtime": "1995-12-10 18:30:00"
+        },
+        {
+          "name": "hosts",
+          "is_dir": false,
+          "permissions": "rw-r--r--",
+          "owner": "root",
+          "group": "sys",
+          "content": "127.0.0.1\tlocalhost\n192.168.1.1\tscohost.company.com scohost\n192.168.1.2\tmailserver.company.com mailserver\n192.168.1.10\tfileserver.company.com fileserver\n",
+          "mtime": "1995-11-25 16:45:00"
+        },
+        {
+          "name": "motd",
+          "is_dir": false,
+          "permissions": "rw-r--r--",
+          "owner": "root",
+          "group": "sys",
+          "content": "\nSCO UNIX System V/386 Release 3.2\nCopyright (C) 1976-1995 The Santa Cruz Operation, Inc.\n\nWelcome to SCO UNIX!\nFor technical support, contact your system administrator.\n\nSystem maintenance scheduled for Dec 15, 1995 at 02:00 AM\n",
+          "mtime": "1995-12-08 10:00:00"
+        },
+        {
+          "name": "fstab",
+          "is_dir": false,
+          "permissions": "rw-r--r--",
+          "owner": "root",
+          "group": "sys",
+          "content": "/dev/root\t/\tsysv\tdefaults\t1 1\n/dev/u\t/u\tsysv\tdefaults\t1 2\n/dev/swap\tnone\tswap\tsw\t0 0\n",
+          "mtime": "1995-11-18 09:30:00"
+        },
+        {
+          "name": "inittab",
+          "is_dir": false,
+          "permissions": "rw-r--r--",
+          "owner": "root",
+          "group": "sys",
+          "content": "is:3:initdefault:\nfs::sysinit:/etc/bcheckrc </dev/console >/dev/console 2>&1\nrc::bootwait:/etc/rc </dev/console >/dev/console 2>&1\nco:234:respawn:/etc/getty tty1 co_9600\n1:2:respawn:/etc/getty tty1a m\n2:2:respawn:/etc/getty tty2 m\n",
+          "mtime": "1995-11-18 09:45:00"
+        },
+        {
+          "name": "profile",
+          "is_dir": false,
+          "permissions": "rw-r--r--",
+          "owner": "root",
+          "group": "sys",
+          "content": "# System V .profile\nexport PATH=/bin:/usr/bin:/sbin:/usr/sbin\nexport PS1=\"$ \"\nexport TERM=vt100\nexport EDITOR=vi\n",
+          "mtime": "1995-11-25 10:30:00"
+        },
+        {
+          "name": "services",
+          "is_dir": false,
+          "permissions": "rw-r--r--",
+          "owner": "root",
+          "group": "sys",
+          "content": "echo\t7/tcp\necho\t7/udp\nftp-data\t20/tcp\nftp\t21/tcp\ntelnet\t23/tcp\nsmtp\t25/tcp\ntime\t37/tcp\ntime\t37/udp\nfinger\t79/tcp\nhttp\t80/tcp\n",
+          "mtime": "1995-11-18 10:00:00"
+        },
+        {
+          "name": "protocols",
+          "is_dir": false,
+          "permissions": "rw-r--r--",
+          "owner": "root",
+          "group": "sys",
+          "content": "ip\t0\tIP\nicmp\t1\tICMP\nigmp\t2\tIGMP\ntcp\t6\tTCP\nudp\t17\tUDP\n",
+          "mtime": "1995-11-18 10:05:00"
+        },
+        {
+          "name": "networks",
+          "is_dir": false,
+          "permissions": "rw-r--r--",
+          "owner": "root",
+          "group": "sys",
+          "content": "loopback\t127\ncompany-net\t192.168.1\n",
+          "mtime": "1995-11-18 10:10:00"
+        },
+        {
+          "name": "rc",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "content": "#!/bin/sh\n# System startup script\necho \"Starting system services...\"\n/etc/syslogd\n/usr/lib/sendmail -bd -q30m\n",
+          "mtime": "1995-11-18 11:00:00"
+        }
+      ]
+    },
+    {
+      "name": "usr",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys",
+      "mtime": "1995-11-18 10:15:00",
+      "children": [
+        {
+          "name": "bin",
+          "is_dir": true,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "mtime": "1995-11-18 10:20:00",
+          "children": [
+            {"name": "vi", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 163840, "mtime": "1995-10-16 09:00:00"},
+            {"name": "ex", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 163840, "mtime": "1995-10-16 09:00:15"},
+            {"name": "ed", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 32768, "mtime": "1995-10-16 09:00:30"},
+            {"name": "mail", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 40960, "mtime": "1995-10-16 09:00:45"},
+            {"name": "mailx", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 49152, "mtime": "1995-10-16 09:01:00"},
+            {"name": "cc", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 98304, "mtime": "1995-10-16 09:01:15"},
+            {"name": "make", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 73728, "mtime": "1995-10-16 09:01:30"},
+            {"name": "ld", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 81920, "mtime": "1995-10-16 09:01:45"},
+            {"name": "ar", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 28672, "mtime": "1995-10-16 09:02:00"},
+            {"name": "nm", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 24576, "mtime": "1995-10-16 09:02:15"},
+            {"name": "strip", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 20480, "mtime": "1995-10-16 09:02:30"},
+            {"name": "size", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-16 09:02:45"},
+            {"name": "file", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 32768, "mtime": "1995-10-16 09:03:00"},
+            {"name": "strings", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 18432, "mtime": "1995-10-16 09:03:15"},
+            {"name": "od", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 22528, "mtime": "1995-10-16 09:03:30"},
+            {"name": "bc", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 36864, "mtime": "1995-10-16 09:03:45"},
+            {"name": "dc", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 28672, "mtime": "1995-10-16 09:04:00"},
+            {"name": "man", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 40960, "mtime": "1995-10-16 09:04:15"},
+            {"name": "banner", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-16 09:04:30"},
+            {"name": "calendar", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 20480, "mtime": "1995-10-16 09:04:45"},
+            {"name": "cal", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 14336, "mtime": "1995-10-16 09:05:00"},
+            {"name": "diff", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 40960, "mtime": "1995-10-16 09:05:15"},
+            {"name": "cmp", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-16 09:05:30"},
+            {"name": "split", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 14336, "mtime": "1995-10-16 09:05:45"},
+            {"name": "cut", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-16 09:06:00"},
+            {"name": "paste", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 18432, "mtime": "1995-10-16 09:06:15"},
+            {"name": "join", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 20480, "mtime": "1995-10-16 09:06:30"},
+            {"name": "tr", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 14336, "mtime": "1995-10-16 09:06:45"},
+            {"name": "dd", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 24576, "mtime": "1995-10-16 09:07:00"},
+            {"name": "touch", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 12288, "mtime": "1995-10-16 09:07:15"},
+            {"name": "sleep", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 8192, "mtime": "1995-10-16 09:07:30"},
+            {"name": "tee", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 12288, "mtime": "1995-10-16 09:07:45"},
+            {"name": "uuencode", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-16 09:08:00"},
+            {"name": "uudecode", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 18432, "mtime": "1995-10-16 09:08:15"}
+          ]
+        },
+        {
+          "name": "lib",
+          "is_dir": true,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "mtime": "1995-11-18 10:25:00",
+          "children": [
+            {"name": "libc.so.1", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 524288, "mtime": "1995-10-16 10:00:00"},
+            {"name": "libm.so.1", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 163840, "mtime": "1995-10-16 10:00:30"},
+            {"name": "libcurses.so.1", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 98304, "mtime": "1995-10-16 10:01:00"},
+            {"name": "libsocket.so.1", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 73728, "mtime": "1995-10-16 10:01:30"},
+            {"name": "sendmail", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 245760, "mtime": "1995-10-16 10:02:00"},
+            {
+              "name": "uucp",
+              "is_dir": true,
+              "permissions": "rwxr-xr-x",
+              "owner": "uucp",
+              "group": "uucp",
+              "mtime": "1995-11-20 14:00:00"
+            }
+          ]
+        },
+        {
+          "name": "include",
+          "is_dir": true,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "mtime": "1995-11-18 10:30:00",
+          "children": [
+            {"name": "stdio.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 8192, "mtime": "1995-10-16 11:00:00"},
+            {"name": "stdlib.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 6144, "mtime": "1995-10-16 11:00:15"},
+            {"name": "string.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 4096, "mtime": "1995-10-16 11:00:30"},
+            {"name": "unistd.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 7168, "mtime": "1995-10-16 11:00:45"},
+            {"name": "fcntl.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 3072, "mtime": "1995-10-16 11:01:00"},
+            {"name": "errno.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 5120, "mtime": "1995-10-16 11:01:15"},
+            {
+              "name": "sys",
+              "is_dir": true,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "mtime": "1995-11-18 10:32:00",
+              "children": [
+                {"name": "types.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 6144, "mtime": "1995-10-16 11:05:00"},
+                {"name": "stat.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 4096, "mtime": "1995-10-16 11:05:15"},
+                {"name": "socket.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 7168, "mtime": "1995-10-16 11:05:30"}
+              ]
+            }
+          ]
+        },
+        {
+          "name": "local",
+          "is_dir": true,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "mtime": "1995-11-20 15:00:00",
+          "children": [
+            {
+              "name": "bin",
+              "is_dir": true,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "mtime": "1995-11-20 15:05:00"
+            }
+          ]
+        },
+        {
+          "name": "sbin",
+          "is_dir": true,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "mtime": "1995-11-18 10:35:00",
+          "children": [
+            {"name": "inetd", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 49152, "mtime": "1995-10-16 12:00:00"},
+            {"name": "syslogd", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 40960, "mtime": "1995-10-16 12:00:30"},
+            {"name": "cron", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 32768, "mtime": "1995-10-16 12:01:00"}
+          ]
+        },
+        {
+          "name": "admin",
+          "is_dir": true,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "mtime": "1995-11-22 10:00:00"
+        }
+      ]
+    },
+    {
+      "name": "dev",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys",
+      "mtime": "1995-11-18 09:45:00",
+      "children": [
+        {"name": "console", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
+        {"name": "null", "is_dir": false, "permissions": "rw-rw-rw-", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
+        {"name": "zero", "is_dir": false, "permissions": "rw-rw-rw-", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
+        {"name": "tty", "is_dir": false, "permissions": "rw-rw-rw-", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
+        {"name": "tty1", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "tty", "size": 0, "mtime": "1995-11-18 09:00:00"},
+        {"name": "tty1a", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "tty", "size": 0, "mtime": "1995-12-11 01:00:00"},
+        {"name": "tty2", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "tty", "size": 0, "mtime": "1995-12-10 23:15:00"},
+        {"name": "tty3", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "tty", "size": 0, "mtime": "1995-12-11 00:22:00"},
+        {"name": "ttyS0", "is_dir": false, "permissions": "rw-rw----", "owner": "root", "group": "uucp", "size": 0, "mtime": "1995-11-18 09:00:00"},
+        {"name": "ttyS1", "is_dir": false, "permissions": "rw-rw----", "owner": "root", "group": "uucp", "size": 0, "mtime": "1995-11-18 09:00:00"},
+        {"name": "hd0", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
+        {"name": "hd1", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
+        {"name": "fd0", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
+        {"name": "fd1", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
+        {"name": "lp", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
+        {"name": "mem", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "kmem", "size": 0, "mtime": "1995-11-18 09:00:00"},
+        {"name": "kmem", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "kmem", "size": 0, "mtime": "1995-11-18 09:00:00"},
+        {"name": "root", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
+        {"name": "swap", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
+        {"name": "u", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"}
+      ]
+    },
+    {
+      "name": "lib",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys",
+      "mtime": "1995-11-18 10:00:00",
+      "children": [
+        {"name": "libc.a", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 1048576, "mtime": "1995-10-15 14:00:00"},
+        {"name": "libm.a", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 262144, "mtime": "1995-10-15 14:00:30"},
+        {"name": "libcurses.a", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 131072, "mtime": "1995-10-15 14:01:00"},
+        {"name": "libtermcap.a", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 49152, "mtime": "1995-10-15 14:01:30"},
+        {"name": "ld.so", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 40960, "mtime": "1995-10-15 14:02:00"},
+        {"name": "cpp", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 98304, "mtime": "1995-10-15 14:02:30"}
+      ]
+    },
+    {
+      "name": "sbin",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys",
+      "mtime": "1995-11-18 10:05:00",
+      "children": [
+        {"name": "init", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 32768, "mtime": "1995-10-15 15:00:00"},
+        {"name": "getty", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 24576, "mtime": "1995-10-15 15:00:30"},
+        {"name": "halt", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-15 15:01:00"},
+        {"name": "reboot", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-15 15:01:30"},
+        {"name": "shutdown", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 20480, "mtime": "1995-10-15 15:02:00"},
+        {"name": "mount", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 28672, "mtime": "1995-10-15 15:02:30"},
+        {"name": "umount", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 24576, "mtime": "1995-10-15 15:03:00"},
+        {"name": "fsck", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 73728, "mtime": "1995-10-15 15:03:30"},
+        {"name": "mkfs", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 49152, "mtime": "1995-10-15 15:04:00"},
+        {"name": "sync", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 8192, "mtime": "1995-10-15 15:04:30"},
+        {"name": "ifconfig", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 32768, "mtime": "1995-10-15 15:05:00"},
+        {"name": "route", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 28672, "mtime": "1995-10-15 15:05:30"}
+      ]
+    },
+    {
+      "name": "boot",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys",
+      "mtime": "1995-11-18 09:00:00",
+      "children": [
+        {"name": "unix", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 983040, "mtime": "1995-10-15 08:00:00"},
+        {"name": "bootconf", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 2048, "mtime": "1995-11-18 09:05:00"}
+      ]
+    },
+    {
+      "name": "var",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys",
+      "mtime": "1995-12-10 23:45:00",
+      "children": [
+        {
+          "name": "log",
+          "is_dir": true,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "mtime": "1995-12-11 01:30:00",
+          "children": [
+            {
+              "name": "messages",
+              "is_dir": false,
+              "permissions": "rw-r--r--",
+              "owner": "root",
+              "group": "sys",
+              "content": "Dec 11 01:15:23 scohost unix: system boot\nDec 11 01:15:45 scohost syslogd: restart\nDec 11 01:20:12 scohost sendmail: starting daemon\n",
+              "mtime": "1995-12-11 01:20:12"
+            },
+            {
+              "name": "maillog",
+              "is_dir": false,
+              "permissions": "rw-r--r--",
+              "owner": "root",
+              "group": "sys",
+              "content": "Dec 10 18:45:30 scohost sendmail[156]: queue run started\nDec 10 19:15:45 scohost sendmail[156]: queue run completed\n",
+              "mtime": "1995-12-10 19:15:45"
+            }
+          ]
+        },
+        {
+          "name": "spool",
+          "is_dir": true,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "mtime": "1995-12-10 20:00:00",
+          "children": [
+            {
+              "name": "mail",
+              "is_dir": true,
+              "permissions": "rwxrwxrwx",
+              "owner": "root",
+              "group": "mail",
+              "mtime": "1995-12-10 20:30:00",
+              "children": [
+                {
+                  "name": "root",
+                  "is_dir": false,
+                  "permissions": "rw-------",
+                  "owner": "root",
+                  "group": "mail",
+                  "content": "",
+                  "mtime": "1995-12-10 20:30:00"
+                }
+              ]
+            },
+            {
+              "name": "cron",
+              "is_dir": true,
+              "permissions": "rwx------",
+              "owner": "root",
+              "group": "sys",
+              "mtime": "1995-11-18 10:00:00"
+            },
+            {
+              "name": "uucp",
+              "is_dir": true,
+              "permissions": "rwxr-xr-x",
+              "owner": "uucp",
+              "group": "uucp",
+              "mtime": "1995-11-18 10:00:00"
+            }
+          ]
+        },
+        {
+          "name": "adm",
+          "is_dir": true,
+          "permissions": "rwxr-xr-x",
+          "owner": "adm",
+          "group": "adm",
+          "mtime": "1995-12-10 22:00:00",
+          "children": [
+            {
+              "name": "wtmp",
+              "is_dir": false,
+              "permissions": "rw-r--r--",
+              "owner": "root",
+              "group": "adm",
+              "content": "",
+              "mtime": "1995-12-11 01:00:00"
+            },
+            {
+              "name": "sulog",
+              "is_dir": false,
+              "permissions": "rw-------",
+              "owner": "root",
+              "group": "adm",
+              "content": "",
+              "mtime": "1995-12-05 14:30:00"
+            }
+          ]
+        },
+        {
+          "name": "tmp",
+          "is_dir": true,
+          "permissions": "rwxrwxrwt",
+          "owner": "root",
+          "group": "sys",
+          "mtime": "1995-12-11 01:15:00"
+        }
+      ]
+    },
+    {
+      "name": "tmp",
+      "is_dir": true,
+      "permissions": "rwxrwxrwt",
+      "owner": "root",
+      "group": "sys",
+      "mtime": "1995-12-11 01:30:00"
+    },
+    {
+      "name": "mnt",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys",
+      "mtime": "1995-11-18 09:50:00"
+    },
+    {
+      "name": "opt",
+      "is_dir": true,
+      "permissions": "rwxr-xr-x",
+      "owner": "root",
+      "group": "sys",
+      "mtime": "1995-11-20 14:30:00"
     },
     {
       "name": "home",
@@ -81,6 +607,15 @@
                   ]
                 }
               ]
+            },
+            {
+              "name": ".profile",
+              "is_dir": false,
+              "permissions": "rw-r--r--",
+              "owner": "dxmail",
+              "group": "mail",
+              "content": "# .profile for dxmail\nPATH=/home/dxmail/bin:/bin:/usr/bin\nexport PATH\nPS1='dxmail$ '\n",
+              "mtime": "1995-09-15 11:25:00"
             }
           ]
         },
@@ -90,81 +625,29 @@
           "permissions": "rwxr-xr-x",
           "owner": "hacky",
           "group": "users",
-          "mtime": "1995-12-08 16:45:30"
+          "mtime": "1995-12-08 16:45:30",
+          "children": [
+            {
+              "name": ".profile",
+              "is_dir": false,
+              "permissions": "rw-r--r--",
+              "owner": "hacky",
+              "group": "users",
+              "content": "# .profile for hacky\nPATH=/bin:/usr/bin:/usr/local/bin\nexport PATH\nPS1='hacky$ '\nEDITOR=vi\nexport EDITOR\n",
+              "mtime": "1995-12-08 16:50:00"
+            },
+            {
+              "name": ".history",
+              "is_dir": false,
+              "permissions": "rw-------",
+              "owner": "hacky",
+              "group": "users",
+              "content": "",
+              "mtime": "1995-12-08 16:45:30"
+            }
+          ]
         }
       ]
-    },
-    {
-      "name": "usr",
-      "is_dir": true,
-      "permissions": "rwxr-xr-x",
-      "owner": "root",
-      "group": "sys",
-      "mtime": "1995-11-18 10:15:00"
-    },
-    {
-      "name": "tmp",
-      "is_dir": true,
-      "permissions": "rwxrwxrwx",
-      "owner": "root",
-      "group": "sys",
-      "mtime": "1995-12-11 01:30:00"
-    },
-    {
-      "name": "var",
-      "is_dir": true,
-      "permissions": "rwxr-xr-x",
-      "owner": "root",
-      "group": "sys",
-      "mtime": "1995-12-10 23:45:00"
-    },
-    {
-      "name": "dev",
-      "is_dir": true,
-      "permissions": "rwxr-xr-x",
-      "owner": "root",
-      "group": "sys",
-      "mtime": "1995-11-18 09:45:00"
-    },
-    {
-      "name": "lib",
-      "is_dir": true,
-      "permissions": "rwxr-xr-x",
-      "owner": "root",
-      "group": "sys",
-      "mtime": "1995-11-18 10:00:00"
-    },
-    {
-      "name": "sbin",
-      "is_dir": true,
-      "permissions": "rwxr-xr-x",
-      "owner": "root",
-      "group": "sys",
-      "mtime": "1995-11-18 10:05:00"
-    },
-    {
-      "name": "boot",
-      "is_dir": true,
-      "permissions": "rwxr-xr-x",
-      "owner": "root",
-      "group": "sys",
-      "mtime": "1995-11-18 09:00:00"
-    },
-    {
-      "name": "mnt",
-      "is_dir": true,
-      "permissions": "rwxr-xr-x",
-      "owner": "root",
-      "group": "sys",
-      "mtime": "1995-11-18 09:50:00"
-    },
-    {
-      "name": "opt",
-      "is_dir": true,
-      "permissions": "rwxr-xr-x",
-      "owner": "root",
-      "group": "sys",
-      "mtime": "1995-11-20 14:30:00"
     },
     {
       "name": ".profile",
@@ -172,7 +655,7 @@
       "permissions": "rw-r--r--",
       "owner": "root",
       "group": "sys",
-      "content": "# System V .profile\nexport PATH=/bin:/usr/bin:/sbin:/usr/sbin\nexport PS1=\"$ \"\n",
+      "content": "# System V .profile\nexport PATH=/bin:/usr/bin:/sbin:/usr/sbin\nexport PS1=\"# \"\nexport TERM=vt100\nexport EDITOR=vi\n",
       "mtime": "1995-11-25 10:30:00"
     },
     {
@@ -183,6 +666,15 @@
       "group": "sys",
       "content": "",
       "mtime": "1995-12-10 22:15:00"
+    },
+    {
+      "name": ".login",
+      "is_dir": false,
+      "permissions": "rw-r--r--",
+      "owner": "root",
+      "group": "sys",
+      "content": "# .login for root\nstty erase ^H kill ^U intr ^C\n",
+      "mtime": "1995-11-25 10:35:00"
     }
   ]
 }

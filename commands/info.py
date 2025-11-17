@@ -44,6 +44,7 @@ def execute_df(vfs, args, print_func):
     print_func("Filesystem            kbytes    used   avail capacity  Mounted on")
     print_func("/dev/root              51200   28672   22528    56%    /")
     print_func("/dev/u                256000  189440   66560    74%    /u")
+    print_func("tmpfs                  16384    1024   15360     7%    /tmp")
     print_func("/dev/swap              65536   12288   53248    19%    swap")
 
 

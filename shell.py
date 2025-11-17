@@ -123,6 +123,23 @@ class Shell:
 
     def execute_command(self, command):
         """Execute Unix commands"""
+        # Check for output redirection
+        redirect_output = None
+        redirect_append = False
+
+        if '>>' in command:
+            # Append redirect
+            parts = command.split('>>', 1)
+            command = parts[0].strip()
+            redirect_output = parts[1].strip()
+            redirect_append = True
+        elif '>' in command:
+            # Overwrite redirect
+            parts = command.split('>', 1)
+            command = parts[0].strip()
+            redirect_output = parts[1].strip()
+            redirect_append = False
+
         parts = command.strip().split()
         if not parts:
             return True
@@ -146,20 +163,45 @@ class Shell:
             self._show_history(args)
             return True
 
-        # Dynamic command dispatch
-        if cmd in self.commands:
-            func = self.commands[cmd]
-            # Check if command needs username (like who, whoami, w, ps)
-            if cmd in ["who", "w", "whoami", "ps"]:
-                func(self.username, args, self.print_instant)
-            # Check if command needs aliases dict (like alias command)
-            elif cmd == "alias":
-                func(self.aliases, args, self.print_instant)
+        # Handle output redirection
+        if redirect_output:
+            # Capture output
+            captured_output = []
+            def capture_print(text):
+                captured_output.append(text)
+
+            # Execute command with output capture
+            if cmd in self.commands:
+                func = self.commands[cmd]
+                if cmd in ["who", "w", "whoami", "ps"]:
+                    func(self.username, args, capture_print)
+                elif cmd == "alias":
+                    func(self.aliases, args, capture_print)
+                else:
+                    func(self.vfs, args, capture_print)
             else:
-                # Standard commands that need vfs
-                func(self.vfs, args, self.print_instant)
+                capture_print(f"{cmd}: not found")
+
+            # Write captured output to file
+            content = "\n".join(captured_output) + "\n" if captured_output else ""
+            success, error = self.vfs.write_file(redirect_output, content, redirect_append)
+            if not success:
+                self.print_instant(error)
         else:
-            self.print_instant(f"{cmd}: not found")
+            # Dynamic command dispatch
+            if cmd in self.commands:
+                func = self.commands[cmd]
+                # Check if command needs username (like who, whoami, w, ps)
+                if cmd in ["who", "w", "whoami", "ps"]:
+                    func(self.username, args, self.print_instant)
+                # Check if command needs aliases dict (like alias command)
+                elif cmd == "alias":
+                    func(self.aliases, args, self.print_instant)
+                else:
+                    # Standard commands that need vfs
+                    func(self.vfs, args, self.print_instant)
+            else:
+                self.print_instant(f"{cmd}: not found")
 
         return True
 

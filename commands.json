@@ -4,109 +4,127 @@
       "name": "cd",
       "module": "commands.filesystem",
       "function": "execute_cd",
-      "description": "Change directory"
+      "description": "Change directory",
+      "usage": "cd [path]"
     },
     {
       "name": "pwd",
       "module": "commands.filesystem",
       "function": "execute_pwd",
-      "description": "Print working directory"
+      "description": "Print working directory",
+      "usage": "pwd"
     },
     {
       "name": "mkdir",
       "module": "commands.filesystem",
       "function": "execute_mkdir",
-      "description": "Make directory"
+      "description": "Make directory",
+      "usage": "mkdir <dir>"
     },
     {
       "name": "ls",
       "module": "commands.filesystem",
       "function": "execute_ls",
-      "description": "List directory contents"
+      "description": "List directory contents",
+      "usage": "ls [-latr] [path]"
     },
     {
       "name": "rm",
       "module": "commands.filesystem",
       "function": "execute_rm",
-      "description": "Remove files or directories"
+      "description": "Remove files or directories",
+      "usage": "rm [-rf] <file>"
     },
     {
       "name": "cat",
       "module": "commands.file_ops",
       "function": "execute_cat",
-      "description": "Display file contents"
+      "description": "Display file contents",
+      "usage": "cat <file> [...]"
     },
     {
       "name": "tar",
       "module": "commands.tar_ops",
       "function": "execute_tar",
-      "description": "Archive utility"
+      "description": "Archive utility",
+      "usage": "tar [cvf|xvf] <file> [dir]"
     },
     {
       "name": "date",
       "module": "commands.info",
       "function": "execute_date",
-      "description": "Display current date and time"
+      "description": "Display current date and time",
+      "usage": "date"
     },
     {
       "name": "who",
       "module": "commands.info",
       "function": "execute_who",
-      "description": "Show who is logged in"
+      "description": "Show who is logged in",
+      "usage": "who"
     },
     {
       "name": "w",
       "module": "commands.info",
       "function": "execute_w",
-      "description": "Show who is logged in and what they are doing"
+      "description": "Show who is logged in and what they are doing",
+      "usage": "w"
     },
     {
       "name": "whoami",
       "module": "commands.info",
       "function": "execute_whoami",
-      "description": "Print effective user name"
+      "description": "Print effective user name",
+      "usage": "whoami"
     },
     {
       "name": "uptime",
       "module": "commands.info",
       "function": "execute_uptime",
-      "description": "Show how long system has been running"
+      "description": "Show how long system has been running",
+      "usage": "uptime"
     },
     {
       "name": "df",
       "module": "commands.info",
       "function": "execute_df",
-      "description": "Report filesystem disk space usage"
+      "description": "Report filesystem disk space usage",
+      "usage": "df"
     },
     {
       "name": "ps",
       "module": "commands.info",
       "function": "execute_ps",
-      "description": "Report process status"
+      "description": "Report process status",
+      "usage": "ps [-ef|-aux]"
     },
     {
       "name": "uname",
       "module": "commands.info",
       "function": "execute_uname",
-      "description": "Print system information"
+      "description": "Print system information",
+      "usage": "uname [-a]"
     },
     {
       "name": "clear",
       "module": "commands.system",
       "function": "execute_clear",
-      "description": "Clear the terminal screen"
+      "description": "Clear the terminal screen",
+      "usage": "clear"
     },
     {
       "name": "help",
       "module": "commands.system",
       "function": "execute_help",
-      "description": "Display help information"
+      "description": "Display help information",
+      "usage": "help"
     },
     {
       "name": "alias",
       "module": "commands.system",
       "function": "execute_alias",
-      "description": "Create command alias"
+      "description": "Create command alias",
+      "usage": "alias [name[=value]]"
     }
   ]
 }

@@ -6,55 +6,72 @@ Implements tar archive creation and extraction
 import io
 import tarfile
 from vfs import VNode
+from argparse_unix import parse_unix_args
 
 
 def execute_tar(vfs, args, print_func):
     """Execute tar command - create or extract tar archives"""
     if len(args) < 2:
         print_func("Usage: tar [cvf|xvf] file [directory]")
-    else:
-        options = args[0]
-        tarfile_name = args[1]
+        return
 
-        if options == "cvf":
-            # Create tar archive
-            if len(args) < 3:
-                print_func("tar: missing directory argument")
+    # Parse arguments using unified parser
+    parsed = parse_unix_args(args)
+
+    # Get positional arguments (tarfile name and optional directory)
+    positionals = parsed.get_positionals()
+    if not positionals:
+        print_func("Usage: tar [cvf|xvf] file [directory]")
+        return
+
+    tarfile_name = positionals[0]
+
+    # Check for create or extract operations
+    is_create = parsed.has_flag('c')
+    is_extract = parsed.has_flag('x')
+    verbose = parsed.has_flag('v')
+    use_file = parsed.has_flag('f')
+
+    if is_create:
+        # Create tar archive
+        if len(positionals) < 2:
+            print_func("tar: missing directory argument")
+        else:
+            dir_path = positionals[1]
+            target = vfs.resolve_path(dir_path)
+            if target is None:
+                print_func(f"tar: {dir_path}: No such file or directory")
+            elif not target.is_dir:
+                print_func(f"tar: {dir_path}: Not a directory")
             else:
-                dir_path = args[2]
-                target = vfs.resolve_path(dir_path)
-                if target is None:
-                    print_func(f"tar: {dir_path}: No such file or directory")
-                elif not target.is_dir:
-                    print_func(f"tar: {dir_path}: Not a directory")
-                else:
-                    # Create tar archive in memory
-                    tar_content = _create_tar(target)
-                    # Store as virtual file
-                    tar_node = VNode(tarfile_name, is_dir=False)
-                    tar_node.content = tar_content
-                    tar_node.size = len(tar_content)
-                    vfs.current_dir.add_child(tar_node)
-                    # Print verbose output
+                # Create tar archive in memory
+                tar_content = _create_tar(target)
+                # Store as virtual file
+                tar_node = VNode(tarfile_name, is_dir=False)
+                tar_node.content = tar_content
+                tar_node.size = len(tar_content)
+                vfs.current_dir.add_child(tar_node)
+                # Print verbose output if requested
+                if verbose:
                     _print_tar_contents(target, print_func, "a")
 
-        elif options == "xvf":
-            # Extract tar archive
-            tar_node = vfs.resolve_path(tarfile_name)
-            if tar_node is None:
-                print_func(f"tar: {tarfile_name}: No such file or directory")
-            elif tar_node.is_dir:
-                print_func(f"tar: {tarfile_name}: Is a directory")
-            else:
-                # Extract tar archive
-                if tar_node.content:
-                    _extract_tar(vfs, tar_node.content, print_func)
-                else:
-                    print_func(f"tar: {tarfile_name}: Empty archive")
-
+    elif is_extract:
+        # Extract tar archive
+        tar_node = vfs.resolve_path(tarfile_name)
+        if tar_node is None:
+            print_func(f"tar: {tarfile_name}: No such file or directory")
+        elif tar_node.is_dir:
+            print_func(f"tar: {tarfile_name}: Is a directory")
         else:
-            print_func(f"tar: invalid option -- '{options}'")
-            print_func("Usage: tar [cvf|xvf] file [directory]")
+            # Extract tar archive
+            if tar_node.content:
+                _extract_tar(vfs, tar_node.content, print_func, verbose)
+            else:
+                print_func(f"tar: {tarfile_name}: Empty archive")
+
+    else:
+        print_func("tar: you must specify one of the 'c' or 'x' options")
+        print_func("Usage: tar [cvf|xvf] file [directory]")
 
 
 def _create_tar(root_node):
@@ -100,14 +117,15 @@ def _print_tar_contents(node, print_func, prefix="a", path=""):
             _print_tar_contents(child_node, print_func, prefix, current_path)
 
 
-def _extract_tar(vfs, tar_content, print_func):
+def _extract_tar(vfs, tar_content, print_func, verbose=True):
     """Extract a tar archive to the virtual filesystem"""
     tar_buffer = io.BytesIO(tar_content)
     try:
         with tarfile.open(fileobj=tar_buffer, mode='r') as tar:
             for member in tar.getmembers():
                 # Print extraction (verbose mode)
-                print_func(f"x {member.name}")
+                if verbose:
+                    print_func(f"x {member.name}")
 
                 # Skip if it's the root of the archive
                 if not member.name or member.name == '.':

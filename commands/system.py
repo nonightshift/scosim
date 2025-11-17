@@ -3,6 +3,9 @@ System Commands Module
 Implements system utility commands
 """
 
+import json
+import os
+
 
 def execute_clear(vfs, args, print_func):
     """Execute clear command - clear the terminal screen"""
@@ -12,27 +15,35 @@ def execute_clear(vfs, args, print_func):
 
 def execute_help(vfs, args, print_func):
     """Execute help command - show available commands"""
+    # Load commands from commands.json to generate dynamic help
+    commands_file = "commands.json"
+
     print_func("\nAvailable UNIX commands:")
     print_func("-" * 60)
-    print_func("  ls [-l] [path]  - list directory contents")
-    print_func("  cd [path]       - change directory")
-    print_func("  pwd             - print working directory")
-    print_func("  mkdir <dir>     - create directory")
-    print_func("  alias [name[=value]] - define or display aliases")
-    print_func("  tar cvf <file> <dir> - create tar archive")
-    print_func("  tar xvf <file>  - extract tar archive")
-    print_func("  date            - print system date and time")
-    print_func("  who             - display logged in users")
-    print_func("  w               - display users and their activities")
-    print_func("  whoami          - print effective user name")
-    print_func("  uptime          - display system uptime")
-    print_func("  df              - report filesystem disk space usage")
-    print_func("  ps [-ef]        - report process status")
-    print_func("  uname [-a]      - print system information")
-    print_func("  cat <file>      - concatenate and print files")
-    print_func("  clear           - clear the terminal screen")
-    print_func("  history         - show command history")
-    print_func("  exit, logout    - log out of the system")
+
+    try:
+        if os.path.exists(commands_file):
+            with open(commands_file, 'r', encoding='utf-8') as f:
+                config = json.load(f)
+
+            # Display each command with its usage and description
+            for cmd in config.get("commands", []):
+                name = cmd.get("name", "")
+                usage = cmd.get("usage", name)
+                description = cmd.get("description", "")
+
+                # Format: "  usage - description"
+                print_func(f"  {usage:<20} - {description}")
+        else:
+            # Fallback to basic help if commands.json not found
+            print_func("  Commands configuration file not found")
+
+    except Exception as e:
+        print_func(f"  Error loading help: {e}")
+
+    # Add built-in commands not in commands.json
+    print_func("  history              - show command history")
+    print_func("  exit, logout         - log out of the system")
     print_func("-" * 60)
 
 

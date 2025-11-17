@@ -3,6 +3,8 @@ Filesystem Commands Module
 Implements directory navigation and listing commands
 """
 
+from argparse_unix import parse_unix_args
+
 
 def execute_cd(vfs, args, print_func):
     """Execute cd command - change directory"""
@@ -33,15 +35,17 @@ def execute_mkdir(vfs, args, print_func):
 
 def execute_ls(vfs, args, print_func):
     """Execute ls command - list directory contents"""
-    # Parse ls options
-    long_format = "-l" in args
-    show_hidden = "-a" in args
-    sort_by_time = "-t" in args
-    reverse_sort = "-r" in args
+    # Parse arguments using unified parser
+    parsed = parse_unix_args(args)
 
-    # Remove options from args to get paths
-    paths = [arg for arg in args if not arg.startswith("-")]
+    # Check for options
+    long_format = parsed.has_flag('l')
+    show_hidden = parsed.has_flag('a')
+    sort_by_time = parsed.has_flag('t')
+    reverse_sort = parsed.has_flag('r')
 
+    # Get paths
+    paths = parsed.get_positionals()
     if not paths:
         paths = [None]  # Current directory
 
@@ -68,12 +72,15 @@ def execute_rm(vfs, args, print_func):
         print_func("Usage: rm [-r] file ...")
         return
 
-    # Parse options
-    recursive = "-r" in args or "-rf" in args or "-fr" in args
-    force = "-f" in args or "-rf" in args or "-fr" in args
+    # Parse arguments using unified parser
+    parsed = parse_unix_args(args)
 
-    # Get file paths (filter out options)
-    paths = [arg for arg in args if not arg.startswith("-")]
+    # Check for options (handles -rf, -fr, -r, -f all correctly)
+    recursive = parsed.has_flag('r')
+    force = parsed.has_flag('f')
+
+    # Get file paths
+    paths = parsed.get_positionals()
 
     if not paths:
         print_func("rm: missing operand")

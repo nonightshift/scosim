@@ -4,6 +4,7 @@ Implements commands that display system information
 """
 
 from system_time import now
+from argparse_unix import parse_unix_args
 import random
 
 
@@ -50,7 +51,14 @@ def execute_df(vfs, args, print_func):
 
 def execute_ps(username, args, print_func):
     """Execute ps command - report process status"""
-    if "-ef" in args or "-aux" in args:
+    # Parse arguments using unified parser
+    parsed = parse_unix_args(args)
+
+    # Check for full listing options (handles -ef, -e -f, -aux, -a -u -x)
+    full_listing = (parsed.has_flag('e') and parsed.has_flag('f')) or \
+                   (parsed.has_flag('a') and parsed.has_flag('u') and parsed.has_flag('x'))
+
+    if full_listing:
         print_func("  UID   PID  PPID  C    STIME TTY      TIME COMMAND")
         print_func("  root     1     0  0 Nov 01  ?        0:03 /etc/init")
         print_func("  root    23     1  0 Nov 01  ?        0:00 /etc/cron")
@@ -66,7 +74,10 @@ def execute_ps(username, args, print_func):
 
 def execute_uname(vfs, args, print_func):
     """Execute uname command - print system information"""
-    if "-a" in args:
+    # Parse arguments using unified parser
+    parsed = parse_unix_args(args)
+
+    if parsed.has_flag('a'):
         print_func("SCO_SV scohost 3.2 2 i386")
     else:
         print_func("SCO_SV")

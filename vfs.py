@@ -283,7 +283,7 @@ export TERM
 
         return True, None
 
-    def list_dir(self, path=None, long_format=False):
+    def list_dir(self, path=None, long_format=False, show_hidden=False, sort_by_time=False, reverse_sort=False):
         """List directory contents"""
         if path:
             target = self.resolve_path(path)
@@ -300,8 +300,29 @@ export TERM
             else:
                 return [target.name], None
 
+        # Get all children
+        items = []
+        for name, node in target.children.items():
+            # Filter hidden files unless -a is specified
+            if not show_hidden and name.startswith('.'):
+                continue
+            items.append((name, node))
+
+        # Sort items
+        if sort_by_time:
+            # Sort by modification time (newest first)
+            items.sort(key=lambda x: x[1].mtime, reverse=True)
+        else:
+            # Sort by name
+            items.sort(key=lambda x: x[0])
+
+        # Reverse order if requested
+        if reverse_sort:
+            items.reverse()
+
+        # Format entries
         entries = []
-        for name, node in sorted(target.children.items()):
+        for name, node in items:
             if long_format:
                 entries.append(self._format_long_entry(node))
             else:
@@ -334,3 +355,47 @@ export TERM
         name = node.name
 
         return f"{type_char}{perms}  {links:2} {owner} {group} {size} {mtime} {name}"
+
+    def read_file(self, path):
+        """Read file contents"""
+        node = self.resolve_path(path)
+        if node is None:
+            return None, f"cat: cannot open {path}: No such file or directory"
+        if node.is_dir:
+            return None, f"cat: {path}: Is a directory"
+        return node.content, None
+
+    def write_file(self, path, content, append=False):
+        """Write or create a file"""
+        # Resolve parent directory and filename
+        if "/" in path:
+            parent_path = path.rsplit("/", 1)[0]
+            filename = path.rsplit("/", 1)[1]
+            parent = self.resolve_path(parent_path) if parent_path else self.current_dir
+        else:
+            filename = path
+            parent = self.current_dir
+
+        if parent is None or not parent.is_dir:
+            return False, f"cat: {path}: No such file or directory"
+
+        # Check if file exists
+        if filename in parent.children:
+            node = parent.children[filename]
+            if node.is_dir:
+                return False, f"cat: {path}: Is a directory"
+            # Update existing file
+            if append:
+                node.content += content
+            else:
+                node.content = content
+            node.size = len(node.content)
+            node.mtime = now()
+        else:
+            # Create new file
+            new_file = VNode(filename, is_dir=False, parent=parent, permissions="rw-r--r--")
+            new_file.content = content
+            new_file.size = len(content)
+            parent.add_child(new_file)
+
+        return True, None

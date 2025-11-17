@@ -7,7 +7,7 @@ import sys
 import time
 import random
 import getpass
-from datetime import datetime
+from system_time import now
 
 
 class ModemSimulator:
@@ -115,8 +115,8 @@ class ModemSimulator:
         self.print_instant("     SCO UNIX System V/386 Release 3.2")
         self.print_instant("     Copyright (C) 1976-1995 The Santa Cruz Operation, Inc.")
         self.print_instant("="*60)
-        self.print_instant(f"\nSystem time: {datetime.now().strftime('%b %d %H:%M:%S %Y')}")
-        self.print_instant("Last successful connection: Nov 13 14:32:18 2025")
+        self.print_instant(f"\nSystem time: {now().strftime('%b %d %H:%M:%S %Y')}")
+        self.print_instant("Last successful connection: Dec 08 23:15:42 1995")
         self.print_instant("\n" + "-"*60)
 
     def login(self):
@@ -164,7 +164,7 @@ class ModemSimulator:
         self.print_instant("\n" + "="*60)
         self.print_instant("  SCO UNIX System V/386 Release 3.2")
         self.print_instant("="*60)
-        self.print_instant(f"\nLast login: {datetime.now().strftime('%a %b %d %H:%M:%S')} on tty1a")
+        self.print_instant(f"\nLast login: {now().strftime('%a %b %d %H:%M:%S')} on tty1a")
         self.print_instant(f"Terminal: vt100")
         self.print_instant(f"\nYou have mail.")
         self.print_instant("\n" + "-"*60)

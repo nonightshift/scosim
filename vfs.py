@@ -6,11 +6,12 @@ Implements a virtual filesystem for the SCO UNIX simulator
 import json
 import os
 from datetime import datetime
+from system_time import now
 
 
 class VNode:
     """Virtual filesystem node (file or directory)"""
-    def __init__(self, name, is_dir=False, parent=None, permissions="rwxr-xr-x", owner="root", group="sys"):
+    def __init__(self, name, is_dir=False, parent=None, permissions="rwxr-xr-x", owner="root", group="sys", mtime=None):
         self.name = name
         self.is_dir = is_dir
         self.parent = parent
@@ -20,7 +21,8 @@ class VNode:
         self.owner = owner
         self.group = group
         self.size = 0
-        self.mtime = datetime.now()
+        # Use provided mtime or default to system time
+        self.mtime = mtime if mtime is not None else now()
 
     def get_full_path(self):
         """Get the full path of this node"""
@@ -83,9 +85,19 @@ class VirtualFileSystem:
                 owner = child_data.get("owner", "root")
                 group = child_data.get("group", "sys")
 
+                # Parse mtime if provided in JSON
+                mtime = None
+                if "mtime" in child_data:
+                    try:
+                        # Expected format: "YYYY-MM-DD HH:MM:SS"
+                        mtime = datetime.strptime(child_data["mtime"], "%Y-%m-%d %H:%M:%S")
+                    except (ValueError, TypeError):
+                        # If parsing fails, mtime will be set to default in VNode constructor
+                        pass
+
                 # Create the node
                 child_node = VNode(name, is_dir=is_dir, parent=parent_node,
-                                 permissions=permissions, owner=owner, group=group)
+                                 permissions=permissions, owner=owner, group=group, mtime=mtime)
 
                 # Set content for files
                 if not is_dir and "content" in child_data:

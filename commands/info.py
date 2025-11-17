@@ -3,30 +3,30 @@ System Information Commands Module
 Implements commands that display system information
 """
 
-from datetime import datetime
+from system_time import now
 import random
 
 
 def execute_date(vfs, args, print_func):
     """Execute date command - print system date and time"""
-    print_func(datetime.now().strftime('%a %b %d %H:%M:%S %Z %Y'))
+    print_func(now().strftime('%a %b %d %H:%M:%S %Z %Y'))
 
 
 def execute_who(username, args, print_func):
     """Execute who command - display logged in users"""
-    print_func(f"{username:<12} tty1a        {datetime.now().strftime('%b %d %H:%M')}")
-    print_func(f"operator     tty2         {datetime.now().strftime('%b %d')} 09:15")
-    print_func(f"admin        tty3         {datetime.now().strftime('%b %d')} 14:22")
+    print_func(f"{username:<12} tty1a        {now().strftime('%b %d %H:%M')}")
+    print_func(f"operator     tty2         Dec 10 23:15")
+    print_func(f"admin        tty3         Dec 11 00:22")
 
 
 def execute_w(username, args, print_func):
     """Execute w command - display users and their activities"""
-    current_time = datetime.now().strftime('%H:%M:%S')
+    current_time = now().strftime('%H:%M:%S')
     print_func(f" {current_time}  up 23 days,  4:32,  3 users")
     print_func(f"User     tty       login@  idle   what")
-    print_func(f"{username:<8} tty1a     {datetime.now().strftime('%H:%M')}    0     -sh")
-    print_func(f"operator tty2      09:15    1:45  /usr/bin/vi")
-    print_func(f"admin    tty3      14:22    0:12  /bin/sh")
+    print_func(f"{username:<8} tty1a     {now().strftime('%H:%M')}    0     -sh")
+    print_func(f"operator tty2      23:15    2:30  /usr/bin/vi")
+    print_func(f"admin    tty3      00:22    1:23  /bin/sh")
 
 
 def execute_whoami(username, args, print_func):
@@ -36,7 +36,7 @@ def execute_whoami(username, args, print_func):
 
 def execute_uptime(vfs, args, print_func):
     """Execute uptime command - display system uptime"""
-    print_func(f" {datetime.now().strftime('%H:%M:%S')}  up 23 days,  4:32,  3 users,  load average: 0.15, 0.21, 0.18")
+    print_func(f" {now().strftime('%H:%M:%S')}  up 23 days,  4:32,  3 users,  load average: 0.15, 0.21, 0.18")
 
 
 def execute_df(vfs, args, print_func):
@@ -54,7 +54,7 @@ def execute_ps(username, args, print_func):
         print_func("  root     1     0  0 Nov 01  ?        0:03 /etc/init")
         print_func("  root    23     1  0 Nov 01  ?        0:00 /etc/cron")
         print_func("  root    45     1  0 Nov 01  ?        0:12 /etc/syslogd")
-        print_func(f"  {username:<8}{random.randint(100,999)}     1  0 {datetime.now().strftime('%H:%M')}  tty1a    0:00 -sh")
+        print_func(f"  {username:<8}{random.randint(100,999)}     1  0 {now().strftime('%H:%M')}  tty1a    0:00 -sh")
         print_func("  root   156     1  0 Nov 02  ?        1:23 /usr/lib/sendmail")
         print_func("  root   234     1  0 Nov 03  ?        0:45 /usr/sbin/inetd")
     else:

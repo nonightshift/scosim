@@ -283,12 +283,6 @@
             }
         });
 
-        // Handle paste
-        term.onPaste((data) => {
-            currentLine += data;
-            term.write(data);
-        });
-
         // Focus terminal on load
         term.focus();
 

@@ -1,8 +1,5 @@
 # Modem Simulator - Python Requirements
 #
-# Dieses Projekt verwendet nur die Python Standard-Bibliothek
-# und benötigt keine externen Abhängigkeiten.
-#
 # Minimale Python-Version: 3.6+
 #
 # Verwendete Standard-Module:
@@ -12,4 +9,12 @@
 # - getpass: Sichere Passwort-Eingabe
 # - datetime: Datum und Zeit Operationen
 
-# Keine externen Pakete erforderlich
+# Externe Abhängigkeiten für Terminal-Version
+# (nicht erforderlich, wenn nur der Web-Server verwendet wird)
+
+# Externe Abhängigkeiten für Web-Server
+# (erforderlich für web_server.py)
+Flask>=2.3.0
+Flask-SocketIO>=5.3.0
+python-socketio>=5.9.0
+eventlet>=0.33.0

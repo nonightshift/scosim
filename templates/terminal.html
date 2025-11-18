@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCO Unix System V/386 - Modem Simulator</title>
+
+    <!-- xterm.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.css" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #header {
+            background-color: #1a1a1a;
+            color: #00ff00;
+            padding: 10px 20px;
+            border-bottom: 2px solid #00ff00;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #header h1 {
+            font-size: 16px;
+            font-weight: bold;
+            color: #00ff00;
+        }
+
+        #status {
+            font-size: 12px;
+            color: #ffff00;
+        }
+
+        #terminal-container {
+            flex: 1;
+            padding: 10px;
+            overflow: hidden;
+        }
+
+        #terminal {
+            width: 100%;
+            height: 100%;
+        }
+
+        .xterm {
+            height: 100%;
+            padding: 5px;
+        }
+
+        .xterm-viewport {
+            background-color: #000 !important;
+        }
+
+        .xterm-screen {
+            background-color: #000 !important;
+        }
+
+        /* Custom scrollbar for webkit browsers */
+        .xterm-viewport::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .xterm-viewport::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        .xterm-viewport::-webkit-scrollbar-thumb {
+            background: #00ff00;
+            border-radius: 5px;
+        }
+
+        .xterm-viewport::-webkit-scrollbar-thumb:hover {
+            background: #00cc00;
+        }
+
+        /* Loading screen */
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: #00ff00;
+        }
+
+        #loading h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        #loading .spinner {
+            border: 4px solid #1a1a1a;
+            border-top: 4px solid #00ff00;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading">
+        <h2>SCO UNIX SYSTEM V/386</h2>
+        <div class="spinner"></div>
+        <p style="margin-top: 20px;">Initializing modem connection...</p>
+    </div>
+
+    <!-- Header -->
+    <div id="header">
+        <h1>📟 SCO Unix System V/386 - Modem Simulator (Web Terminal)</h1>
+        <div id="status">● Connected</div>
+    </div>
+
+    <!-- Terminal Container -->
+    <div id="terminal-container">
+        <div id="terminal"></div>
+    </div>
+
+    <!-- Socket.IO -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+
+    <!-- xterm.js -->
+    <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xterm-addon-web-links@0.9.0/lib/xterm-addon-web-links.js"></script>
+
+    <script>
+        // Initialize xterm.js
+        const term = new Terminal({
+            cursorBlink: true,
+            cursorStyle: 'block',
+            fontSize: 14,
+            fontFamily: '"Courier New", Courier, monospace',
+            theme: {
+                background: '#000000',
+                foreground: '#00ff00',
+                cursor: '#00ff00',
+                cursorAccent: '#000000',
+                black: '#000000',
+                red: '#ff0000',
+                green: '#00ff00',
+                yellow: '#ffff00',
+                blue: '#0000ff',
+                magenta: '#ff00ff',
+                cyan: '#00ffff',
+                white: '#ffffff',
+                brightBlack: '#666666',
+                brightRed: '#ff6666',
+                brightGreen: '#66ff66',
+                brightYellow: '#ffff66',
+                brightBlue: '#6666ff',
+                brightMagenta: '#ff66ff',
+                brightCyan: '#66ffff',
+                brightWhite: '#ffffff'
+            },
+            cols: 80,
+            rows: 24,
+            scrollback: 1000
+        });
+
+        // Add fit addon
+        const fitAddon = new FitAddon.FitAddon();
+        term.loadAddon(fitAddon);
+
+        // Add web links addon
+        const webLinksAddon = new WebLinksAddon.WebLinksAddon();
+        term.loadAddon(webLinksAddon);
+
+        // Open terminal
+        term.open(document.getElementById('terminal'));
+        fitAddon.fit();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            fitAddon.fit();
+            socket.emit('resize', {
+                cols: term.cols,
+                rows: term.rows
+            });
+        });
+
+        // Input buffer
+        let currentLine = '';
+
+        // Socket.IO connection
+        const socket = io();
+
+        socket.on('connect', () => {
+            console.log('Connected to server');
+            document.getElementById('status').innerHTML = '● Connected';
+            document.getElementById('status').style.color = '#00ff00';
+
+            // Hide loading screen
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hidden');
+            }, 500);
+        });
+
+        socket.on('disconnect', () => {
+            console.log('Disconnected from server');
+            document.getElementById('status').innerHTML = '○ Disconnected';
+            document.getElementById('status').style.color = '#ff0000';
+            term.write('\r\n\r\n=== Connection lost. Please refresh the page. ===\r\n');
+        });
+
+        socket.on('connected', (data) => {
+            console.log(data.data);
+        });
+
+        socket.on('output', (data) => {
+            term.write(data.data);
+        });
+
+        // Handle terminal input
+        term.onData((data) => {
+            const code = data.charCodeAt(0);
+
+            // Handle Enter key (CR or LF)
+            if (code === 13 || code === 10) {
+                term.write('\r\n');
+                socket.emit('input', { data: currentLine });
+                currentLine = '';
+            }
+            // Handle Backspace
+            else if (code === 127 || code === 8) {
+                if (currentLine.length > 0) {
+                    currentLine = currentLine.slice(0, -1);
+                    term.write('\b \b');
+                }
+            }
+            // Handle Ctrl+C
+            else if (code === 3) {
+                term.write('^C\r\n');
+                socket.emit('input', { data: '' });
+                currentLine = '';
+            }
+            // Handle Ctrl+D
+            else if (code === 4) {
+                term.write('^D\r\n');
+                socket.emit('input', { data: 'exit' });
+                currentLine = '';
+            }
+            // Handle Tab
+            else if (code === 9) {
+                // Tab completion could be implemented here
+                term.write('    ');
+            }
+            // Regular characters
+            else if (code >= 32 && code < 127) {
+                currentLine += data;
+                term.write(data);
+            }
+        });
+
+        // Handle paste
+        term.onPaste((data) => {
+            currentLine += data;
+            term.write(data);
+        });
+
+        // Focus terminal on load
+        term.focus();
+
+        // Prevent context menu
+        document.getElementById('terminal').addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+
+        // Keep terminal focused
+        document.addEventListener('click', () => {
+            term.focus();
+        });
+
+        // Show info message
+        console.log('SCO Unix System V/386 Modem Simulator');
+        console.log('Web Terminal Interface using xterm.js');
+        console.log('Default login: root / root');
+    </script>
+</body>
+</html>

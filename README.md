@@ -47,7 +47,9 @@ chmod +x modem_simulator.py
 
 ## Verwendung
 
-Starten Sie den Simulator einfach mit:
+### Option 1: Terminal-Version
+
+Starten Sie den Simulator im Terminal mit:
 
 ```bash
 python3 modem_simulator.py
@@ -58,6 +60,56 @@ oder (wenn ausführbar gemacht):
 ```bash
 ./modem_simulator.py
 ```
+
+oder mit dem Startskript:
+
+```bash
+./start.sh
+```
+
+### Option 2: Web-Terminal (Browser-Zugriff)
+
+**NEU!** Der Simulator kann jetzt über einen Webbrowser mit xterm.js verwendet werden:
+
+#### Installation der Web-Abhängigkeiten
+
+```bash
+pip install -r requirements.txt
+```
+
+Dies installiert:
+- Flask (Web-Framework)
+- Flask-SocketIO (WebSocket-Unterstützung)
+- python-socketio (Socket.IO Backend)
+- eventlet (Async-Server)
+
+#### Starten des Web-Servers
+
+```bash
+./start_web.sh
+```
+
+oder direkt:
+
+```bash
+python3 web_server.py
+```
+
+#### Zugriff auf das Web-Terminal
+
+Öffnen Sie Ihren Browser und navigieren Sie zu:
+
+- **Lokal**: http://localhost:5000
+- **Im Netzwerk**: http://[IP-Adresse]:5000
+
+Das Web-Terminal bietet:
+- ✅ Vollständige xterm.js Terminal-Emulation im Browser
+- ✅ Authentisches grünes Terminal-Design (wie echte VT100-Terminals)
+- ✅ Alle UNIX-Befehle wie in der Terminal-Version
+- ✅ Zugriff von überall im Netzwerk
+- ✅ Keine Installation auf Client-Seite erforderlich
+- ✅ Mehrere simultane Benutzer-Sitzungen möglich
+- ✅ Responsive Design für Desktop und Mobile
 
 ### Demo-Zugangsdaten
 
@@ -271,12 +323,13 @@ export LANG=de_DE.UTF-8
 
 Mögliche Erweiterungen für die Zukunft:
 
+- [x] **Web-Terminal mit xterm.js** (✅ Implementiert!)
+- [x] **Multi-User Support mit Netzwerk-Kommunikation** (✅ Implementiert via Web-Server!)
 - [ ] Mehr UNIX-Befehle (vi, grep, find, etc.)
 - [ ] Dateisystem-Simulation mit echten Verzeichnisoperationen
 - [ ] Konfigurationsdatei für Benutzer und Einstellungen
 - [ ] Verschiedene Modem-Geschwindigkeiten wählbar
 - [ ] Sound-Effekte (echte Modem-Geräusche)
-- [ ] Multi-User Support mit echter Netzwerk-Kommunikation
 - [ ] Mail-System Simulation (mailx)
 - [ ] UNIX-Prozess-Simulation mit echten Interaktionen
 

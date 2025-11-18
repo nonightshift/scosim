@@ -23,6 +23,7 @@ class Shell:
         self.history_max_size = 1000
         self.commands = {}
         self.commands_config_path = commands_config_path
+        self.history = []  # Command history list for web terminal
 
         # Load dynamic commands
         self._load_commands()
@@ -121,8 +122,19 @@ class Shell:
         """Print text instantly"""
         print(text)
 
-    def execute_command(self, command):
+    def get_prompt(self):
+        """Get the shell prompt based on username"""
+        if self.username == "root":
+            return "# "
+        else:
+            return "$ "
+
+    def execute_command(self, command, print_func=None):
         """Execute Unix commands"""
+        # Use provided print_func or default to print_instant
+        if print_func is None:
+            print_func = self.print_instant
+
         # Check for output redirection
         redirect_output = None
         redirect_append = False
@@ -160,7 +172,7 @@ class Shell:
         if cmd in ["logout", "exit", "quit"]:
             return False
         elif cmd == "history":
-            self._show_history(args)
+            self._show_history(args, print_func)
             return True
 
         # Handle output redirection
@@ -186,27 +198,30 @@ class Shell:
             content = "\n".join(captured_output) + "\n" if captured_output else ""
             success, error = self.vfs.write_file(redirect_output, content, redirect_append)
             if not success:
-                self.print_instant(error)
+                print_func(error)
         else:
             # Dynamic command dispatch
             if cmd in self.commands:
                 func = self.commands[cmd]
                 # Check if command needs username (like who, whoami, w, ps)
                 if cmd in ["who", "w", "whoami", "ps"]:
-                    func(self.username, args, self.print_instant)
+                    func(self.username, args, print_func)
                 # Check if command needs aliases dict (like alias command)
                 elif cmd == "alias":
-                    func(self.aliases, args, self.print_instant)
+                    func(self.aliases, args, print_func)
                 else:
                     # Standard commands that need vfs
-                    func(self.vfs, args, self.print_instant)
+                    func(self.vfs, args, print_func)
             else:
-                self.print_instant(f"{cmd}: not found")
+                print_func(f"{cmd}: not found")
 
         return True
 
-    def _show_history(self, args):
+    def _show_history(self, args, print_func=None):
         """Show command history"""
+        if print_func is None:
+            print_func = self.print_instant
+
         # Get number of history entries to show
         num_entries = readline.get_current_history_length()
 
@@ -222,7 +237,7 @@ class Shell:
         for i in range(start_index, num_entries + 1):
             entry = readline.get_history_item(i)
             if entry:
-                print(f" {i:4d}  {entry}")
+                print_func(f" {i:4d}  {entry}")
 
     def run(self):
         """Run the interactive shell"""

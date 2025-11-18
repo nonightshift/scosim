@@ -1,0 +1,22 @@
+{
+  "name": "scosim",
+  "version": "1.0.0",
+  "description": "Ein Python-basierter Kommandozeilensimulator, der die authentische Erfahrung eines Modem-Logins zu einem SCO UNIX System V/386 aus den 1990er Jahren nachbildet. Perfekt für Nostalgie, Bildungszwecke oder einfach zum Spaß!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://local_proxy@127.0.0.1:62477/git/nonightshift/scosim"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io-client": "^4.5.4",
+    "xterm": "^5.3.0",
+    "xterm-addon-fit": "^0.8.0",
+    "xterm-addon-web-links": "^0.9.0"
+  }
+}

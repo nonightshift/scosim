@@ -4,8 +4,8 @@ Web server for SCO Unix Simulator with xterm.js terminal
 Provides browser-based access to the modem simulator
 """
 
-from flask import Flask, render_template, session
-from flask_socketio import SocketIO, emit
+from flask import Flask, render_template
+from flask_socketio import SocketIO, emit, request
 import threading
 import queue
 import sys
@@ -148,8 +148,7 @@ def index():
 @socketio.on('connect')
 def handle_connect():
     """Handle new WebSocket connection"""
-    sid = session.get('session_id', str(threading.get_ident()))
-    session['session_id'] = sid
+    sid = request.sid
 
     # Create new terminal session
     terminal = WebTerminal(sid)
@@ -166,7 +165,7 @@ def handle_connect():
 @socketio.on('disconnect')
 def handle_disconnect():
     """Handle WebSocket disconnection"""
-    sid = session.get('session_id')
+    sid = request.sid
     if sid in sessions:
         sessions[sid].running = False
         del sessions[sid]
@@ -175,7 +174,7 @@ def handle_disconnect():
 @socketio.on('input')
 def handle_input(data):
     """Handle input from the web terminal"""
-    sid = session.get('session_id')
+    sid = request.sid
     if sid in sessions:
         terminal = sessions[sid]
         input_text = data.get('data', '')

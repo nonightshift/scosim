@@ -38,15 +38,19 @@ class ModemSimulator:
         """Prints text instantly"""
         print(text)
 
-    def simulate_modem_dial(self):
+    def simulate_modem_dial(self, print_func=None):
         """Simulates the modem dial-in process"""
-        self.print_instant("\n" + "="*60)
-        self.print_instant("     MODEM COMMUNICATIONS SIMULATOR v2.4")
-        self.print_instant("     Copyright (C) 1995-1998")
-        self.print_instant("="*60 + "\n")
+        # Use custom print function if provided, otherwise use default
+        _print = print_func if print_func else self.print_instant
+        _slow_print = self.slow_print
+
+        _print("\n" + "="*60)
+        _print("     MODEM COMMUNICATIONS SIMULATOR v2.4")
+        _print("     Copyright (C) 1995-1998")
+        _print("="*60 + "\n")
 
         time.sleep(0.5)
-        self.slow_print("Initializing modem...", 0.03)
+        _slow_print("Initializing modem...", 0.03)
         time.sleep(0.3)
 
         # AT commands
@@ -60,26 +64,29 @@ class ModemSimulator:
         ]
 
         for cmd, response in at_commands:
-            self.slow_print(f"{cmd}", 0.02)
+            _slow_print(f"{cmd}", 0.02)
             time.sleep(0.2)
             if response:
-                self.slow_print(response, 0.02)
+                _slow_print(response, 0.02)
             time.sleep(0.3)
 
         # Simulate dialing sounds
-        self.print_instant("")
-        self.slow_print("Dialing...", 0.04)
+        _print("")
+        _slow_print("Dialing...", 0.04)
         time.sleep(0.5)
 
         dial_sounds = ["BEEP", "BEEP", "BEEP", "BEEP", "BEEP", "BEEP", "BEEP"]
         for sound in dial_sounds:
-            sys.stdout.write(sound + " ")
-            sys.stdout.flush()
+            if print_func:
+                print_func(sound + " ", end='')
+            else:
+                sys.stdout.write(sound + " ")
+                sys.stdout.flush()
             time.sleep(0.15)
-        print("\n")
+        _print("\n")
 
         time.sleep(0.5)
-        self.slow_print("Connecting...", 0.04)
+        _slow_print("Connecting...", 0.04)
         time.sleep(0.8)
 
         # Modem handshake sounds as text
@@ -92,32 +99,34 @@ class ModemSimulator:
         ]
 
         for sound in handshake:
-            self.slow_print(sound, 0.02)
+            _slow_print(sound, 0.02)
             time.sleep(0.3)
 
         time.sleep(0.5)
-        self.print_instant("")
-        self.slow_print("CONNECT 14400/V.32bis", 0.03)
+        _print("")
+        _slow_print("CONNECT 14400/V.32bis", 0.03)
         self.connected = True
         time.sleep(0.5)
 
-    def show_login_screen(self):
+    def show_login_screen(self, print_func=None):
         """Displays the login screen"""
-        self.print_instant("\n" + "="*60)
-        self.print_instant("")
-        self.print_instant("     ███████╗ ██████╗ ██████╗     ██╗   ██╗███╗   ██╗██╗██╗  ██╗")
-        self.print_instant("     ██╔════╝██╔════╝██╔═══██╗    ██║   ██║████╗  ██║██║╚██╗██╔╝")
-        self.print_instant("     ███████╗██║     ██║   ██║    ██║   ██║██╔██╗ ██║██║ ╚███╔╝ ")
-        self.print_instant("     ╚════██║██║     ██║   ██║    ██║   ██║██║╚██╗██║██║ ██╔██╗ ")
-        self.print_instant("     ███████║╚██████╗╚██████╔╝    ╚██████╔╝██║ ╚████║██║██╔╝ ██╗")
-        self.print_instant("     ╚══════╝ ╚═════╝ ╚═════╝      ╚═════╝ ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝")
-        self.print_instant("")
-        self.print_instant("     SCO UNIX System V/386 Release 3.2")
-        self.print_instant("     Copyright (C) 1976-1995 The Santa Cruz Operation, Inc.")
-        self.print_instant("="*60)
-        self.print_instant(f"\nSystem time: {now().strftime('%b %d %H:%M:%S %Y')}")
-        self.print_instant("Last successful connection: Dec 08 23:15:42 1995")
-        self.print_instant("\n" + "-"*60)
+        _print = print_func if print_func else self.print_instant
+
+        _print("\n" + "="*60)
+        _print("")
+        _print("     ███████╗ ██████╗ ██████╗     ██╗   ██╗███╗   ██╗██╗██╗  ██╗")
+        _print("     ██╔════╝██╔════╝██╔═══██╗    ██║   ██║████╗  ██║██║╚██╗██╔╝")
+        _print("     ███████╗██║     ██║   ██║    ██║   ██║██╔██╗ ██║██║ ╚███╔╝ ")
+        _print("     ╚════██║██║     ██║   ██║    ██║   ██║██║╚██╗██║██║ ██╔██╗ ")
+        _print("     ███████║╚██████╗╚██████╔╝    ╚██████╔╝██║ ╚████║██║██╔╝ ██╗")
+        _print("     ╚══════╝ ╚═════╝ ╚═════╝      ╚═════╝ ╚═╝  ╚═══╝╚═╝╚═╝  ╚═╝")
+        _print("")
+        _print("     SCO UNIX System V/386 Release 3.2")
+        _print("     Copyright (C) 1976-1995 The Santa Cruz Operation, Inc.")
+        _print("="*60)
+        _print(f"\nSystem time: {now().strftime('%b %d %H:%M:%S %Y')}")
+        _print("Last successful connection: Dec 08 23:15:42 1995")
+        _print("\n" + "-"*60)
 
     def login(self):
         """Performs the login process"""
@@ -159,38 +168,46 @@ class ModemSimulator:
             self.disconnect()
             return False
 
-    def show_welcome_message(self):
+    def show_welcome_message(self, username=None, print_func=None):
         """Displays welcome message after login"""
-        self.print_instant("\n" + "="*60)
-        self.print_instant("  SCO UNIX System V/386 Release 3.2")
-        self.print_instant("="*60)
-        self.print_instant(f"\nLast login: {now().strftime('%a %b %d %H:%M:%S')} on tty1a")
-        self.print_instant(f"Terminal: vt100")
-        self.print_instant(f"\nYou have mail.")
-        self.print_instant("\n" + "-"*60)
-        self.print_instant("SCO UNIX System V/386 Release 3.2 (scohost)")
-        self.print_instant("-"*60 + "\n")
+        _print = print_func if print_func else self.print_instant
 
-    def logout(self):
+        _print("\n" + "="*60)
+        _print("  SCO UNIX System V/386 Release 3.2")
+        _print("="*60)
+        _print(f"\nLast login: {now().strftime('%a %b %d %H:%M:%S')} on tty1a")
+        _print(f"Terminal: vt100")
+        _print(f"\nYou have mail.")
+        _print("\n" + "-"*60)
+        _print("SCO UNIX System V/386 Release 3.2 (scohost)")
+        _print("-"*60 + "\n")
+
+    def logout(self, print_func=None):
         """Logout process"""
-        self.print_instant("\n" + "="*60)
-        self.slow_print("Closing session...", 0.03)
-        time.sleep(0.5)
-        self.slow_print(f"Goodbye, {self.username}!", 0.03)
-        self.slow_print(f"Connect time: {random.randint(5, 45)} minutes", 0.03)
-        time.sleep(0.5)
-        self.disconnect()
+        _print = print_func if print_func else self.print_instant
+        _slow_print = self.slow_print
 
-    def disconnect(self):
-        """Disconnects the modem connection"""
-        self.slow_print("\nDisconnecting...", 0.03)
+        _print("\n" + "="*60)
+        _slow_print("Closing session...", 0.03)
         time.sleep(0.5)
-        self.slow_print("+++ATH0", 0.03)
+        _slow_print(f"Goodbye, {self.username}!", 0.03)
+        _slow_print(f"Connect time: {random.randint(5, 45)} minutes", 0.03)
+        time.sleep(0.5)
+        self.disconnect(print_func=print_func)
+
+    def disconnect(self, print_func=None):
+        """Disconnects the modem connection"""
+        _print = print_func if print_func else self.print_instant
+        _slow_print = self.slow_print
+
+        _slow_print("\nDisconnecting...", 0.03)
+        time.sleep(0.5)
+        _slow_print("+++ATH0", 0.03)
         time.sleep(0.3)
-        self.slow_print("NO CARRIER", 0.03)
+        _slow_print("NO CARRIER", 0.03)
         time.sleep(0.3)
-        self.print_instant("\n" + "="*60)
-        self.print_instant("  Connection closed")
-        self.print_instant("="*60 + "\n")
+        _print("\n" + "="*60)
+        _print("  Connection closed")
+        _print("="*60 + "\n")
         self.connected = False
         self.logged_in = False

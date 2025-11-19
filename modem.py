@@ -38,11 +38,11 @@ class ModemSimulator:
         """Prints text instantly"""
         print(text)
 
-    def simulate_modem_dial(self, print_func=None):
+    def simulate_modem_dial(self, print_func=None, slow_print_func=None):
         """Simulates the modem dial-in process"""
         # Use custom print function if provided, otherwise use default
         _print = print_func if print_func else self.print_instant
-        _slow_print = self.slow_print
+        _slow_print = slow_print_func if slow_print_func else self.slow_print
 
         _print("\n" + "="*60)
         _print("     MODEM COMMUNICATIONS SIMULATOR v2.4")
@@ -182,10 +182,10 @@ class ModemSimulator:
         _print("SCO UNIX System V/386 Release 3.2 (scohost)")
         _print("-"*60 + "\n")
 
-    def logout(self, print_func=None):
+    def logout(self, print_func=None, slow_print_func=None):
         """Logout process"""
         _print = print_func if print_func else self.print_instant
-        _slow_print = self.slow_print
+        _slow_print = slow_print_func if slow_print_func else self.slow_print
 
         _print("\n" + "="*60)
         _slow_print("Closing session...", 0.03)
@@ -193,12 +193,12 @@ class ModemSimulator:
         _slow_print(f"Goodbye, {self.username}!", 0.03)
         _slow_print(f"Connect time: {random.randint(5, 45)} minutes", 0.03)
         time.sleep(0.5)
-        self.disconnect(print_func=print_func)
+        self.disconnect(print_func=print_func, slow_print_func=slow_print_func)
 
-    def disconnect(self, print_func=None):
+    def disconnect(self, print_func=None, slow_print_func=None):
         """Disconnects the modem connection"""
         _print = print_func if print_func else self.print_instant
-        _slow_print = self.slow_print
+        _slow_print = slow_print_func if slow_print_func else self.slow_print
 
         _slow_print("\nDisconnecting...", 0.03)
         time.sleep(0.5)

@@ -64,12 +64,8 @@ class WebTerminal:
         self.running = True
 
         try:
-            # Replace print function in modem simulator
-            original_print = __builtins__.print if isinstance(__builtins__, dict) else __builtins__.print
-            self.modem.slow_print = self.slow_print
-
             # Simulate modem dial
-            self.modem.simulate_modem_dial(print_func=self.custom_print)
+            self.modem.simulate_modem_dial(print_func=self.custom_print, slow_print_func=self.slow_print)
 
             # Show login screen
             self.modem.show_login_screen(print_func=self.custom_print)
@@ -102,7 +98,7 @@ class WebTerminal:
                 self.custom_print("\nToo many login failures. Connection terminated.")
 
             # Logout
-            self.modem.logout(print_func=self.custom_print)
+            self.modem.logout(print_func=self.custom_print, slow_print_func=self.slow_print)
 
         except Exception as e:
             self.custom_print(f"\nError: {str(e)}")

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCO Unix System V/386 - Modem Simulator</title>
+    <title>SCO Unix System V/386 - VT100 Terminal</title>
 
     <style>
         * {
@@ -63,68 +63,41 @@
             flex-direction: column;
             overflow: hidden;
             background-color: #000;
-        }
-
-        /* Output Area */
-        #output {
-            flex: 1;
             padding: 10px;
-            overflow-y: auto;
-            overflow-x: hidden;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-size: 14px;
-            line-height: 1.2;
         }
 
-        /* Custom scrollbar */
-        #output::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        #output::-webkit-scrollbar-track {
-            background: #1a1a1a;
-        }
-
-        #output::-webkit-scrollbar-thumb {
-            background: #00ff00;
-            border-radius: 5px;
-        }
-
-        #output::-webkit-scrollbar-thumb:hover {
-            background: #00cc00;
-        }
-
-        /* Input Area */
-        #input-container {
-            background-color: #000;
-            padding: 10px;
-            border-top: 1px solid #00ff00;
-            display: flex;
-            align-items: center;
-            flex-shrink: 0;
-        }
-
-        #input-prompt {
-            color: #00ff00;
-            margin-right: 5px;
-            font-size: 14px;
-        }
-
-        #input {
-            flex: 1;
-            background-color: #000;
-            color: #00ff00;
-            border: none;
-            outline: none;
+        /* VT100 Terminal Display */
+        #terminal-screen {
             font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
-            caret-color: #00ff00;
+            font-size: 16px;
+            line-height: 1.2;
+            white-space: pre;
+            color: #00ff00;
+            background-color: #000;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            cursor: default;
+            user-select: none;
         }
 
-        #input::selection {
+        /* Cursor styles */
+        .cursor-block {
+            display: inline-block;
             background-color: #00ff00;
             color: #000;
+            animation: blink-block 1s infinite;
+        }
+
+        .cursor-underline {
+            text-decoration: underline;
+            text-decoration-color: #00ff00;
+            text-decoration-thickness: 2px;
+        }
+
+        @keyframes blink-block {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0.3; }
         }
 
         /* Loading Screen */
@@ -172,19 +145,52 @@
             display: none !important;
         }
 
-        /* Blinking cursor effect */
-        .cursor {
-            display: inline-block;
-            width: 8px;
-            height: 14px;
-            background-color: #00ff00;
-            margin-left: 2px;
-            animation: blink 1s infinite;
-        }
+        /* ANSI color classes */
+        .ansi-black { color: #000000; }
+        .ansi-red { color: #ff0000; }
+        .ansi-green { color: #00ff00; }
+        .ansi-yellow { color: #ffff00; }
+        .ansi-blue { color: #0000ff; }
+        .ansi-magenta { color: #ff00ff; }
+        .ansi-cyan { color: #00ffff; }
+        .ansi-white { color: #ffffff; }
+        .ansi-bright-black { color: #555555; }
+        .ansi-bright-red { color: #ff5555; }
+        .ansi-bright-green { color: #55ff55; }
+        .ansi-bright-yellow { color: #ffff55; }
+        .ansi-bright-blue { color: #5555ff; }
+        .ansi-bright-magenta { color: #ff55ff; }
+        .ansi-bright-cyan { color: #55ffff; }
+        .ansi-bright-white { color: #ffffff; }
+
+        .ansi-bg-black { background-color: #000000; }
+        .ansi-bg-red { background-color: #ff0000; }
+        .ansi-bg-green { background-color: #00ff00; }
+        .ansi-bg-yellow { background-color: #ffff00; }
+        .ansi-bg-blue { background-color: #0000ff; }
+        .ansi-bg-magenta { background-color: #ff00ff; }
+        .ansi-bg-cyan { background-color: #00ffff; }
+        .ansi-bg-white { background-color: #ffffff; }
+
+        .ansi-bold { font-weight: bold; }
+        .ansi-dim { opacity: 0.5; }
+        .ansi-underline { text-decoration: underline; }
+        .ansi-blink { animation: blink 1s infinite; }
+        .ansi-reverse { filter: invert(1); }
+        .ansi-hidden { visibility: hidden; }
 
         @keyframes blink {
             0%, 49% { opacity: 1; }
             50%, 100% { opacity: 0; }
+        }
+
+        /* Hidden input for mobile keyboard support */
+        #hidden-input {
+            position: absolute;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
         }
     </style>
 </head>
@@ -193,57 +199,433 @@
     <div id="loading">
         <h2>SCO UNIX SYSTEM V/386</h2>
         <div class="spinner"></div>
-        <p>Initializing modem connection...</p>
+        <p>Initializing VT100 terminal...</p>
     </div>
 
     <!-- Header -->
     <div id="header">
-        <h1>SCO Unix System V/386 - Modem Simulator</h1>
+        <h1>SCO Unix System V/386 - VT100 Terminal Emulator</h1>
         <div id="status" class="connecting">● Connecting...</div>
     </div>
 
     <!-- Terminal -->
     <div id="terminal-container">
-        <div id="output"></div>
-        <div id="input-container">
-            <span id="input-prompt">></span>
-            <input type="text" id="input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-        </div>
+        <div id="terminal-screen" tabindex="0"></div>
+        <input type="text" id="hidden-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
     </div>
 
     <!-- Socket.IO -->
     <script src="{{ url_for('static', filename='js/socket.io.min.js') }}"></script>
 
-    <!-- ANSI to HTML converter for color support -->
-    <script src="https://cdn.jsdelivr.net/npm/ansi_up@5.2.1/ansi_up.min.js"></script>
-
     <script>
-        // Initialize ANSI to HTML converter
-        const ansi_up = new AnsiUp();
-        ansi_up.use_classes = false; // Use inline styles for better compatibility
+        /**
+         * VT100 Terminal Emulator
+         * Implements a classic VT100 terminal with ANSI escape sequence support
+         */
+        class VT100Terminal {
+            constructor(containerElement) {
+                this.container = containerElement;
+                this.cols = 80;
+                this.rows = 24;
+                this.cursorX = 0;
+                this.cursorY = 0;
+                this.savedCursorX = 0;
+                this.savedCursorY = 0;
+                this.scrollTop = 0;
+                this.scrollBottom = this.rows - 1;
 
-        // DOM elements
-        const outputEl = document.getElementById('output');
-        const inputEl = document.getElementById('input');
+                // Screen buffer: each cell contains {char, style}
+                this.buffer = [];
+                for (let i = 0; i < this.rows; i++) {
+                    this.buffer[i] = [];
+                    for (let j = 0; j < this.cols; j++) {
+                        this.buffer[i][j] = { char: ' ', style: this.defaultStyle() };
+                    }
+                }
+
+                // Current text style
+                this.currentStyle = this.defaultStyle();
+
+                // ANSI parser state
+                this.parseState = 'normal';
+                this.escapeBuffer = '';
+
+                // Cursor visibility and blinking
+                this.cursorVisible = true;
+                this.cursorBlink = true;
+
+                // Start cursor blink timer
+                this.startCursorBlink();
+
+                // Initial render
+                this.render();
+            }
+
+            defaultStyle() {
+                return {
+                    fg: 'green',
+                    bg: 'black',
+                    bold: false,
+                    dim: false,
+                    underline: false,
+                    blink: false,
+                    reverse: false,
+                    hidden: false
+                };
+            }
+
+            startCursorBlink() {
+                setInterval(() => {
+                    this.cursorBlink = !this.cursorBlink;
+                    this.render();
+                }, 530); // VT100 cursor blinks at ~1.875 Hz
+            }
+
+            /**
+             * Write data to the terminal
+             */
+            write(data) {
+                for (let i = 0; i < data.length; i++) {
+                    const char = data[i];
+
+                    if (this.parseState === 'normal') {
+                        this.handleNormalChar(char);
+                    } else if (this.parseState === 'escape') {
+                        this.handleEscapeChar(char);
+                    } else if (this.parseState === 'csi') {
+                        this.handleCSIChar(char);
+                    }
+                }
+
+                this.render();
+            }
+
+            handleNormalChar(char) {
+                const code = char.charCodeAt(0);
+
+                if (code === 27) { // ESC
+                    this.parseState = 'escape';
+                    this.escapeBuffer = '';
+                } else if (code === 8) { // Backspace
+                    if (this.cursorX > 0) {
+                        this.cursorX--;
+                    }
+                } else if (code === 9) { // Tab
+                    this.cursorX = Math.min(this.cols - 1, (Math.floor(this.cursorX / 8) + 1) * 8);
+                } else if (code === 10) { // Line Feed
+                    this.lineFeed();
+                } else if (code === 13) { // Carriage Return
+                    this.cursorX = 0;
+                } else if (code === 7) { // Bell
+                    // Beep sound (ignored in web)
+                } else if (code >= 32 && code < 127) { // Printable ASCII
+                    this.putChar(char);
+                    this.cursorX++;
+                    if (this.cursorX >= this.cols) {
+                        this.cursorX = 0;
+                        this.lineFeed();
+                    }
+                }
+            }
+
+            handleEscapeChar(char) {
+                if (char === '[') {
+                    this.parseState = 'csi';
+                    this.escapeBuffer = '';
+                } else if (char === 'M') {
+                    // Reverse line feed
+                    if (this.cursorY > this.scrollTop) {
+                        this.cursorY--;
+                    } else {
+                        this.scrollDown();
+                    }
+                    this.parseState = 'normal';
+                } else if (char === '7') {
+                    // Save cursor
+                    this.savedCursorX = this.cursorX;
+                    this.savedCursorY = this.cursorY;
+                    this.parseState = 'normal';
+                } else if (char === '8') {
+                    // Restore cursor
+                    this.cursorX = this.savedCursorX;
+                    this.cursorY = this.savedCursorY;
+                    this.parseState = 'normal';
+                } else if (char === 'c') {
+                    // Reset terminal
+                    this.reset();
+                    this.parseState = 'normal';
+                } else {
+                    this.parseState = 'normal';
+                }
+            }
+
+            handleCSIChar(char) {
+                const code = char.charCodeAt(0);
+
+                if ((code >= 48 && code <= 57) || char === ';' || char === '?') {
+                    // Parameter character
+                    this.escapeBuffer += char;
+                } else {
+                    // Command character
+                    this.executeCSI(this.escapeBuffer, char);
+                    this.parseState = 'normal';
+                }
+            }
+
+            executeCSI(params, command) {
+                const args = params.split(';').map(x => parseInt(x) || 0);
+
+                switch (command) {
+                    case 'A': // Cursor Up
+                        this.cursorY = Math.max(this.scrollTop, this.cursorY - (args[0] || 1));
+                        break;
+                    case 'B': // Cursor Down
+                        this.cursorY = Math.min(this.scrollBottom, this.cursorY + (args[0] || 1));
+                        break;
+                    case 'C': // Cursor Forward
+                        this.cursorX = Math.min(this.cols - 1, this.cursorX + (args[0] || 1));
+                        break;
+                    case 'D': // Cursor Back
+                        this.cursorX = Math.max(0, this.cursorX - (args[0] || 1));
+                        break;
+                    case 'H': // Cursor Position
+                    case 'f':
+                        this.cursorY = Math.min(this.rows - 1, Math.max(0, (args[0] || 1) - 1));
+                        this.cursorX = Math.min(this.cols - 1, Math.max(0, (args[1] || 1) - 1));
+                        break;
+                    case 'J': // Erase in Display
+                        this.eraseDisplay(args[0] || 0);
+                        break;
+                    case 'K': // Erase in Line
+                        this.eraseLine(args[0] || 0);
+                        break;
+                    case 'm': // Select Graphic Rendition
+                        this.setGraphicRendition(args);
+                        break;
+                    case 'r': // Set Scrolling Region
+                        this.scrollTop = Math.max(0, (args[0] || 1) - 1);
+                        this.scrollBottom = Math.min(this.rows - 1, (args[1] || this.rows) - 1);
+                        break;
+                    case 's': // Save cursor position
+                        this.savedCursorX = this.cursorX;
+                        this.savedCursorY = this.cursorY;
+                        break;
+                    case 'u': // Restore cursor position
+                        this.cursorX = this.savedCursorX;
+                        this.cursorY = this.savedCursorY;
+                        break;
+                    case 'l': // Reset Mode
+                        if (params === '?25') {
+                            this.cursorVisible = false;
+                        }
+                        break;
+                    case 'h': // Set Mode
+                        if (params === '?25') {
+                            this.cursorVisible = true;
+                        }
+                        break;
+                }
+            }
+
+            setGraphicRendition(args) {
+                if (args.length === 0 || args[0] === 0) {
+                    this.currentStyle = this.defaultStyle();
+                    return;
+                }
+
+                for (let i = 0; i < args.length; i++) {
+                    const arg = args[i];
+
+                    if (arg === 0) {
+                        this.currentStyle = this.defaultStyle();
+                    } else if (arg === 1) {
+                        this.currentStyle.bold = true;
+                    } else if (arg === 2) {
+                        this.currentStyle.dim = true;
+                    } else if (arg === 4) {
+                        this.currentStyle.underline = true;
+                    } else if (arg === 5) {
+                        this.currentStyle.blink = true;
+                    } else if (arg === 7) {
+                        this.currentStyle.reverse = true;
+                    } else if (arg === 8) {
+                        this.currentStyle.hidden = true;
+                    } else if (arg === 22) {
+                        this.currentStyle.bold = false;
+                        this.currentStyle.dim = false;
+                    } else if (arg === 24) {
+                        this.currentStyle.underline = false;
+                    } else if (arg === 25) {
+                        this.currentStyle.blink = false;
+                    } else if (arg === 27) {
+                        this.currentStyle.reverse = false;
+                    } else if (arg === 28) {
+                        this.currentStyle.hidden = false;
+                    } else if (arg >= 30 && arg <= 37) {
+                        // Foreground colors
+                        const colors = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white'];
+                        this.currentStyle.fg = colors[arg - 30];
+                    } else if (arg >= 40 && arg <= 47) {
+                        // Background colors
+                        const colors = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white'];
+                        this.currentStyle.bg = colors[arg - 40];
+                    } else if (arg >= 90 && arg <= 97) {
+                        // Bright foreground colors
+                        const colors = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white'];
+                        this.currentStyle.fg = 'bright-' + colors[arg - 90];
+                    } else if (arg >= 100 && arg <= 107) {
+                        // Bright background colors
+                        const colors = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white'];
+                        this.currentStyle.bg = 'bright-' + colors[arg - 100];
+                    }
+                }
+            }
+
+            eraseDisplay(mode) {
+                if (mode === 0) { // Erase from cursor to end
+                    this.eraseLine(0);
+                    for (let y = this.cursorY + 1; y < this.rows; y++) {
+                        for (let x = 0; x < this.cols; x++) {
+                            this.buffer[y][x] = { char: ' ', style: this.defaultStyle() };
+                        }
+                    }
+                } else if (mode === 1) { // Erase from start to cursor
+                    this.eraseLine(1);
+                    for (let y = 0; y < this.cursorY; y++) {
+                        for (let x = 0; x < this.cols; x++) {
+                            this.buffer[y][x] = { char: ' ', style: this.defaultStyle() };
+                        }
+                    }
+                } else if (mode === 2) { // Erase entire display
+                    for (let y = 0; y < this.rows; y++) {
+                        for (let x = 0; x < this.cols; x++) {
+                            this.buffer[y][x] = { char: ' ', style: this.defaultStyle() };
+                        }
+                    }
+                }
+            }
+
+            eraseLine(mode) {
+                if (mode === 0) { // Erase from cursor to end of line
+                    for (let x = this.cursorX; x < this.cols; x++) {
+                        this.buffer[this.cursorY][x] = { char: ' ', style: this.defaultStyle() };
+                    }
+                } else if (mode === 1) { // Erase from start of line to cursor
+                    for (let x = 0; x <= this.cursorX; x++) {
+                        this.buffer[this.cursorY][x] = { char: ' ', style: this.defaultStyle() };
+                    }
+                } else if (mode === 2) { // Erase entire line
+                    for (let x = 0; x < this.cols; x++) {
+                        this.buffer[this.cursorY][x] = { char: ' ', style: this.defaultStyle() };
+                    }
+                }
+            }
+
+            putChar(char) {
+                this.buffer[this.cursorY][this.cursorX] = {
+                    char: char,
+                    style: Object.assign({}, this.currentStyle)
+                };
+            }
+
+            lineFeed() {
+                if (this.cursorY >= this.scrollBottom) {
+                    this.scrollUp();
+                } else {
+                    this.cursorY++;
+                }
+            }
+
+            scrollUp() {
+                // Move lines up
+                for (let y = this.scrollTop; y < this.scrollBottom; y++) {
+                    this.buffer[y] = this.buffer[y + 1];
+                }
+                // Clear bottom line
+                this.buffer[this.scrollBottom] = [];
+                for (let x = 0; x < this.cols; x++) {
+                    this.buffer[this.scrollBottom][x] = { char: ' ', style: this.defaultStyle() };
+                }
+            }
+
+            scrollDown() {
+                // Move lines down
+                for (let y = this.scrollBottom; y > this.scrollTop; y--) {
+                    this.buffer[y] = this.buffer[y - 1];
+                }
+                // Clear top line
+                this.buffer[this.scrollTop] = [];
+                for (let x = 0; x < this.cols; x++) {
+                    this.buffer[this.scrollTop][x] = { char: ' ', style: this.defaultStyle() };
+                }
+            }
+
+            reset() {
+                this.cursorX = 0;
+                this.cursorY = 0;
+                this.scrollTop = 0;
+                this.scrollBottom = this.rows - 1;
+                this.currentStyle = this.defaultStyle();
+                this.eraseDisplay(2);
+            }
+
+            /**
+             * Render the terminal to the DOM
+             */
+            render() {
+                let html = '';
+
+                for (let y = 0; y < this.rows; y++) {
+                    for (let x = 0; x < this.cols; x++) {
+                        const cell = this.buffer[y][x];
+                        const isCursor = (x === this.cursorX && y === this.cursorY && this.cursorVisible && this.cursorBlink);
+
+                        let char = cell.char;
+                        let classes = [];
+                        let style = cell.style;
+
+                        // Apply text styles
+                        if (style.fg !== 'green') classes.push('ansi-' + style.fg);
+                        if (style.bg !== 'black') classes.push('ansi-bg-' + style.bg);
+                        if (style.bold) classes.push('ansi-bold');
+                        if (style.dim) classes.push('ansi-dim');
+                        if (style.underline) classes.push('ansi-underline');
+                        if (style.blink) classes.push('ansi-blink');
+                        if (style.reverse) classes.push('ansi-reverse');
+                        if (style.hidden) classes.push('ansi-hidden');
+
+                        if (isCursor) {
+                            classes.push('cursor-block');
+                        }
+
+                        if (classes.length > 0) {
+                            html += '<span class="' + classes.join(' ') + '">' + (char === ' ' && isCursor ? ' ' : char) + '</span>';
+                        } else {
+                            html += char;
+                        }
+                    }
+                    if (y < this.rows - 1) {
+                        html += '\n';
+                    }
+                }
+
+                this.container.innerHTML = html;
+            }
+
+            resize(cols, rows) {
+                // TODO: Implement terminal resizing
+                this.cols = cols;
+                this.rows = rows;
+            }
+        }
+
+        // Initialize terminal
+        const terminalScreen = document.getElementById('terminal-screen');
         const statusEl = document.getElementById('status');
         const loadingEl = document.getElementById('loading');
+        const hiddenInput = document.getElementById('hidden-input');
 
-        // Auto-scroll to bottom
-        function scrollToBottom() {
-            outputEl.scrollTop = outputEl.scrollHeight;
-        }
-
-        // Append output with ANSI color support
-        function appendOutput(text) {
-            const html = ansi_up.ansi_to_html(text);
-            outputEl.innerHTML += html;
-            scrollToBottom();
-        }
-
-        // Clear output
-        function clearOutput() {
-            outputEl.innerHTML = '';
-        }
+        const terminal = new VT100Terminal(terminalScreen);
 
         // Update status
         function setStatus(status, text) {
@@ -251,7 +633,7 @@
             statusEl.textContent = text;
         }
 
-        // Socket.IO connection with WebSocket support
+        // Socket.IO connection
         const socket = io({
             transports: ['websocket', 'polling'],
             upgrade: true
@@ -266,8 +648,7 @@
         socket.on('disconnect', () => {
             console.log('Disconnected from server');
             setStatus('disconnected', '○ Disconnected');
-            appendOutput('\n\n=== Connection lost. Please refresh the page. ===\n');
-            inputEl.disabled = true;
+            terminal.write('\r\n\r\n=== Connection lost. Please refresh the page. ===\r\n');
         });
 
         socket.on('connected', (data) => {
@@ -277,43 +658,78 @@
         // Output handling
         let firstOutput = true;
         socket.on('output', (data) => {
-            appendOutput(data.data);
+            terminal.write(data.data);
 
             // Hide loading screen on first output
             if (firstOutput) {
                 firstOutput = false;
                 setTimeout(() => {
                     loadingEl.classList.add('hidden');
-                    inputEl.focus();
+                    terminalScreen.focus();
                 }, 100);
             }
         });
 
-        // Input handling
-        inputEl.addEventListener('keydown', (e) => {
+        // Keyboard input handling
+        terminalScreen.addEventListener('keydown', (e) => {
+            let data = null;
+
+            // Prevent default for most keys
+            e.preventDefault();
+
             if (e.key === 'Enter') {
-                e.preventDefault();
-                const command = inputEl.value;
+                data = '\r';
+            } else if (e.key === 'Backspace') {
+                data = '\x7f'; // DEL character
+            } else if (e.key === 'Tab') {
+                data = '\t';
+            } else if (e.key === 'Escape') {
+                data = '\x1b';
+            } else if (e.key === 'ArrowUp') {
+                data = '\x1b[A';
+            } else if (e.key === 'ArrowDown') {
+                data = '\x1b[B';
+            } else if (e.key === 'ArrowRight') {
+                data = '\x1b[C';
+            } else if (e.key === 'ArrowLeft') {
+                data = '\x1b[D';
+            } else if (e.key === 'Home') {
+                data = '\x1b[H';
+            } else if (e.key === 'End') {
+                data = '\x1b[F';
+            } else if (e.key === 'Delete') {
+                data = '\x1b[3~';
+            } else if (e.key === 'Insert') {
+                data = '\x1b[2~';
+            } else if (e.key === 'PageUp') {
+                data = '\x1b[5~';
+            } else if (e.key === 'PageDown') {
+                data = '\x1b[6~';
+            } else if (e.ctrlKey && e.key === 'c') {
+                data = '\x03'; // Ctrl+C
+            } else if (e.ctrlKey && e.key === 'd') {
+                data = '\x04'; // Ctrl+D
+            } else if (e.ctrlKey && e.key === 'z') {
+                data = '\x1a'; // Ctrl+Z
+            } else if (e.ctrlKey && e.key === 'l') {
+                data = '\x0c'; // Ctrl+L
+            } else if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
+                data = e.key;
+            }
 
-                // Echo the input to output
-                appendOutput(inputEl.value + '\n');
-
-                // Send to server
-                socket.emit('input', { data: command });
-
-                // Clear input
-                inputEl.value = '';
+            if (data) {
+                socket.emit('input', { data: data });
             }
         });
 
-        // Keep input focused
+        // Focus terminal on click
         document.addEventListener('click', () => {
-            inputEl.focus();
+            terminalScreen.focus();
         });
 
-        // Focus input on load
+        // Focus terminal on load
         window.addEventListener('load', () => {
-            inputEl.focus();
+            terminalScreen.focus();
         });
 
         // Prevent context menu
@@ -321,9 +737,9 @@
             e.preventDefault();
         });
 
-        console.log('SCO Unix System V/386 Modem Simulator');
-        console.log('Minimal Custom Web Terminal');
-        console.log('Default login: root / root');
+        console.log('VT100 Terminal Emulator initialized');
+        console.log('80x24 character display');
+        console.log('Full ANSI escape sequence support');
     </script>
 </body>
 </html>

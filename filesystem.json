@@ -623,6 +623,264 @@
               "group": "mail",
               "content": "# .profile for dxmail\nPATH=/home/dxmail/bin:/bin:/usr/bin\nexport PATH\nPS1='dxmail$ '\n",
               "mtime": "1995-09-15 11:25:00"
+            },
+            {
+              "name": "pp",
+              "is_dir": true,
+              "permissions": "rwxr-xr-x",
+              "owner": "dxmail",
+              "group": "mail",
+              "mtime": "1995-10-20 14:30:00",
+              "children": [
+                {
+                  "name": "bin",
+                  "is_dir": true,
+                  "permissions": "rwxr-xr-x",
+                  "owner": "dxmail",
+                  "group": "mail",
+                  "mtime": "1995-10-20 14:31:00",
+                  "children": [
+                    {
+                      "name": "submit",
+                      "is_dir": false,
+                      "permissions": "rwxr-xr-x",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "size": 45056,
+                      "mtime": "1995-10-20 14:31:15"
+                    },
+                    {
+                      "name": "qmgr",
+                      "is_dir": false,
+                      "permissions": "rwxr-xr-x",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "size": 73728,
+                      "mtime": "1995-10-20 14:31:20"
+                    },
+                    {
+                      "name": "x400out",
+                      "is_dir": false,
+                      "permissions": "rwxr-xr-x",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "size": 98304,
+                      "mtime": "1995-10-20 14:31:25"
+                    },
+                    {
+                      "name": "x400in",
+                      "is_dir": false,
+                      "permissions": "rwxr-xr-x",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "size": 94208,
+                      "mtime": "1995-10-20 14:31:30"
+                    }
+                  ]
+                },
+                {
+                  "name": "etc",
+                  "is_dir": true,
+                  "permissions": "rwxr-xr-x",
+                  "owner": "dxmail",
+                  "group": "mail",
+                  "mtime": "1995-10-20 14:32:00",
+                  "children": [
+                    {
+                      "name": "pp.conf",
+                      "is_dir": false,
+                      "permissions": "rw-r--r--",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "content": "# PP X.400 MTA Configuration\n# Version 6.0\n\n# Local MTA name\nmta_name: dxmail.example.com\n\n# X.400 O/R Address\nor_name: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/\n\n# Queue processing interval (seconds)\nqueue_interval: 300\n\n# Maximum message size (bytes)\nmax_message_size: 10485760\n\n# Routing mode\nrouting: table\n",
+                      "mtime": "1995-11-05 10:15:00"
+                    },
+                    {
+                      "name": "auth.db",
+                      "is_dir": false,
+                      "permissions": "rw-------",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "size": 8192,
+                      "mtime": "1995-11-05 10:16:00"
+                    }
+                  ]
+                },
+                {
+                  "name": "lib",
+                  "is_dir": true,
+                  "permissions": "rwxr-xr-x",
+                  "owner": "dxmail",
+                  "group": "mail",
+                  "mtime": "1995-10-20 14:33:00",
+                  "children": [
+                    {
+                      "name": "libpp.so.1",
+                      "is_dir": false,
+                      "permissions": "rwxr-xr-x",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "size": 262144,
+                      "mtime": "1995-10-20 14:33:15"
+                    },
+                    {
+                      "name": "libx400.so.1",
+                      "is_dir": false,
+                      "permissions": "rwxr-xr-x",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "size": 327680,
+                      "mtime": "1995-10-20 14:33:20"
+                    }
+                  ]
+                },
+                {
+                  "name": "queue",
+                  "is_dir": true,
+                  "permissions": "rwxr-xr-x",
+                  "owner": "dxmail",
+                  "group": "mail",
+                  "mtime": "1995-11-28 09:15:00",
+                  "children": [
+                    {
+                      "name": "in",
+                      "is_dir": true,
+                      "permissions": "rwxr-xr-x",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "mtime": "1995-11-28 09:15:10"
+                    },
+                    {
+                      "name": "out",
+                      "is_dir": true,
+                      "permissions": "rwxr-xr-x",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "mtime": "1995-11-28 09:15:15"
+                    },
+                    {
+                      "name": "defer",
+                      "is_dir": true,
+                      "permissions": "rwxr-xr-x",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "mtime": "1995-11-28 09:15:20",
+                      "children": [
+                        {
+                          "name": "msg001.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 2048,
+                          "mtime": "1995-12-01 14:22:00"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "bad",
+                      "is_dir": true,
+                      "permissions": "rwxr-xr-x",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "mtime": "1995-11-28 09:15:25"
+                    }
+                  ]
+                },
+                {
+                  "name": "logs",
+                  "is_dir": true,
+                  "permissions": "rwxr-xr-x",
+                  "owner": "dxmail",
+                  "group": "mail",
+                  "mtime": "1995-12-05 08:00:00",
+                  "children": [
+                    {
+                      "name": "mta.log",
+                      "is_dir": false,
+                      "permissions": "rw-r--r--",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "content": "1995-12-05 08:00:15 [INFO] PP X.400 MTA started\n1995-12-05 08:05:22 [INFO] Queue manager initialized\n1995-12-05 08:10:33 [INFO] Processing queue: 0 messages pending\n1995-12-05 09:15:44 [WARN] Connection timeout to remote MTA /C=DE/ADMD=DBP/\n1995-12-05 10:20:11 [INFO] Message submitted: ID=19951205102011.AA001\n1995-12-05 10:25:18 [INFO] Message delivered: ID=19951205102011.AA001\n",
+                      "mtime": "1995-12-05 10:25:18"
+                    },
+                    {
+                      "name": "queue.log",
+                      "is_dir": false,
+                      "permissions": "rw-r--r--",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "content": "1995-12-05 08:10:33 Queue scan started\n1995-12-05 08:10:33 Queue scan completed: 0 messages\n1995-12-05 10:20:11 Message queued: msg001.x400\n1995-12-05 10:25:18 Message dequeued: msg001.x400 (delivered)\n",
+                      "mtime": "1995-12-05 10:25:18"
+                    }
+                  ]
+                },
+                {
+                  "name": "tables",
+                  "is_dir": true,
+                  "permissions": "rwxr-xr-x",
+                  "owner": "dxmail",
+                  "group": "mail",
+                  "mtime": "1995-10-25 11:00:00",
+                  "children": [
+                    {
+                      "name": "routing.tbl",
+                      "is_dir": false,
+                      "permissions": "rw-r--r--",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "content": "# X.400 Routing Table\n# Format: OR-Address-Pattern -> Next-Hop\n\n/C=DE/ADMD=DBP/*          -> relay.dbp.de\n/C=US/ADMD=*/*            -> x400-gw.example.com\n/C=GB/ADMD=BT/*           -> bt-relay.uk\n*                         -> default-relay.example.com\n",
+                      "mtime": "1995-11-05 11:30:00"
+                    },
+                    {
+                      "name": "aliases.tbl",
+                      "is_dir": false,
+                      "permissions": "rw-r--r--",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "content": "# X.400 Address Aliases\n# Format: Alias -> Full-OR-Address\n\npostmaster: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=ADMIN/S=Postmaster/\nroot: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=ADMIN/S=Root/\nadmin: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=ADMIN/S=Administrator/\n",
+                      "mtime": "1995-10-25 11:35:00"
+                    }
+                  ]
+                },
+                {
+                  "name": "tools",
+                  "is_dir": true,
+                  "permissions": "rwxr-xr-x",
+                  "owner": "dxmail",
+                  "group": "mail",
+                  "mtime": "1995-10-20 14:35:00",
+                  "children": [
+                    {
+                      "name": "ppshow",
+                      "is_dir": false,
+                      "permissions": "rwxr-xr-x",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "size": 24576,
+                      "mtime": "1995-10-20 14:35:15"
+                    },
+                    {
+                      "name": "ppqueue",
+                      "is_dir": false,
+                      "permissions": "rwxr-xr-x",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "size": 28672,
+                      "mtime": "1995-10-20 14:35:20"
+                    },
+                    {
+                      "name": "ppstat",
+                      "is_dir": false,
+                      "permissions": "rwxr-xr-x",
+                      "owner": "dxmail",
+                      "group": "mail",
+                      "size": 32768,
+                      "mtime": "1995-10-20 14:35:25"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },

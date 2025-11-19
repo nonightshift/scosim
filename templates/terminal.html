@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SCO Unix System V/386 - Modem Simulator</title>
 
-    <!-- xterm.js CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/xterm.css') }}" />
-
     <style>
         * {
             margin: 0;
@@ -17,13 +14,15 @@
 
         body {
             background-color: #000;
-            font-family: 'Courier New', monospace;
-            overflow: hidden;
+            font-family: 'Courier New', Courier, monospace;
+            color: #00ff00;
             height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
+        /* Header */
         #header {
             background-color: #1a1a1a;
             color: #00ff00;
@@ -33,88 +32,102 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
         }
 
         #header h1 {
             font-size: 16px;
             font-weight: bold;
-            color: #00ff00;
         }
 
         #status {
             font-size: 12px;
+        }
+
+        #status.connected {
+            color: #00ff00;
+        }
+
+        #status.disconnected {
+            color: #ff0000;
+        }
+
+        #status.connecting {
             color: #ffff00;
         }
 
+        /* Terminal Container */
         #terminal-container {
             flex: 1;
-            padding: 10px;
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
-            position: relative;
-            min-height: 400px;
-            z-index: 1;
             background-color: #000;
         }
 
-        #terminal {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            z-index: 2;
+        /* Output Area */
+        #output {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 14px;
+            line-height: 1.2;
         }
 
-        .xterm {
-            height: 100%;
-            padding: 5px;
-        }
-
-        .xterm-viewport {
-            background-color: #000 !important;
-        }
-
-        .xterm-screen {
-            background-color: #000 !important;
-        }
-
-        /* Ensure DOM renderer rows are visible */
-        .xterm-rows {
-            display: block !important;
-            visibility: visible !important;
-            position: relative !important;
-            z-index: 10 !important;
-        }
-
-        .xterm-rows > div {
-            display: block !important;
-            visibility: visible !important;
-            color: #00ff00 !important;
-            overflow: visible !important;
-        }
-
-        .xterm-rows > div > span {
-            color: #00ff00 !important;
-            visibility: visible !important;
-        }
-
-        /* Custom scrollbar for webkit browsers */
-        .xterm-viewport::-webkit-scrollbar {
+        /* Custom scrollbar */
+        #output::-webkit-scrollbar {
             width: 10px;
         }
 
-        .xterm-viewport::-webkit-scrollbar-track {
+        #output::-webkit-scrollbar-track {
             background: #1a1a1a;
         }
 
-        .xterm-viewport::-webkit-scrollbar-thumb {
+        #output::-webkit-scrollbar-thumb {
             background: #00ff00;
             border-radius: 5px;
         }
 
-        .xterm-viewport::-webkit-scrollbar-thumb:hover {
+        #output::-webkit-scrollbar-thumb:hover {
             background: #00cc00;
         }
 
-        /* Loading screen */
+        /* Input Area */
+        #input-container {
+            background-color: #000;
+            padding: 10px;
+            border-top: 1px solid #00ff00;
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        #input-prompt {
+            color: #00ff00;
+            margin-right: 5px;
+            font-size: 14px;
+        }
+
+        #input {
+            flex: 1;
+            background-color: #000;
+            color: #00ff00;
+            border: none;
+            outline: none;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            caret-color: #00ff00;
+        }
+
+        #input::selection {
+            background-color: #00ff00;
+            color: #000;
+        }
+
+        /* Loading Screen */
         #loading {
             position: fixed;
             top: 0;
@@ -133,6 +146,7 @@
         #loading h2 {
             font-size: 24px;
             margin-bottom: 20px;
+            text-align: center;
         }
 
         #loading .spinner {
@@ -144,13 +158,33 @@
             animation: spin 1s linear infinite;
         }
 
+        #loading p {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
         .hidden {
-            display: none;
+            display: none !important;
+        }
+
+        /* Blinking cursor effect */
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 14px;
+            background-color: #00ff00;
+            margin-left: 2px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
         }
     </style>
 </head>
@@ -159,303 +193,136 @@
     <div id="loading">
         <h2>SCO UNIX SYSTEM V/386</h2>
         <div class="spinner"></div>
-        <p style="margin-top: 20px;">Initializing modem connection...</p>
+        <p>Initializing modem connection...</p>
     </div>
 
     <!-- Header -->
     <div id="header">
-        <h1>📟 SCO Unix System V/386 - Modem Simulator (Web Terminal)</h1>
-        <div id="status">● Connected</div>
+        <h1>SCO Unix System V/386 - Modem Simulator</h1>
+        <div id="status" class="connecting">● Connecting...</div>
     </div>
 
-    <!-- Terminal Container -->
+    <!-- Terminal -->
     <div id="terminal-container">
-        <div id="terminal"></div>
+        <div id="output"></div>
+        <div id="input-container">
+            <span id="input-prompt">></span>
+            <input type="text" id="input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        </div>
     </div>
 
     <!-- Socket.IO -->
     <script src="{{ url_for('static', filename='js/socket.io.min.js') }}"></script>
 
-    <!-- xterm.js -->
-    <script src="{{ url_for('static', filename='js/xterm.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/xterm-addon-fit.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/xterm-addon-web-links.js') }}"></script>
+    <!-- ANSI to HTML converter for color support -->
+    <script src="https://cdn.jsdelivr.net/npm/ansi_up@5.2.1/ansi_up.min.js"></script>
 
     <script>
-        // Verify xterm.js is loaded
-        console.log('[INIT] xterm.js loaded:', typeof Terminal !== 'undefined');
-        console.log('[INIT] FitAddon loaded:', typeof FitAddon !== 'undefined');
-        console.log('[INIT] WebLinksAddon loaded:', typeof WebLinksAddon !== 'undefined');
+        // Initialize ANSI to HTML converter
+        const ansi_up = new AnsiUp();
+        ansi_up.use_classes = false; // Use inline styles for better compatibility
 
-        // Initialize xterm.js
-        const term = new Terminal({
-            cursorBlink: true,
-            cursorStyle: 'block',
-            fontSize: 14,
-            fontFamily: '"Courier New", Courier, monospace',
-            theme: {
-                background: '#000000',
-                foreground: '#00ff00',
-                cursor: '#00ff00',
-                cursorAccent: '#000000',
-                black: '#000000',
-                red: '#ff0000',
-                green: '#00ff00',
-                yellow: '#ffff00',
-                blue: '#0000ff',
-                magenta: '#ff00ff',
-                cyan: '#00ffff',
-                white: '#ffffff',
-                brightBlack: '#666666',
-                brightRed: '#ff6666',
-                brightGreen: '#66ff66',
-                brightYellow: '#ffff66',
-                brightBlue: '#6666ff',
-                brightMagenta: '#ff66ff',
-                brightCyan: '#66ffff',
-                brightWhite: '#ffffff'
-            },
-            cols: 80,
-            rows: 24,
-            scrollback: 1000
-        });
+        // DOM elements
+        const outputEl = document.getElementById('output');
+        const inputEl = document.getElementById('input');
+        const statusEl = document.getElementById('status');
+        const loadingEl = document.getElementById('loading');
 
-        // Add fit addon
-        const fitAddon = new FitAddon.FitAddon();
-        term.loadAddon(fitAddon);
-
-        // Add web links addon
-        const webLinksAddon = new WebLinksAddon.WebLinksAddon();
-        term.loadAddon(webLinksAddon);
-
-        // Open terminal
-        const terminalElement = document.getElementById('terminal');
-        console.log('[INIT] Terminal element:', terminalElement);
-        console.log('[INIT] Terminal element dimensions:', terminalElement ? `${terminalElement.clientWidth}x${terminalElement.clientHeight}` : 'N/A');
-
-        try {
-            term.open(terminalElement);
-            console.log('[INIT] Terminal.open() called successfully');
-
-            // Debug: Check what elements were created
-            setTimeout(() => {
-                console.log('[INIT] Terminal element HTML:', terminalElement.innerHTML.substring(0, 500));
-                console.log('[INIT] Terminal element children:', terminalElement.children);
-                const allElements = terminalElement.querySelectorAll('*');
-                console.log('[INIT] All child elements count:', allElements.length);
-                console.log('[INIT] Element types:', Array.from(allElements).map(el => el.tagName).join(', '));
-
-                // Debug DOM renderer rows
-                const rows = terminalElement.querySelectorAll('.xterm-rows');
-                console.log('[DOM] .xterm-rows elements:', rows.length);
-                if (rows.length > 0) {
-                    const firstRow = rows[0];
-                    console.log('[DOM] First .xterm-rows element:', firstRow);
-                    console.log('[DOM] .xterm-rows innerHTML:', firstRow.innerHTML.substring(0, 300));
-                    const rowStyle = window.getComputedStyle(firstRow);
-                    const rowRect = firstRow.getBoundingClientRect();
-                    console.log('[DOM] .xterm-rows display:', rowStyle.display);
-                    console.log('[DOM] .xterm-rows visibility:', rowStyle.visibility);
-                    console.log('[DOM] .xterm-rows color:', rowStyle.color);
-                    console.log('[DOM] .xterm-rows fontSize:', rowStyle.fontSize);
-                    console.log('[DOM] .xterm-rows position:', rowStyle.position);
-                    console.log('[DOM] .xterm-rows top:', rowStyle.top);
-                    console.log('[DOM] .xterm-rows left:', rowStyle.left);
-                    console.log('[DOM] .xterm-rows zIndex:', rowStyle.zIndex);
-                    console.log('[DOM] .xterm-rows boundingRect:', {
-                        top: rowRect.top,
-                        left: rowRect.left,
-                        width: rowRect.width,
-                        height: rowRect.height,
-                        bottom: rowRect.bottom,
-                        right: rowRect.right
-                    });
-                    console.log('[DOM] Viewport height:', window.innerHeight);
-                    console.log('[DOM] Is .xterm-rows in viewport?', rowRect.top >= 0 && rowRect.top < window.innerHeight);
-                }
-            }, 100);
-        } catch (e) {
-            console.error('[INIT] Error opening terminal:', e);
+        // Auto-scroll to bottom
+        function scrollToBottom() {
+            outputEl.scrollTop = outputEl.scrollHeight;
         }
 
-        // DON'T fit immediately - terminal is behind loading screen
-        // fitAddon.fit();
-        console.log('[INIT] Terminal opened, size:', term.cols, 'x', term.rows);
+        // Append output with ANSI color support
+        function appendOutput(text) {
+            const html = ansi_up.ansi_to_html(text);
+            outputEl.innerHTML += html;
+            scrollToBottom();
+        }
 
-        // Write a test message to verify terminal is working
-        term.write('Terminal initialized successfully\r\n');
-        console.log('[INIT] Test message written to terminal');
+        // Clear output
+        function clearOutput() {
+            outputEl.innerHTML = '';
+        }
 
-        // Debug: Check if xterm canvas was created
-        setTimeout(() => {
-            const canvas = terminalElement.querySelector('canvas');
-            const xtermElement = terminalElement.querySelector('.xterm');
-            const xtermScreen = terminalElement.querySelector('.xterm-screen');
+        // Update status
+        function setStatus(status, text) {
+            statusEl.className = status;
+            statusEl.textContent = text;
+        }
 
-            console.log('[DEBUG] Canvas element:', canvas);
-            console.log('[DEBUG] Canvas dimensions:', canvas ? `${canvas.width}x${canvas.height}` : 'N/A');
-            console.log('[DEBUG] .xterm element:', xtermElement);
-            console.log('[DEBUG] .xterm-screen element:', xtermScreen);
-
-            if (xtermElement) {
-                const computedStyle = window.getComputedStyle(xtermElement);
-                console.log('[DEBUG] .xterm computed height:', computedStyle.height);
-                console.log('[DEBUG] .xterm computed width:', computedStyle.width);
-                console.log('[DEBUG] .xterm computed display:', computedStyle.display);
-            }
-
-            if (canvas) {
-                const canvasStyle = window.getComputedStyle(canvas);
-                console.log('[DEBUG] Canvas computed height:', canvasStyle.height);
-                console.log('[DEBUG] Canvas computed width:', canvasStyle.width);
-                console.log('[DEBUG] Canvas visibility:', canvasStyle.visibility);
-                console.log('[DEBUG] Canvas opacity:', canvasStyle.opacity);
-            }
-        }, 500);
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            fitAddon.fit();
-            socket.emit('resize', {
-                cols: term.cols,
-                rows: term.rows
-            });
-        });
-
-        // Input buffer
-        let currentLine = '';
-
-        // Socket.IO connection
-        // Use polling only to avoid WebSocket WSGI errors
+        // Socket.IO connection with WebSocket support
         const socket = io({
-            transports: ['polling'],
-            upgrade: false
+            transports: ['websocket', 'polling'],
+            upgrade: true
         });
 
-        console.log('[INIT] Socket.IO initialized (polling mode)');
-
+        // Connection events
         socket.on('connect', () => {
-            console.log('[SOCKET] Connected to server');
-            document.getElementById('status').innerHTML = '● Connected';
-            document.getElementById('status').style.color = '#00ff00';
-
-            // Hide loading screen after receiving first output
-            console.log('[SOCKET] Connection established, waiting for output...');
+            console.log('Connected to server');
+            setStatus('connected', '● Connected');
         });
 
         socket.on('disconnect', () => {
-            console.log('[SOCKET] Disconnected from server');
-            document.getElementById('status').innerHTML = '○ Disconnected';
-            document.getElementById('status').style.color = '#ff0000';
-            term.write('\r\n\r\n=== Connection lost. Please refresh the page. ===\r\n');
+            console.log('Disconnected from server');
+            setStatus('disconnected', '○ Disconnected');
+            appendOutput('\n\n=== Connection lost. Please refresh the page. ===\n');
+            inputEl.disabled = true;
         });
 
         socket.on('connected', (data) => {
-            console.log('[SOCKET] Server response:', data.data);
+            console.log('Server response:', data.data);
         });
 
-        let outputReceived = false;
+        // Output handling
+        let firstOutput = true;
         socket.on('output', (data) => {
-            console.log('[OUTPUT] Received:', data.data.substring(0, 50));
-            console.log('[OUTPUT] Full data length:', data.data.length);
-            console.log('[OUTPUT] Terminal cols:', term.cols, 'rows:', term.rows);
-
-            // Write to terminal
-            try {
-                term.write(data.data);
-                console.log('[OUTPUT] Successfully wrote to terminal');
-            } catch (e) {
-                console.error('[OUTPUT] Error writing to terminal:', e);
-            }
+            appendOutput(data.data);
 
             // Hide loading screen on first output
-            if (!outputReceived) {
-                outputReceived = true;
-                console.log('[UI] First output received, hiding loading screen');
+            if (firstOutput) {
+                firstOutput = false;
                 setTimeout(() => {
-                    document.getElementById('loading').classList.add('hidden');
-                    console.log('[UI] Loading screen hidden');
-                    // Force terminal refresh
-                    setTimeout(() => {
-                        fitAddon.fit();
-                        term.focus();
-                        term.scrollToBottom();
-                        term.refresh(0, term.rows - 1);
-                        console.log('[UI] Terminal refitted, focused, and refreshed');
-                        console.log('[UI] Terminal buffer line count:', term.buffer.active.length);
-                    }, 200);
+                    loadingEl.classList.add('hidden');
+                    inputEl.focus();
                 }, 100);
             }
         });
 
-        // Handle terminal input
-        term.onData((data) => {
-            const code = data.charCodeAt(0);
+        // Input handling
+        inputEl.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const command = inputEl.value;
 
-            // Handle Enter key (CR or LF)
-            if (code === 13 || code === 10) {
-                term.write('\r\n');
-                console.log('[INPUT] Sending line:', currentLine);
-                socket.emit('input', { data: currentLine });
-                currentLine = '';
-            }
-            // Handle Backspace
-            else if (code === 127 || code === 8) {
-                if (currentLine.length > 0) {
-                    currentLine = currentLine.slice(0, -1);
-                    term.write('\b \b');
-                }
-            }
-            // Handle Ctrl+C
-            else if (code === 3) {
-                term.write('^C\r\n');
-                socket.emit('input', { data: '' });
-                currentLine = '';
-            }
-            // Handle Ctrl+D
-            else if (code === 4) {
-                term.write('^D\r\n');
-                socket.emit('input', { data: 'exit' });
-                currentLine = '';
-            }
-            // Handle Tab
-            else if (code === 9) {
-                // Tab completion could be implemented here
-                term.write('    ');
-            }
-            // Regular characters
-            else if (code >= 32 && code < 127) {
-                currentLine += data;
-                term.write(data);
+                // Echo the input to output
+                appendOutput(inputEl.value + '\n');
+
+                // Send to server
+                socket.emit('input', { data: command });
+
+                // Clear input
+                inputEl.value = '';
             }
         });
 
-        // Focus terminal on load
-        term.focus();
+        // Keep input focused
+        document.addEventListener('click', () => {
+            inputEl.focus();
+        });
 
-        // Force initial render after a short delay to ensure everything is loaded
-        setTimeout(() => {
-            console.log('[INIT] Forcing initial terminal render');
-            term.clear();
-            term.write('===Terminal Ready===\r\n');
-            fitAddon.fit();
-            term.refresh(0, term.rows - 1);
-            console.log('[INIT] Initial render complete, size:', term.cols, 'x', term.rows);
-        }, 1000);
+        // Focus input on load
+        window.addEventListener('load', () => {
+            inputEl.focus();
+        });
 
         // Prevent context menu
-        document.getElementById('terminal').addEventListener('contextmenu', (e) => {
+        document.addEventListener('contextmenu', (e) => {
             e.preventDefault();
         });
 
-        // Keep terminal focused
-        document.addEventListener('click', () => {
-            term.focus();
-        });
-
-        // Show info message
         console.log('SCO Unix System V/386 Modem Simulator');
-        console.log('Web Terminal Interface using xterm.js');
+        console.log('Minimal Custom Web Terminal');
         console.log('Default login: root / root');
     </script>
 </body>

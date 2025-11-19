@@ -69,7 +69,7 @@ oder mit dem Startskript:
 
 ### Option 2: Web-Terminal (Browser-Zugriff)
 
-**NEU!** Der Simulator kann jetzt über einen Webbrowser mit xterm.js verwendet werden:
+**NEU!** Der Simulator kann jetzt über einen Webbrowser mit einem minimalen Custom-Terminal verwendet werden:
 
 #### Installation der Web-Abhängigkeiten
 
@@ -103,8 +103,10 @@ python3 web_server.py
 - **Im Netzwerk**: http://[IP-Adresse]:5000
 
 Das Web-Terminal bietet:
-- ✅ Vollständige xterm.js Terminal-Emulation im Browser
-- ✅ Authentisches grünes Terminal-Design (wie echte VT100-Terminals)
+- ✅ Minimales Custom-Terminal ohne externe Dependencies
+- ✅ Authentisches grünes Retro-Terminal-Design
+- ✅ ANSI-Farb-Unterstützung für farbige Ausgaben
+- ✅ WebSocket-Verbindung für schnelle Kommunikation
 - ✅ Alle UNIX-Befehle wie in der Terminal-Version
 - ✅ Zugriff von überall im Netzwerk
 - ✅ Keine Installation auf Client-Seite erforderlich
@@ -323,7 +325,7 @@ export LANG=de_DE.UTF-8
 
 Mögliche Erweiterungen für die Zukunft:
 
-- [x] **Web-Terminal mit xterm.js** (✅ Implementiert!)
+- [x] **Web-Terminal mit Custom HTML/CSS/JS** (✅ Implementiert!)
 - [x] **Multi-User Support mit Netzwerk-Kommunikation** (✅ Implementiert via Web-Server!)
 - [ ] Mehr UNIX-Befehle (vi, grep, find, etc.)
 - [ ] Dateisystem-Simulation mit echten Verzeichnisoperationen

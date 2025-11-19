@@ -260,6 +260,11 @@ export TERM
         if target == self.root:
             return False, "rm: cannot remove '/': Permission denied"
 
+        # Protect /tmp directory from deletion
+        full_path = target.get_full_path()
+        if full_path == "/tmp":
+            return False, "rm: cannot remove '/tmp': Permission denied"
+
         # Check if it's a directory
         if target.is_dir:
             # Check if directory is empty
@@ -437,3 +442,17 @@ export TERM
                 matches.append(full_path)
 
         return matches
+
+    def reset(self):
+        """Reset the filesystem to its initial state"""
+        # Create a new root directory
+        self.root = VNode("/", is_dir=True, parent=None)
+        self.current_dir = self.root
+
+        # Reload filesystem structure from JSON
+        if os.path.exists(self.fs_config_path):
+            self._load_from_json()
+        else:
+            self._initialize_standard_structure()
+
+        return True, None

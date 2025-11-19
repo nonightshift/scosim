@@ -103,6 +103,14 @@ def execute_rm(vfs, args, print_func):
 
     # Remove each matched file
     for path in expanded_paths:
+        # Check if trying to delete /unix kernel
+        target = vfs.resolve_path(path)
+        if target is not None:
+            full_path = target.get_full_path()
+            if full_path == "/unix":
+                print_func("Out of memory.")
+                continue
+
         success, error = vfs.remove(path, recursive, force)
         if not success and not force:
             print_func(error)

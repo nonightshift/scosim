@@ -72,3 +72,12 @@ def execute_alias(aliases, args, print_func):
                 print_func(f"{alias_def}='{aliases[alias_def]}'")
             else:
                 print_func(f"alias: {alias_def}: not found")
+
+
+def execute_reset(vfs, args, print_func):
+    """Execute reset command - restore filesystem to initial state"""
+    success, error = vfs.reset()
+    if success:
+        print_func("System reset to initial state.")
+    else:
+        print_func(f"reset: {error}")

@@ -125,6 +125,13 @@
       "function": "execute_alias",
       "description": "Create command alias",
       "usage": "alias [name[=value]]"
+    },
+    {
+      "name": "reset",
+      "module": "commands.system",
+      "function": "execute_reset",
+      "description": "Reset system to initial state",
+      "usage": "reset"
     }
   ]
 }

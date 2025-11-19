@@ -51,11 +51,18 @@ def execute_tar(vfs, args, print_func):
             else:
                 # Create tar archive in memory
                 tar_content = _create_tar(target)
-                # Store as virtual file
-                tar_node = VNode(tarfile_name, is_dir=False)
+
+                # Store as virtual file with proper attributes
+                tar_node = VNode(
+                    tarfile_name,
+                    is_dir=False,
+                    parent=vfs.current_dir,
+                    permissions="rw-r--r--"
+                )
                 tar_node.content = tar_content
                 tar_node.size = len(tar_content)
                 vfs.current_dir.add_child(tar_node)
+
                 # Print verbose output if requested
                 if verbose:
                     _print_tar_contents(target, print_func, "a")

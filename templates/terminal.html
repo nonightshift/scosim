@@ -197,7 +197,10 @@
             },
             cols: 80,
             rows: 24,
-            scrollback: 1000
+            scrollback: 1000,
+            // Force canvas renderer
+            rendererType: 'canvas',
+            allowTransparency: false
         });
 
         // Add fit addon
@@ -213,13 +216,40 @@
         console.log('[INIT] Terminal element:', terminalElement);
         term.open(terminalElement);
 
-        // Initial fit
-        fitAddon.fit();
+        // DON'T fit immediately - terminal is behind loading screen
+        // fitAddon.fit();
         console.log('[INIT] Terminal opened, size:', term.cols, 'x', term.rows);
 
         // Write a test message to verify terminal is working
         term.write('Terminal initialized successfully\r\n');
         console.log('[INIT] Test message written to terminal');
+
+        // Debug: Check if xterm canvas was created
+        setTimeout(() => {
+            const canvas = terminalElement.querySelector('canvas');
+            const xtermElement = terminalElement.querySelector('.xterm');
+            const xtermScreen = terminalElement.querySelector('.xterm-screen');
+
+            console.log('[DEBUG] Canvas element:', canvas);
+            console.log('[DEBUG] Canvas dimensions:', canvas ? `${canvas.width}x${canvas.height}` : 'N/A');
+            console.log('[DEBUG] .xterm element:', xtermElement);
+            console.log('[DEBUG] .xterm-screen element:', xtermScreen);
+
+            if (xtermElement) {
+                const computedStyle = window.getComputedStyle(xtermElement);
+                console.log('[DEBUG] .xterm computed height:', computedStyle.height);
+                console.log('[DEBUG] .xterm computed width:', computedStyle.width);
+                console.log('[DEBUG] .xterm computed display:', computedStyle.display);
+            }
+
+            if (canvas) {
+                const canvasStyle = window.getComputedStyle(canvas);
+                console.log('[DEBUG] Canvas computed height:', canvasStyle.height);
+                console.log('[DEBUG] Canvas computed width:', canvasStyle.width);
+                console.log('[DEBUG] Canvas visibility:', canvasStyle.visibility);
+                console.log('[DEBUG] Canvas opacity:', canvasStyle.opacity);
+            }
+        }, 500);
 
         // Handle window resize
         window.addEventListener('resize', () => {
@@ -284,9 +314,14 @@
                     document.getElementById('loading').classList.add('hidden');
                     console.log('[UI] Loading screen hidden');
                     // Force terminal refresh
-                    fitAddon.fit();
-                    term.focus();
-                    console.log('[UI] Terminal refitted and focused');
+                    setTimeout(() => {
+                        fitAddon.fit();
+                        term.focus();
+                        term.scrollToBottom();
+                        term.refresh(0, term.rows - 1);
+                        console.log('[UI] Terminal refitted, focused, and refreshed');
+                        console.log('[UI] Terminal buffer line count:', term.buffer.active.length);
+                    }, 200);
                 }, 100);
             }
         });
@@ -335,6 +370,16 @@
 
         // Focus terminal on load
         term.focus();
+
+        // Force initial render after a short delay to ensure everything is loaded
+        setTimeout(() => {
+            console.log('[INIT] Forcing initial terminal render');
+            term.clear();
+            term.write('===Terminal Ready===\r\n');
+            fitAddon.fit();
+            term.refresh(0, term.rows - 1);
+            console.log('[INIT] Initial render complete, size:', term.cols, 'x', term.rows);
+        }, 1000);
 
         // Prevent context menu
         document.getElementById('terminal').addEventListener('contextmenu', (e) => {

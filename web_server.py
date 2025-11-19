@@ -33,16 +33,19 @@ sessions = {}
 
 
 class WebTerminal:
-    """Handles terminal I/O for web-based terminal"""
+    """Handles terminal I/O for web-based terminal with VT100 support"""
 
     def __init__(self, sid):
         self.sid = sid
         self.input_queue = queue.Queue()
+        self.char_queue = queue.Queue()  # Queue for individual characters
+        self.input_buffer = ""  # Buffer for line-based input
         self.vfs = VirtualFileSystem()
         self.modem = ModemSimulator()
         self.shell = None
         self.username = None
         self.running = False
+        self.echo_enabled = True  # Control local echo
         logging.info(f"WebTerminal created for session {sid}")
 
     def send_output(self, text):
@@ -52,26 +55,67 @@ class WebTerminal:
         except Exception as e:
             logging.error(f"[{self.sid[:8]}] Failed to send output: {e}", exc_info=True)
 
+    def process_char(self, char):
+        """Process a single character input"""
+        if char == '\r' or char == '\n':
+            # Enter pressed - complete the line
+            line = self.input_buffer
+            self.input_buffer = ""
+            if self.echo_enabled:
+                self.send_output('\r\n')
+            self.input_queue.put(line)
+        elif char == '\x7f' or char == '\x08':
+            # Backspace/Delete
+            if len(self.input_buffer) > 0:
+                self.input_buffer = self.input_buffer[:-1]
+                if self.echo_enabled:
+                    # Move cursor back, erase character, move cursor back again
+                    self.send_output('\x08 \x08')
+        elif char == '\x03':
+            # Ctrl+C
+            self.input_buffer = ""
+            if self.echo_enabled:
+                self.send_output('^C\r\n')
+            self.input_queue.put('')
+        elif char == '\x04':
+            # Ctrl+D
+            if len(self.input_buffer) == 0:
+                self.input_queue.put('exit')
+            else:
+                # Send partial line
+                line = self.input_buffer
+                self.input_buffer = ""
+                self.input_queue.put(line)
+        elif len(char) == 1 and ord(char) >= 32 and ord(char) < 127:
+            # Printable character
+            self.input_buffer += char
+            if self.echo_enabled:
+                self.send_output(char)
+
     def read_input(self, prompt=''):
-        """Read input from web terminal"""
+        """Read input from web terminal (line-based)"""
         if prompt:
             self.send_output(prompt)
         # Wait for input from the queue
         return self.input_queue.get()
 
     def custom_print(self, text='', end='\n'):
-        """Custom print function for web terminal"""
+        """Custom print function for VT100 terminal"""
+        # Convert \n to \r\n for proper VT100 terminal behavior
         output = str(text) + end
+        output = output.replace('\n', '\r\n')
         self.send_output(output)
 
     def slow_print(self, text, delay=0.03):
-        """Print text with a slight delay for web terminal"""
+        """Print text with a slight delay for VT100 terminal"""
         # For web, send the whole text at once for better performance
-        # The custom terminal can handle the full text rendering efficiently
+        # The VT100 terminal can handle the full text rendering efficiently
         import time
         if delay > 0:
             time.sleep(delay * 0.5)  # Small delay before sending
-        self.send_output(text)
+        # Convert \n to \r\n for proper VT100 terminal behavior
+        output = text.replace('\n', '\r\n')
+        self.send_output(output)
 
     def run_simulator(self):
         """Run the complete modem simulation"""
@@ -94,12 +138,16 @@ class WebTerminal:
 
             while attempt < max_attempts:
                 logging.info(f"[{self.sid[:8]}] Waiting for login (attempt {attempt + 1})")
-                self.send_output("\nlogin: ")
+                self.send_output("\r\nlogin: ")
                 username = self.input_queue.get().strip()
                 logging.info(f"[{self.sid[:8]}] Received username: {username}")
 
+                # Disable echo for password
+                self.echo_enabled = False
                 self.send_output("Password: ")
                 password = self.input_queue.get().strip()
+                # Re-enable echo after password
+                self.echo_enabled = True
                 logging.info(f"[{self.sid[:8]}] Received password")
 
                 if username in self.modem.users and self.modem.users[username] == password:
@@ -206,12 +254,14 @@ def handle_disconnect():
 
 @socketio.on('input')
 def handle_input(data):
-    """Handle input from the web terminal"""
+    """Handle input from the web terminal (character-by-character)"""
     sid = request.sid
     if sid in sessions:
         terminal = sessions[sid]
         input_text = data.get('data', '')
-        terminal.input_queue.put(input_text)
+        # Process each character
+        for char in input_text:
+            terminal.process_char(char)
 
 
 @socketio.on('resize')

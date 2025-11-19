@@ -76,6 +76,18 @@
             background-color: #000 !important;
         }
 
+        /* Ensure DOM renderer rows are visible */
+        .xterm-rows {
+            display: block !important;
+            visibility: visible !important;
+        }
+
+        .xterm-rows > div {
+            display: block !important;
+            visibility: visible !important;
+            color: #00ff00 !important;
+        }
+
         /* Custom scrollbar for webkit browsers */
         .xterm-viewport::-webkit-scrollbar {
             width: 10px;
@@ -224,6 +236,20 @@
                 const allElements = terminalElement.querySelectorAll('*');
                 console.log('[INIT] All child elements count:', allElements.length);
                 console.log('[INIT] Element types:', Array.from(allElements).map(el => el.tagName).join(', '));
+
+                // Debug DOM renderer rows
+                const rows = terminalElement.querySelectorAll('.xterm-rows');
+                console.log('[DOM] .xterm-rows elements:', rows.length);
+                if (rows.length > 0) {
+                    const firstRow = rows[0];
+                    console.log('[DOM] First .xterm-rows element:', firstRow);
+                    console.log('[DOM] .xterm-rows innerHTML:', firstRow.innerHTML.substring(0, 300));
+                    const rowStyle = window.getComputedStyle(firstRow);
+                    console.log('[DOM] .xterm-rows display:', rowStyle.display);
+                    console.log('[DOM] .xterm-rows visibility:', rowStyle.visibility);
+                    console.log('[DOM] .xterm-rows color:', rowStyle.color);
+                    console.log('[DOM] .xterm-rows fontSize:', rowStyle.fontSize);
+                }
             }, 100);
         } catch (e) {
             console.error('[INIT] Error opening terminal:', e);

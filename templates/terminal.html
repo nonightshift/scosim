@@ -214,14 +214,13 @@
         let currentLine = '';
 
         // Socket.IO connection
-        // Use WebSocket only, with fallback to polling
+        // Use polling only to avoid WebSocket WSGI errors
         const socket = io({
-            transports: ['websocket', 'polling'],
-            upgrade: true,
-            rememberUpgrade: true
+            transports: ['polling'],
+            upgrade: false
         });
 
-        console.log('[INIT] Socket.IO initialized');
+        console.log('[INIT] Socket.IO initialized (polling mode)');
 
         socket.on('connect', () => {
             console.log('[SOCKET] Connected to server');

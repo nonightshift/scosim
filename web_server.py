@@ -23,8 +23,11 @@ logging.basicConfig(
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'sco-unix-simulator-secret-key'
-# Use async_mode='threading' for better compatibility
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading', logger=True, engineio_logger=True)
+# Disable WebSocket, use polling only to avoid WSGI errors
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading',
+                   logger=True, engineio_logger=True,
+                   ping_timeout=60, ping_interval=25,
+                   transports=['polling'])
 
 # Store session data per session ID
 sessions = {}

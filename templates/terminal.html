@@ -197,10 +197,7 @@
             },
             cols: 80,
             rows: 24,
-            scrollback: 1000,
-            // Force canvas renderer
-            rendererType: 'canvas',
-            allowTransparency: false
+            scrollback: 1000
         });
 
         // Add fit addon
@@ -214,7 +211,23 @@
         // Open terminal
         const terminalElement = document.getElementById('terminal');
         console.log('[INIT] Terminal element:', terminalElement);
-        term.open(terminalElement);
+        console.log('[INIT] Terminal element dimensions:', terminalElement ? `${terminalElement.clientWidth}x${terminalElement.clientHeight}` : 'N/A');
+
+        try {
+            term.open(terminalElement);
+            console.log('[INIT] Terminal.open() called successfully');
+
+            // Debug: Check what elements were created
+            setTimeout(() => {
+                console.log('[INIT] Terminal element HTML:', terminalElement.innerHTML.substring(0, 500));
+                console.log('[INIT] Terminal element children:', terminalElement.children);
+                const allElements = terminalElement.querySelectorAll('*');
+                console.log('[INIT] All child elements count:', allElements.length);
+                console.log('[INIT] Element types:', Array.from(allElements).map(el => el.tagName).join(', '));
+            }, 100);
+        } catch (e) {
+            console.error('[INIT] Error opening terminal:', e);
+        }
 
         // DON'T fit immediately - terminal is behind loading screen
         // fitAddon.fit();

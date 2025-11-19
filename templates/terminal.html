@@ -80,12 +80,20 @@
         .xterm-rows {
             display: block !important;
             visibility: visible !important;
+            position: relative !important;
+            z-index: 10 !important;
         }
 
         .xterm-rows > div {
             display: block !important;
             visibility: visible !important;
             color: #00ff00 !important;
+            overflow: visible !important;
+        }
+
+        .xterm-rows > div > span {
+            color: #00ff00 !important;
+            visibility: visible !important;
         }
 
         /* Custom scrollbar for webkit browsers */
@@ -245,10 +253,25 @@
                     console.log('[DOM] First .xterm-rows element:', firstRow);
                     console.log('[DOM] .xterm-rows innerHTML:', firstRow.innerHTML.substring(0, 300));
                     const rowStyle = window.getComputedStyle(firstRow);
+                    const rowRect = firstRow.getBoundingClientRect();
                     console.log('[DOM] .xterm-rows display:', rowStyle.display);
                     console.log('[DOM] .xterm-rows visibility:', rowStyle.visibility);
                     console.log('[DOM] .xterm-rows color:', rowStyle.color);
                     console.log('[DOM] .xterm-rows fontSize:', rowStyle.fontSize);
+                    console.log('[DOM] .xterm-rows position:', rowStyle.position);
+                    console.log('[DOM] .xterm-rows top:', rowStyle.top);
+                    console.log('[DOM] .xterm-rows left:', rowStyle.left);
+                    console.log('[DOM] .xterm-rows zIndex:', rowStyle.zIndex);
+                    console.log('[DOM] .xterm-rows boundingRect:', {
+                        top: rowRect.top,
+                        left: rowRect.left,
+                        width: rowRect.width,
+                        height: rowRect.height,
+                        bottom: rowRect.bottom,
+                        right: rowRect.right
+                    });
+                    console.log('[DOM] Viewport height:', window.innerHeight);
+                    console.log('[DOM] Is .xterm-rows in viewport?', rowRect.top >= 0 && rowRect.top < window.innerHeight);
                 }
             }, 100);
         } catch (e) {

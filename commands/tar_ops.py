@@ -52,16 +52,29 @@ def execute_tar(vfs, args, print_func):
                 # Create tar archive in memory
                 tar_content = _create_tar(target)
 
+                # Parse tarfile path to get parent directory and filename
+                if "/" in tarfile_name:
+                    parent_path = tarfile_name.rsplit("/", 1)[0]
+                    filename = tarfile_name.rsplit("/", 1)[1]
+                    parent = vfs.resolve_path(parent_path) if parent_path else vfs.current_dir
+                else:
+                    filename = tarfile_name
+                    parent = vfs.current_dir
+
+                if parent is None or not parent.is_dir:
+                    print_func(f"tar: {tarfile_name}: Cannot create file in non-existent directory")
+                    return
+
                 # Store as virtual file with proper attributes
                 tar_node = VNode(
-                    tarfile_name,
+                    filename,
                     is_dir=False,
-                    parent=vfs.current_dir,
+                    parent=parent,
                     permissions="rw-r--r--"
                 )
                 tar_node.content = tar_content
                 tar_node.size = len(tar_content)
-                vfs.current_dir.add_child(tar_node)
+                parent.add_child(tar_node)
 
                 # Print verbose output if requested
                 if verbose:
@@ -109,7 +122,13 @@ def _add_to_tar(tar, node, arcname):
         tar.addfile(info)
         # Add children
         for child_name, child_node in node.children.items():
-            child_arcname = f"{arcname}/{child_name}"
+            # Avoid double slashes when arcname is "/"
+            if arcname == "/":
+                child_arcname = child_name
+            elif arcname.endswith("/"):
+                child_arcname = f"{arcname}{child_name}"
+            else:
+                child_arcname = f"{arcname}/{child_name}"
             _add_to_tar(tar, child_node, child_arcname)
     else:
         info.type = tarfile.REGTYPE
@@ -121,7 +140,16 @@ def _add_to_tar(tar, node, arcname):
 
 def _print_tar_contents(node, print_func, prefix="a", path=""):
     """Print tar archive contents in verbose mode"""
-    current_path = f"{path}/{node.name}" if path else node.name
+    # Avoid double slashes when constructing paths
+    if not path:
+        current_path = node.name
+    elif path == "/":
+        current_path = node.name
+    elif path.endswith("/"):
+        current_path = f"{path}{node.name}"
+    else:
+        current_path = f"{path}/{node.name}"
+
     print_func(f"{prefix} {current_path}")
 
     if node.is_dir:

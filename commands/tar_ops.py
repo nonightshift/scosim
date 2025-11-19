@@ -15,6 +15,11 @@ def execute_tar(vfs, args, print_func):
         print_func("Usage: tar [cvf|xvf] file [directory]")
         return
 
+    # Handle tar's special syntax: flags can be specified without dash
+    # e.g., "tar cvf archive.tar dir" instead of "tar -cvf archive.tar dir"
+    if args and not args[0].startswith('-') and ('c' in args[0] or 'x' in args[0]):
+        args = ['-' + args[0]] + args[1:]
+
     # Parse arguments using unified parser
     parsed = parse_unix_args(args)
 

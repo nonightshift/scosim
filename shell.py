@@ -215,6 +215,11 @@ class Shell:
             else:
                 print_func(f"{cmd}: not found")
 
+        # Check if /unix file exists, print "Out of memory" if not
+        unix_file = self.vfs.resolve_path("/unix")
+        if unix_file is None:
+            print_func("Out of memory")
+
         return True
 
     def _show_history(self, args, print_func=None):

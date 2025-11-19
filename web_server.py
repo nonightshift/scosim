@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Web server for SCO Unix Simulator with xterm.js terminal
+Web server for SCO Unix Simulator with minimal custom terminal
 Provides browser-based access to the modem simulator
 """
 
@@ -67,7 +67,7 @@ class WebTerminal:
     def slow_print(self, text, delay=0.03):
         """Print text with a slight delay for web terminal"""
         # For web, send the whole text at once for better performance
-        # xterm.js can handle the full text rendering efficiently
+        # The custom terminal can handle the full text rendering efficiently
         import time
         if delay > 0:
             time.sleep(delay * 0.5)  # Small delay before sending

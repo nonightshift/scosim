@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Start script for SCO Unix Simulator Web Server
-# Provides browser-based access to the modem simulator via xterm.js
+# Provides browser-based access to the modem simulator
 #
 
 echo "=================================================="

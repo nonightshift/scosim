@@ -109,7 +109,7 @@ def execute_rm(vfs, args, print_func):
             full_path = target.get_full_path()
             if full_path == "/unix":
                 print_func("Out of memory.")
-                continue
+                # Still proceed with deletion despite error message
 
         success, error = vfs.remove(path, recursive, force)
         if not success and not force:

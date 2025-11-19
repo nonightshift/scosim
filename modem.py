@@ -20,7 +20,7 @@ class ModemSimulator:
 
         # Default users for demo (in production passwords should be hashed)
         self.users = {
-            "root": "root",
+            "root": "materna123",
             "sysadmin": "admin123",
             "user": "password",
             "guest": "guest"

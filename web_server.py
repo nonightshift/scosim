@@ -69,13 +69,13 @@ class WebTerminal:
         self.send_output(output)
 
     def slow_print(self, text, delay=0.03):
-        """Print text character by character (faster for web)"""
-        # For web, we'll send the whole text at once but slightly delayed
+        """Print text with a slight delay for web terminal"""
+        # For web, send the whole text at once for better performance
+        # xterm.js can handle the full text rendering efficiently
         import time
-        for char in text:
-            self.send_output(char)
-            if delay > 0:
-                time.sleep(delay * 0.1)  # Reduce delay for better web experience
+        if delay > 0:
+            time.sleep(delay * 0.5)  # Small delay before sending
+        self.send_output(text)
 
     def run_simulator(self):
         """Run the complete modem simulation"""

@@ -214,7 +214,14 @@
         let currentLine = '';
 
         // Socket.IO connection
-        const socket = io();
+        // Use WebSocket only, with fallback to polling
+        const socket = io({
+            transports: ['websocket', 'polling'],
+            upgrade: true,
+            rememberUpgrade: true
+        });
+
+        console.log('[INIT] Socket.IO initialized');
 
         socket.on('connect', () => {
             console.log('[SOCKET] Connected to server');

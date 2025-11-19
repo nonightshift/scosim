@@ -23,7 +23,8 @@ logging.basicConfig(
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'sco-unix-simulator-secret-key'
-socketio = SocketIO(app, cors_allowed_origins="*")
+# Use async_mode='threading' for better compatibility
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading', logger=True, engineio_logger=True)
 
 # Store session data per session ID
 sessions = {}
@@ -46,7 +47,9 @@ class WebTerminal:
         """Send output to the web terminal"""
         logging.debug(f"[{self.sid[:8]}] Sending output: {repr(text[:50])}")
         try:
-            socketio.emit('output', {'data': text}, room=self.sid, namespace='/')
+            # Use broadcast instead of room to ensure delivery
+            socketio.emit('output', {'data': text}, to=self.sid)
+            logging.debug(f"[{self.sid[:8]}] Output emitted successfully")
         except Exception as e:
             logging.error(f"[{self.sid[:8]}] Failed to send output: {e}", exc_info=True)
 
@@ -168,6 +171,7 @@ def handle_connect():
     """Handle new WebSocket connection"""
     sid = request.sid
     logging.info(f"New connection: {sid}")
+    logging.info(f"Request namespace: {request.namespace}")
 
     # Create new terminal session
     terminal = WebTerminal(sid)
@@ -175,15 +179,23 @@ def handle_connect():
 
     # Send immediate test message
     emit('connected', {'data': 'Connected to SCO Unix Simulator'})
+    logging.info(f"Sent 'connected' event to {sid}")
 
     # Send test output to verify connection works
     emit('output', {'data': 'TEST: Socket.IO connection established\r\n'})
-    logging.info(f"Test message sent to {sid}")
+    logging.info(f"Sent test output to {sid}")
+
+    # Delay the start of the simulator to ensure the connection is fully established
+    def delayed_start():
+        import time
+        time.sleep(1)  # Wait 1 second for WebSocket upgrade to complete
+        logging.info(f"Starting simulator task for {sid} after delay")
+        terminal.run_simulator()
 
     # Use socketio.start_background_task for proper threading with Flask-SocketIO
-    logging.info(f"Starting simulator task for {sid}")
-    socketio.start_background_task(terminal.run_simulator)
-    logging.info(f"Simulator task started for {sid}")
+    logging.info(f"Scheduling simulator task for {sid}")
+    socketio.start_background_task(delayed_start)
+    logging.info(f"Simulator task scheduled for {sid}")
 
 
 @socketio.on('disconnect')

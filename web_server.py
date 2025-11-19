@@ -17,17 +17,16 @@ from vfs import VirtualFileSystem
 
 # Configure logging
 logging.basicConfig(
-    level=logging.DEBUG,
-    format='[%(asctime)s] %(levelname)s in %(module)s: %(message)s'
+    level=logging.INFO,
+    format='[%(asctime)s] %(levelname)s: %(message)s'
 )
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'sco-unix-simulator-secret-key'
-# Disable WebSocket, use polling only to avoid WSGI errors
+# Enable WebSocket with fallback to polling
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading',
-                   logger=True, engineio_logger=True,
-                   ping_timeout=60, ping_interval=25,
-                   transports=['polling'])
+                   logger=False, engineio_logger=False,
+                   ping_timeout=60, ping_interval=25)
 
 # Store session data per session ID
 sessions = {}
@@ -48,11 +47,8 @@ class WebTerminal:
 
     def send_output(self, text):
         """Send output to the web terminal"""
-        logging.debug(f"[{self.sid[:8]}] Sending output: {repr(text[:50])}")
         try:
-            # Use broadcast instead of room to ensure delivery
             socketio.emit('output', {'data': text}, to=self.sid)
-            logging.debug(f"[{self.sid[:8]}] Output emitted successfully")
         except Exception as e:
             logging.error(f"[{self.sid[:8]}] Failed to send output: {e}", exc_info=True)
 
@@ -180,24 +176,20 @@ def handle_connect():
     terminal = WebTerminal(sid)
     sessions[sid] = terminal
 
-    # Send immediate test message
+    # Send connection confirmation
     emit('connected', {'data': 'Connected to SCO Unix Simulator'})
     logging.info(f"Sent 'connected' event to {sid}")
 
-    # Send test output to verify connection works
-    emit('output', {'data': 'TEST: Socket.IO connection established\r\n'})
-    logging.info(f"Sent test output to {sid}")
-
-    # Delay the start of the simulator to ensure the connection is fully established
-    def delayed_start():
+    # Start simulator in background
+    def start_simulator():
         import time
-        time.sleep(1)  # Wait 1 second for WebSocket upgrade to complete
-        logging.info(f"Starting simulator task for {sid} after delay")
+        time.sleep(0.1)  # Small delay to ensure connection is ready
+        logging.info(f"Starting simulator task for {sid}")
         terminal.run_simulator()
 
     # Use socketio.start_background_task for proper threading with Flask-SocketIO
     logging.info(f"Scheduling simulator task for {sid}")
-    socketio.start_background_task(delayed_start)
+    socketio.start_background_task(start_simulator)
     logging.info(f"Simulator task scheduled for {sid}")
 
 
@@ -219,7 +211,6 @@ def handle_input(data):
     if sid in sessions:
         terminal = sessions[sid]
         input_text = data.get('data', '')
-        logging.debug(f"[{sid[:8]}] Received input: {repr(input_text)}")
         terminal.input_queue.put(input_text)
 
 

@@ -6,6 +6,7 @@ Implements a virtual filesystem for the SCO UNIX simulator
 import json
 import os
 from datetime import datetime
+from fnmatch import fnmatch
 from system_time import now
 
 
@@ -399,3 +400,40 @@ export TERM
             parent.add_child(new_file)
 
         return True, None
+
+    def glob_match(self, pattern):
+        """
+        Match files using glob patterns (e.g., *.txt, file?.c, test*)
+        Returns a list of full paths that match the pattern
+        """
+        matches = []
+
+        # Check if pattern contains wildcards
+        if '*' not in pattern and '?' not in pattern and '[' not in pattern:
+            # No wildcards, just return the pattern as-is
+            return [pattern]
+
+        # Split pattern into directory and filename parts
+        if "/" in pattern:
+            # Pattern contains directory path
+            last_slash = pattern.rfind("/")
+            dir_path = pattern[:last_slash] if last_slash > 0 else "/"
+            file_pattern = pattern[last_slash + 1:]
+
+            # Resolve the directory
+            target_dir = self.resolve_path(dir_path)
+            if target_dir is None or not target_dir.is_dir:
+                return []
+        else:
+            # Pattern is just a filename in current directory
+            target_dir = self.current_dir
+            file_pattern = pattern
+
+        # Match files in the target directory
+        for name, node in target_dir.children.items():
+            if fnmatch(name, file_pattern):
+                # Build full path
+                full_path = node.get_full_path()
+                matches.append(full_path)
+
+        return matches

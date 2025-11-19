@@ -86,7 +86,23 @@ def execute_rm(vfs, args, print_func):
         print_func("rm: missing operand")
         return
 
+    # Expand glob patterns for each path
+    expanded_paths = []
     for path in paths:
+        matched = vfs.glob_match(path)
+        if matched:
+            expanded_paths.extend(matched)
+        else:
+            # No matches found - add original path (will produce error unless -f is used)
+            expanded_paths.append(path)
+
+    # If no files matched any pattern and not using force, show error
+    if not expanded_paths and not force:
+        print_func("rm: no matches found")
+        return
+
+    # Remove each matched file
+    for path in expanded_paths:
         success, error = vfs.remove(path, recursive, force)
         if not success and not force:
             print_func(error)

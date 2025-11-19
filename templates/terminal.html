@@ -217,29 +217,38 @@
         const socket = io();
 
         socket.on('connect', () => {
-            console.log('Connected to server');
+            console.log('[SOCKET] Connected to server');
             document.getElementById('status').innerHTML = '● Connected';
             document.getElementById('status').style.color = '#00ff00';
 
-            // Hide loading screen
-            setTimeout(() => {
-                document.getElementById('loading').classList.add('hidden');
-            }, 500);
+            // Hide loading screen after receiving first output
+            console.log('[SOCKET] Connection established, waiting for output...');
         });
 
         socket.on('disconnect', () => {
-            console.log('Disconnected from server');
+            console.log('[SOCKET] Disconnected from server');
             document.getElementById('status').innerHTML = '○ Disconnected';
             document.getElementById('status').style.color = '#ff0000';
             term.write('\r\n\r\n=== Connection lost. Please refresh the page. ===\r\n');
         });
 
         socket.on('connected', (data) => {
-            console.log(data.data);
+            console.log('[SOCKET] Server response:', data.data);
         });
 
+        let outputReceived = false;
         socket.on('output', (data) => {
+            console.log('[OUTPUT] Received:', data.data.substring(0, 50));
             term.write(data.data);
+
+            // Hide loading screen on first output
+            if (!outputReceived) {
+                outputReceived = true;
+                console.log('[UI] First output received, hiding loading screen');
+                setTimeout(() => {
+                    document.getElementById('loading').classList.add('hidden');
+                }, 100);
+            }
         });
 
         // Handle terminal input
@@ -249,6 +258,7 @@
             // Handle Enter key (CR or LF)
             if (code === 13 || code === 10) {
                 term.write('\r\n');
+                console.log('[INPUT] Sending line:', currentLine);
                 socket.emit('input', { data: currentLine });
                 currentLine = '';
             }

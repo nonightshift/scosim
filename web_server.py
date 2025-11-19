@@ -9,10 +9,17 @@ from flask_socketio import SocketIO, emit
 import threading
 import queue
 import sys
+import logging
 from io import StringIO
 from modem import ModemSimulator
 from shell import Shell
 from vfs import VirtualFileSystem
+
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='[%(asctime)s] %(levelname)s in %(module)s: %(message)s'
+)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'sco-unix-simulator-secret-key'
@@ -33,10 +40,15 @@ class WebTerminal:
         self.shell = None
         self.username = None
         self.running = False
+        logging.info(f"WebTerminal created for session {sid}")
 
     def send_output(self, text):
         """Send output to the web terminal"""
-        socketio.emit('output', {'data': text}, room=self.sid)
+        logging.debug(f"[{self.sid[:8]}] Sending output: {repr(text[:50])}")
+        try:
+            socketio.emit('output', {'data': text}, room=self.sid, namespace='/')
+        except Exception as e:
+            logging.error(f"[{self.sid[:8]}] Failed to send output: {e}", exc_info=True)
 
     def read_input(self, prompt=''):
         """Read input from web terminal"""
@@ -61,13 +73,17 @@ class WebTerminal:
 
     def run_simulator(self):
         """Run the complete modem simulation"""
+        logging.info(f"[{self.sid[:8]}] Starting simulator")
         self.running = True
 
         try:
             # Simulate modem dial
+            logging.info(f"[{self.sid[:8]}] Starting modem dial simulation")
             self.modem.simulate_modem_dial(print_func=self.custom_print, slow_print_func=self.slow_print)
+            logging.info(f"[{self.sid[:8]}] Modem dial completed")
 
             # Show login screen
+            logging.info(f"[{self.sid[:8]}] Showing login screen")
             self.modem.show_login_screen(print_func=self.custom_print)
 
             # Login process
@@ -75,13 +91,17 @@ class WebTerminal:
             max_attempts = 3
 
             while attempt < max_attempts:
+                logging.info(f"[{self.sid[:8]}] Waiting for login (attempt {attempt + 1})")
                 self.send_output("\nlogin: ")
                 username = self.input_queue.get().strip()
+                logging.info(f"[{self.sid[:8]}] Received username: {username}")
 
                 self.send_output("Password: ")
                 password = self.input_queue.get().strip()
+                logging.info(f"[{self.sid[:8]}] Received password")
 
                 if username in self.modem.users and self.modem.users[username] == password:
+                    logging.info(f"[{self.sid[:8]}] Login successful for user: {username}")
                     self.username = username
                     self.modem.show_welcome_message(username, print_func=self.custom_print)
 
@@ -101,9 +121,11 @@ class WebTerminal:
             self.modem.logout(print_func=self.custom_print, slow_print_func=self.slow_print)
 
         except Exception as e:
+            logging.error(f"[{self.sid[:8]}] Error in simulator: {str(e)}", exc_info=True)
             self.custom_print(f"\nError: {str(e)}")
         finally:
             self.running = False
+            logging.info(f"[{self.sid[:8]}] Simulator ended")
             self.send_output("\r\n\r\n=== Session ended. Refresh page to reconnect. ===\r\n")
 
     def run_shell(self):
@@ -145,26 +167,34 @@ def index():
 def handle_connect():
     """Handle new WebSocket connection"""
     sid = request.sid
+    logging.info(f"New connection: {sid}")
 
     # Create new terminal session
     terminal = WebTerminal(sid)
     sessions[sid] = terminal
 
-    # Start simulator in background thread
-    thread = threading.Thread(target=terminal.run_simulator)
-    thread.daemon = True
-    thread.start()
-
+    # Send immediate test message
     emit('connected', {'data': 'Connected to SCO Unix Simulator'})
+
+    # Send test output to verify connection works
+    emit('output', {'data': 'TEST: Socket.IO connection established\r\n'})
+    logging.info(f"Test message sent to {sid}")
+
+    # Use socketio.start_background_task for proper threading with Flask-SocketIO
+    logging.info(f"Starting simulator task for {sid}")
+    socketio.start_background_task(terminal.run_simulator)
+    logging.info(f"Simulator task started for {sid}")
 
 
 @socketio.on('disconnect')
 def handle_disconnect():
     """Handle WebSocket disconnection"""
     sid = request.sid
+    logging.info(f"Disconnect: {sid}")
     if sid in sessions:
         sessions[sid].running = False
         del sessions[sid]
+        logging.info(f"Session {sid} cleaned up")
 
 
 @socketio.on('input')
@@ -174,6 +204,7 @@ def handle_input(data):
     if sid in sessions:
         terminal = sessions[sid]
         input_text = data.get('data', '')
+        logging.debug(f"[{sid[:8]}] Received input: {repr(input_text)}")
         terminal.input_queue.put(input_text)
 
 

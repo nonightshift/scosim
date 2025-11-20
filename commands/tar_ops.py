@@ -154,7 +154,7 @@ def _print_tar_contents(node, print_func, prefix="a", path=""):
     print_func(f"{prefix} {current_path}")
 
     # Add delay to simulate real tar processing (approximately 100ms per file)
-    time.sleep(0.1)
+    time.sleep(0.02)
 
     if node.is_dir:
         for child_name, child_node in sorted(node.children.items()):
@@ -206,7 +206,7 @@ def _extract_tar(vfs, tar_content, print_func, verbose=True):
                     parent.add_child(new_file)
 
                 # Add delay to simulate real tar processing (approximately 100ms per file)
-                time.sleep(0.1)
+                time.sleep(0.02)
 
     except Exception as e:
         print_func(f"tar: Error extracting archive: {e}")

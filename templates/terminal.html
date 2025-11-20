@@ -627,6 +627,69 @@
 
         const terminal = new VT100Terminal(terminalScreen);
 
+        // Command history management
+        const commandHistory = {
+            history: [],
+            maxSize: 1000,
+            currentIndex: -1,
+            currentLine: '',
+            inputBuffer: '',
+
+            // Add command to history
+            addCommand(command) {
+                if (command.trim().length > 0) {
+                    // Don't add duplicate consecutive commands
+                    if (this.history.length === 0 || this.history[this.history.length - 1] !== command) {
+                        this.history.push(command);
+                        // Limit history size
+                        if (this.history.length > this.maxSize) {
+                            this.history.shift();
+                        }
+                    }
+                }
+                this.currentIndex = this.history.length;
+                this.currentLine = '';
+            },
+
+            // Navigate to previous command
+            getPrevious() {
+                if (this.currentIndex === this.history.length) {
+                    // Save current line before navigating history
+                    this.currentLine = this.inputBuffer;
+                }
+
+                if (this.currentIndex > 0) {
+                    this.currentIndex--;
+                    return this.history[this.currentIndex];
+                }
+                return null;
+            },
+
+            // Navigate to next command
+            getNext() {
+                if (this.currentIndex < this.history.length - 1) {
+                    this.currentIndex++;
+                    return this.history[this.currentIndex];
+                } else if (this.currentIndex === this.history.length - 1) {
+                    this.currentIndex = this.history.length;
+                    return this.currentLine; // Restore the line being typed
+                }
+                return null;
+            },
+
+            // Reset to end of history
+            reset() {
+                this.currentIndex = this.history.length;
+                this.currentLine = '';
+                this.inputBuffer = '';
+            },
+
+            // Update input buffer
+            updateBuffer(buffer) {
+                this.inputBuffer = buffer;
+            }
+        };
+
         // Update status
         function setStatus(status, text) {
             statusEl.className = status;
@@ -670,25 +733,59 @@
             }
         });
 
+        // Helper function to clear current line and send new text
+        function replaceCurrentLine(newText) {
+            // Clear current line by sending backspaces
+            for (let i = 0; i < commandHistory.inputBuffer.length; i++) {
+                socket.emit('input', { data: '\x7f' });
+            }
+
+            // Send new text
+            for (let i = 0; i < newText.length; i++) {
+                socket.emit('input', { data: newText[i] });
+            }
+
+            // Update buffer
+            commandHistory.updateBuffer(newText);
+        }
+
         // Keyboard input handling
         terminalScreen.addEventListener('keydown', (e) => {
             let data = null;
+            let handleHistoryNav = false;
 
             // Prevent default for most keys
             e.preventDefault();
 
             if (e.key === 'Enter') {
                 data = '\r';
+                // Save command to history
+                commandHistory.addCommand(commandHistory.inputBuffer);
+                commandHistory.reset();
             } else if (e.key === 'Backspace') {
                 data = '\x7f'; // DEL character
+                // Remove last character from buffer
+                if (commandHistory.inputBuffer.length > 0) {
+                    commandHistory.updateBuffer(commandHistory.inputBuffer.slice(0, -1));
+                }
             } else if (e.key === 'Tab') {
                 data = '\t';
             } else if (e.key === 'Escape') {
                 data = '\x1b';
             } else if (e.key === 'ArrowUp') {
-                data = '\x1b[A';
+                // History navigation - previous command
+                handleHistoryNav = true;
+                const prevCommand = commandHistory.getPrevious();
+                if (prevCommand !== null) {
+                    replaceCurrentLine(prevCommand);
+                }
             } else if (e.key === 'ArrowDown') {
-                data = '\x1b[B';
+                // History navigation - next command
+                handleHistoryNav = true;
+                const nextCommand = commandHistory.getNext();
+                if (nextCommand !== null) {
+                    replaceCurrentLine(nextCommand);
+                }
             } else if (e.key === 'ArrowRight') {
                 data = '\x1b[C';
             } else if (e.key === 'ArrowLeft') {
@@ -707,17 +804,25 @@
                 data = '\x1b[6~';
             } else if (e.ctrlKey && e.key === 'c') {
                 data = '\x03'; // Ctrl+C
+                // Reset input buffer and history position on Ctrl+C
+                commandHistory.reset();
             } else if (e.ctrlKey && e.key === 'd') {
                 data = '\x04'; // Ctrl+D
             } else if (e.ctrlKey && e.key === 'z') {
                 data = '\x1a'; // Ctrl+Z
             } else if (e.ctrlKey && e.key === 'l') {
                 data = '\x0c'; // Ctrl+L
+            } else if (e.ctrlKey && e.key === 'u') {
+                // Ctrl+U: Clear line
+                data = '\x15';
+                commandHistory.reset();
             } else if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
                 data = e.key;
+                // Add character to buffer
+                commandHistory.updateBuffer(commandHistory.inputBuffer + e.key);
             }
 
-            if (data) {
+            if (data && !handleHistoryNav) {
                 socket.emit('input', { data: data });
             }
         });

@@ -1,0 +1,169 @@
+{
+  "processes": [
+    {
+      "pid": 1,
+      "ppid": 0,
+      "uid": "root",
+      "command": "/etc/init",
+      "tty": "?",
+      "stime": "Nov 01",
+      "cputime": "0:03",
+      "status": "running",
+      "c": 0
+    },
+    {
+      "pid": 23,
+      "ppid": 1,
+      "uid": "root",
+      "command": "/etc/cron",
+      "tty": "?",
+      "stime": "Nov 01",
+      "cputime": "0:00",
+      "status": "running",
+      "c": 0
+    },
+    {
+      "pid": 45,
+      "ppid": 1,
+      "uid": "root",
+      "command": "/etc/syslogd",
+      "tty": "?",
+      "stime": "Nov 01",
+      "cputime": "0:12",
+      "status": "running",
+      "c": 0
+    },
+    {
+      "pid": 156,
+      "ppid": 1,
+      "uid": "root",
+      "command": "/usr/lib/sendmail -bd -q30m",
+      "tty": "?",
+      "stime": "Nov 02",
+      "cputime": "1:23",
+      "status": "running",
+      "c": 0
+    },
+    {
+      "pid": 234,
+      "ppid": 1,
+      "uid": "root",
+      "command": "/usr/sbin/inetd",
+      "tty": "?",
+      "stime": "Nov 03",
+      "cputime": "0:45",
+      "status": "running",
+      "c": 0
+    },
+    {
+      "pid": 567,
+      "ppid": 1,
+      "uid": "dxmail",
+      "command": "/home/dxmail/pp/bin/qmgr",
+      "tty": "?",
+      "stime": "Nov 05",
+      "cputime": "2:15",
+      "status": "running",
+      "c": 0
+    },
+    {
+      "pid": 568,
+      "ppid": 567,
+      "uid": "dxmail",
+      "command": "/home/dxmail/pp/bin/x400in",
+      "tty": "?",
+      "stime": "Nov 05",
+      "cputime": "1:45",
+      "status": "running",
+      "c": 0
+    },
+    {
+      "pid": 569,
+      "ppid": 567,
+      "uid": "dxmail",
+      "command": "/home/dxmail/pp/bin/x400in",
+      "tty": "?",
+      "stime": "Nov 05",
+      "cputime": "1:50",
+      "status": "running",
+      "c": 0
+    },
+    {
+      "pid": 570,
+      "ppid": 567,
+      "uid": "dxmail",
+      "command": "/home/dxmail/pp/bin/x400out",
+      "tty": "?",
+      "stime": "Nov 05",
+      "cputime": "3:20",
+      "status": "running",
+      "c": 0
+    },
+    {
+      "pid": 571,
+      "ppid": 567,
+      "uid": "dxmail",
+      "command": "/home/dxmail/pp/bin/x400out",
+      "tty": "?",
+      "stime": "Nov 05",
+      "cputime": "3:12",
+      "status": "running",
+      "c": 0
+    },
+    {
+      "pid": 572,
+      "ppid": 567,
+      "uid": "dxmail",
+      "command": "/home/dxmail/pp/bin/x400out",
+      "tty": "?",
+      "stime": "Nov 05",
+      "cputime": "3:08",
+      "status": "running",
+      "c": 0
+    },
+    {
+      "pid": 573,
+      "ppid": 567,
+      "uid": "dxmail",
+      "command": "/home/dxmail/pp/bin/submit",
+      "tty": "?",
+      "stime": "10:15",
+      "cputime": "0:05",
+      "status": "running",
+      "c": 0
+    },
+    {
+      "pid": 574,
+      "ppid": 567,
+      "uid": "dxmail",
+      "command": "/home/dxmail/pp/bin/submit",
+      "tty": "?",
+      "stime": "10:20",
+      "cputime": "0:03",
+      "status": "running",
+      "c": 0
+    },
+    {
+      "pid": 575,
+      "ppid": 567,
+      "uid": "dxmail",
+      "command": "/home/dxmail/pp/bin/x400in",
+      "tty": "?",
+      "stime": "10:25",
+      "cputime": "0:02",
+      "status": "running",
+      "c": 0
+    },
+    {
+      "pid": 576,
+      "ppid": 567,
+      "uid": "dxmail",
+      "command": "/home/dxmail/pp/bin/x400out",
+      "tty": "?",
+      "stime": "10:30",
+      "cputime": "0:01",
+      "status": "running",
+      "c": 0
+    }
+  ]
+}

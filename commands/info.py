@@ -5,7 +5,19 @@ Implements commands that display system information
 
 from system_time import now
 from argparse_unix import parse_unix_args
+from process_table import ProcessTable
 import random
+
+# Global process table instance
+_process_table = None
+
+
+def get_process_table():
+    """Get or create the global process table instance"""
+    global _process_table
+    if _process_table is None:
+        _process_table = ProcessTable()
+    return _process_table
 
 
 def execute_date(vfs, args, print_func):
@@ -51,6 +63,9 @@ def execute_df(vfs, args, print_func):
 
 def execute_ps(username, args, print_func):
     """Execute ps command - report process status"""
+    # Get process table
+    ptable = get_process_table()
+
     # Parse arguments using unified parser
     parsed = parse_unix_args(args)
 
@@ -58,18 +73,36 @@ def execute_ps(username, args, print_func):
     full_listing = (parsed.has_flag('e') and parsed.has_flag('f')) or \
                    (parsed.has_flag('a') and parsed.has_flag('u') and parsed.has_flag('x'))
 
-    if full_listing:
-        print_func("  UID   PID  PPID  C    STIME TTY      TIME COMMAND")
-        print_func("  root     1     0  0 Nov 01  ?        0:03 /etc/init")
-        print_func("  root    23     1  0 Nov 01  ?        0:00 /etc/cron")
-        print_func("  root    45     1  0 Nov 01  ?        0:12 /etc/syslogd")
-        print_func(f"  {username:<8}{random.randint(100,999)}     1  0 {now().strftime('%H:%M')}  tty1a    0:00 -sh")
-        print_func("  root   156     1  0 Nov 02  ?        1:23 /usr/lib/sendmail")
-        print_func("  root   234     1  0 Nov 03  ?        0:45 /usr/sbin/inetd")
-    else:
-        print_func("  PID TTY      TIME COMMAND")
-        print_func(f" {random.randint(100,999)} tty1a    0:00 sh")
-        print_func(f" {random.randint(100,999)} tty1a    0:00 ps")
+    # Add current shell and ps process for this user
+    shell_pid = random.randint(800, 899)
+    ps_pid = random.randint(900, 999)
+
+    # Temporarily add shell and ps processes
+    shell_proc_exists = ptable.get_process(shell_pid) is None
+    ps_proc_exists = ptable.get_process(ps_pid) is None
+
+    if shell_proc_exists:
+        from process_table import Process
+        shell_proc = Process(shell_pid, 1, username, "-sh", "tty1a", now().strftime('%H:%M'), "0:00")
+        ptable.add_process(shell_proc)
+
+    if ps_proc_exists:
+        from process_table import Process
+        ps_proc = Process(ps_pid, shell_pid, username, "ps " + " ".join(args), "tty1a", now().strftime('%H:%M'), "0:00")
+        ptable.add_process(ps_proc)
+
+    # Get formatted output from process table
+    output_lines = ptable.format_ps_output(full_listing=full_listing, filter_user=None if full_listing else username)
+
+    # Print all lines
+    for line in output_lines:
+        print_func(line)
+
+    # Clean up temporary processes
+    if shell_proc_exists:
+        ptable.remove_process(shell_pid)
+    if ps_proc_exists:
+        ptable.remove_process(ps_pid)
 
 
 def execute_uname(vfs, args, print_func):

@@ -31,11 +31,14 @@ socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading',
 # Store session data per session ID
 sessions = {}
 
+# Global flag for skip dialin mode
+skip_dialin_mode = False
+
 
 class WebTerminal:
     """Handles terminal I/O for web-based terminal with VT100 support"""
 
-    def __init__(self, sid):
+    def __init__(self, sid, skip_dialin=False):
         self.sid = sid
         self.input_queue = queue.Queue()
         self.char_queue = queue.Queue()  # Queue for individual characters
@@ -46,7 +49,8 @@ class WebTerminal:
         self.username = None
         self.running = False
         self.echo_enabled = True  # Control local echo
-        logging.info(f"WebTerminal created for session {sid}")
+        self.skip_dialin = skip_dialin  # Skip dial-in process
+        logging.info(f"WebTerminal created for session {sid} (skip_dialin={skip_dialin})")
 
     def send_output(self, text):
         """Send output to the web terminal"""
@@ -123,52 +127,64 @@ class WebTerminal:
         self.running = True
 
         try:
-            # Simulate modem dial
-            logging.info(f"[{self.sid[:8]}] Starting modem dial simulation")
-            self.modem.simulate_modem_dial(print_func=self.custom_print, slow_print_func=self.slow_print)
-            logging.info(f"[{self.sid[:8]}] Modem dial completed")
+            if self.skip_dialin:
+                # Skip dial-in and login directly as root
+                logging.info(f"[{self.sid[:8]}] Skipping dial-in, logging in as root")
+                self.custom_print("Skipping dial-in process, logging in as root...\r\n")
+                self.username = 'root'
+                self.modem.show_welcome_message('root', print_func=self.custom_print)
 
-            # Show login screen
-            logging.info(f"[{self.sid[:8]}] Showing login screen")
-            self.modem.show_login_screen(print_func=self.custom_print)
+                # Start shell as root
+                self.shell = Shell('root', self.vfs)
+                self.run_shell()
+            else:
+                # Normal dial-in process
+                # Simulate modem dial
+                logging.info(f"[{self.sid[:8]}] Starting modem dial simulation")
+                self.modem.simulate_modem_dial(print_func=self.custom_print, slow_print_func=self.slow_print)
+                logging.info(f"[{self.sid[:8]}] Modem dial completed")
 
-            # Login process
-            attempt = 0
-            max_attempts = 3
+                # Show login screen
+                logging.info(f"[{self.sid[:8]}] Showing login screen")
+                self.modem.show_login_screen(print_func=self.custom_print)
 
-            while attempt < max_attempts:
-                logging.info(f"[{self.sid[:8]}] Waiting for login (attempt {attempt + 1})")
-                self.send_output("\r\nlogin: ")
-                username = self.input_queue.get().strip()
-                logging.info(f"[{self.sid[:8]}] Received username: {username}")
+                # Login process
+                attempt = 0
+                max_attempts = 3
 
-                # Disable echo for password
-                self.echo_enabled = False
-                self.send_output("Password: ")
-                password = self.input_queue.get().strip()
-                # Re-enable echo after password
-                self.echo_enabled = True
-                logging.info(f"[{self.sid[:8]}] Received password")
+                while attempt < max_attempts:
+                    logging.info(f"[{self.sid[:8]}] Waiting for login (attempt {attempt + 1})")
+                    self.send_output("\r\nlogin: ")
+                    username = self.input_queue.get().strip()
+                    logging.info(f"[{self.sid[:8]}] Received username: {username}")
 
-                if username in self.modem.users and self.modem.users[username] == password:
-                    logging.info(f"[{self.sid[:8]}] Login successful for user: {username}")
-                    self.username = username
-                    self.modem.show_welcome_message(username, print_func=self.custom_print)
+                    # Disable echo for password
+                    self.echo_enabled = False
+                    self.send_output("Password: ")
+                    password = self.input_queue.get().strip()
+                    # Re-enable echo after password
+                    self.echo_enabled = True
+                    logging.info(f"[{self.sid[:8]}] Received password")
 
-                    # Start shell
-                    self.shell = Shell(username, self.vfs)
-                    self.run_shell()
-                    break
-                else:
-                    attempt += 1
-                    if attempt < max_attempts:
-                        self.custom_print("Login incorrect")
+                    if username in self.modem.users and self.modem.users[username] == password:
+                        logging.info(f"[{self.sid[:8]}] Login successful for user: {username}")
+                        self.username = username
+                        self.modem.show_welcome_message(username, print_func=self.custom_print)
 
-            if attempt >= max_attempts:
-                self.custom_print("\nToo many login failures. Connection terminated.")
+                        # Start shell
+                        self.shell = Shell(username, self.vfs)
+                        self.run_shell()
+                        break
+                    else:
+                        attempt += 1
+                        if attempt < max_attempts:
+                            self.custom_print("Login incorrect")
 
-            # Logout
-            self.modem.logout(print_func=self.custom_print, slow_print_func=self.slow_print)
+                if attempt >= max_attempts:
+                    self.custom_print("\nToo many login failures. Connection terminated.")
+
+                # Logout
+                self.modem.logout(print_func=self.custom_print, slow_print_func=self.slow_print)
 
         except Exception as e:
             logging.error(f"[{self.sid[:8]}] Error in simulator: {str(e)}", exc_info=True)
@@ -221,7 +237,7 @@ def handle_connect():
     logging.info(f"Request namespace: {request.namespace}")
 
     # Create new terminal session
-    terminal = WebTerminal(sid)
+    terminal = WebTerminal(sid, skip_dialin=skip_dialin_mode)
     sessions[sid] = terminal
 
     # Send connection confirmation
@@ -272,7 +288,20 @@ def handle_resize(data):
 
 
 if __name__ == '__main__':
+    import argparse
+
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='SCO Unix Simulator Web Server')
+    parser.add_argument('--skip-dialin', action='store_true',
+                       help='Skip dial-in process and login directly as root')
+    args = parser.parse_args()
+
+    # Set global skip dialin mode
+    skip_dialin_mode = args.skip_dialin
+
     print("Starting SCO Unix Simulator Web Server...")
+    if skip_dialin_mode:
+        print("Mode: Skip dial-in (auto-login as root)")
     print("Access the terminal at: http://localhost:5000")
     print("Press Ctrl+C to stop the server")
     socketio.run(app, host='0.0.0.0', port=5000, debug=True, allow_unsafe_werkzeug=True)

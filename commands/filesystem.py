@@ -5,6 +5,7 @@ Implements directory navigation and listing commands
 
 import time
 from argparse_unix import parse_unix_args
+from config_loader import get_command_delay
 
 
 def execute_cd(vfs, args, print_func):
@@ -116,5 +117,5 @@ def execute_rm(vfs, args, print_func):
         if not success and not force:
             print_func(error)
 
-        # Add delay to simulate real file deletion (approximately 100ms per file)
-        time.sleep(0.1)
+        # Add delay to simulate real file deletion
+        time.sleep(get_command_delay("rm"))

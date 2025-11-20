@@ -50,6 +50,9 @@ class WebTerminal:
         self.running = False
         self.echo_enabled = True  # Control local echo
         self.skip_dialin = skip_dialin  # Skip dial-in process
+        self.history_index = -1  # Current position in history (-1 = not navigating)
+        self.current_line_backup = ""  # Backup of current line when navigating history
+        self.escape_sequence = ""  # Buffer for escape sequences
         logging.info(f"WebTerminal created for session {sid} (skip_dialin={skip_dialin})")
 
     def send_output(self, text):
@@ -59,12 +62,78 @@ class WebTerminal:
         except Exception as e:
             logging.error(f"[{self.sid[:8]}] Failed to send output: {e}", exc_info=True)
 
+    def clear_current_line(self):
+        """Clear the current input line on the terminal"""
+        if len(self.input_buffer) > 0:
+            # Move cursor back and erase all characters
+            for _ in range(len(self.input_buffer)):
+                self.send_output('\x08 \x08')
+            self.input_buffer = ""
+
+    def replace_line_with_history(self, history_line):
+        """Replace current line with a history entry"""
+        self.clear_current_line()
+        self.input_buffer = history_line
+        if self.echo_enabled:
+            self.send_output(history_line)
+
+    def process_escape_sequence(self, sequence):
+        """Process complete escape sequences for history navigation"""
+        if sequence == '\x1b[A':
+            # Arrow Up - navigate to previous command
+            if self.shell and self.shell.history:
+                if self.history_index == -1:
+                    # Start navigating - backup current line
+                    self.current_line_backup = self.input_buffer
+                    self.history_index = len(self.shell.history) - 1
+                elif self.history_index > 0:
+                    self.history_index -= 1
+
+                if self.history_index >= 0 and self.history_index < len(self.shell.history):
+                    self.replace_line_with_history(self.shell.history[self.history_index])
+        elif sequence == '\x1b[B':
+            # Arrow Down - navigate to next command
+            if self.shell and self.history_index != -1:
+                if self.history_index < len(self.shell.history) - 1:
+                    self.history_index += 1
+                    self.replace_line_with_history(self.shell.history[self.history_index])
+                else:
+                    # Restore the line being typed
+                    self.history_index = -1
+                    self.replace_line_with_history(self.current_line_backup)
+                    self.current_line_backup = ""
+
     def process_char(self, char):
         """Process a single character input"""
+        # Handle escape sequences
+        if self.escape_sequence or char == '\x1b':
+            self.escape_sequence += char
+
+            # Check if we have a complete escape sequence
+            if self.escape_sequence == '\x1b':
+                # Just started, wait for more
+                return
+            elif self.escape_sequence == '\x1b[':
+                # CSI started, wait for final character
+                return
+            elif len(self.escape_sequence) >= 3:
+                # Check for arrow keys
+                if self.escape_sequence in ['\x1b[A', '\x1b[B', '\x1b[C', '\x1b[D']:
+                    self.process_escape_sequence(self.escape_sequence)
+                    self.escape_sequence = ""
+                    return
+                else:
+                    # Not a sequence we handle, reset
+                    self.escape_sequence = ""
+                    return
+            return
+
         if char == '\r' or char == '\n':
             # Enter pressed - complete the line
             line = self.input_buffer
             self.input_buffer = ""
+            self.history_index = -1  # Reset history navigation
+            self.current_line_backup = ""
             if self.echo_enabled:
                 self.send_output('\r\n')
             self.input_queue.put(line)
@@ -78,6 +147,8 @@ class WebTerminal:
         elif char == '\x03':
             # Ctrl+C
             self.input_buffer = ""
+            self.history_index = -1  # Reset history navigation
+            self.current_line_backup = ""
             if self.echo_enabled:
                 self.send_output('^C\r\n')
             self.input_queue.put('')
@@ -89,9 +160,14 @@ class WebTerminal:
                 # Send partial line
                 line = self.input_buffer
                 self.input_buffer = ""
+                self.history_index = -1  # Reset history navigation
                 self.input_queue.put(line)
         elif len(char) == 1 and ord(char) >= 32 and ord(char) < 127:
-            # Printable character
+            # Printable character - reset history navigation when typing
+            if self.history_index != -1:
+                self.history_index = -1
+                self.current_line_backup = ""
+
             self.input_buffer += char
             if self.echo_enabled:
                 self.send_output(char)

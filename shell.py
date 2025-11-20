@@ -227,22 +227,39 @@ class Shell:
         if print_func is None:
             print_func = self.print_instant
 
-        # Get number of history entries to show
-        num_entries = readline.get_current_history_length()
+        # Use self.history if available (web terminal), otherwise use readline (CLI)
+        if self.history:
+            # Web terminal mode - use self.history list
+            num_entries = len(self.history)
 
-        if args and args[0].isdigit():
-            # Show last N entries
-            show_count = int(args[0])
-            start_index = max(1, num_entries - show_count + 1)
+            if args and args[0].isdigit():
+                # Show last N entries
+                show_count = int(args[0])
+                start_index = max(0, num_entries - show_count)
+            else:
+                # Show all history
+                start_index = 0
+
+            # Print history with line numbers (1-indexed for display)
+            for i in range(start_index, num_entries):
+                print_func(f" {i+1:4d}  {self.history[i]}")
         else:
-            # Show all history
-            start_index = 1
+            # CLI mode - use readline
+            num_entries = readline.get_current_history_length()
 
-        # Print history with line numbers
-        for i in range(start_index, num_entries + 1):
-            entry = readline.get_history_item(i)
-            if entry:
-                print_func(f" {i:4d}  {entry}")
+            if args and args[0].isdigit():
+                # Show last N entries
+                show_count = int(args[0])
+                start_index = max(1, num_entries - show_count + 1)
+            else:
+                # Show all history
+                start_index = 1
+
+            # Print history with line numbers
+            for i in range(start_index, num_entries + 1):
+                entry = readline.get_history_item(i)
+                if entry:
+                    print_func(f" {i:4d}  {entry}")
 
     def run(self):
         """Run the interactive shell"""

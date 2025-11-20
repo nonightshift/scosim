@@ -185,7 +185,7 @@ class Shell:
             # Execute command with output capture
             if cmd in self.commands:
                 func = self.commands[cmd]
-                if cmd in ["who", "w", "whoami", "ps"]:
+                if cmd in ["who", "w", "whoami", "ps", "kill"]:
                     func(self.username, args, capture_print)
                 elif cmd == "alias":
                     func(self.aliases, args, capture_print)
@@ -203,8 +203,8 @@ class Shell:
             # Dynamic command dispatch
             if cmd in self.commands:
                 func = self.commands[cmd]
-                # Check if command needs username (like who, whoami, w, ps)
-                if cmd in ["who", "w", "whoami", "ps"]:
+                # Check if command needs username (like who, whoami, w, ps, kill)
+                if cmd in ["who", "w", "whoami", "ps", "kill"]:
                     func(self.username, args, print_func)
                 # Check if command needs aliases dict (like alias command)
                 elif cmd == "alias":

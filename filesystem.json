@@ -14,52 +14,420 @@
       "group": "sys",
       "mtime": "1995-11-18 09:30:22",
       "children": [
-        {"name": "sh", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 45056, "mtime": "1995-10-15 10:20:00"},
-        {"name": "ksh", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 98304, "mtime": "1995-10-15 10:20:15"},
-        {"name": "csh", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 76800, "mtime": "1995-10-15 10:20:30"},
-        {"name": "ls", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 24576, "mtime": "1995-10-15 10:21:00"},
-        {"name": "cat", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 12288, "mtime": "1995-10-15 10:21:15"},
-        {"name": "cp", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-15 10:21:30"},
-        {"name": "mv", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 14336, "mtime": "1995-10-15 10:21:45"},
-        {"name": "rm", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 13312, "mtime": "1995-10-15 10:22:00"},
-        {"name": "mkdir", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 10240, "mtime": "1995-10-15 10:22:15"},
-        {"name": "rmdir", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 10240, "mtime": "1995-10-15 10:22:30"},
-        {"name": "pwd", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 8192, "mtime": "1995-10-15 10:22:45"},
-        {"name": "cd", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 8192, "mtime": "1995-10-15 10:23:00"},
-        {"name": "echo", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 9216, "mtime": "1995-10-15 10:23:15"},
-        {"name": "grep", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 32768, "mtime": "1995-10-15 10:23:30"},
-        {"name": "sed", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 40960, "mtime": "1995-10-15 10:23:45"},
-        {"name": "awk", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 49152, "mtime": "1995-10-15 10:24:00"},
-        {"name": "find", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 28672, "mtime": "1995-10-15 10:24:15"},
-        {"name": "sort", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 20480, "mtime": "1995-10-15 10:24:30"},
-        {"name": "uniq", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 12288, "mtime": "1995-10-15 10:24:45"},
-        {"name": "wc", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 11264, "mtime": "1995-10-15 10:25:00"},
-        {"name": "head", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 10240, "mtime": "1995-10-15 10:25:15"},
-        {"name": "tail", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 12288, "mtime": "1995-10-15 10:25:30"},
-        {"name": "more", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 18432, "mtime": "1995-10-15 10:25:45"},
-        {"name": "pg", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 20480, "mtime": "1995-10-15 10:26:00"},
-        {"name": "tar", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 36864, "mtime": "1995-10-15 10:26:15"},
-        {"name": "cpio", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 32768, "mtime": "1995-10-15 10:26:30"},
-        {"name": "compress", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 24576, "mtime": "1995-10-15 10:26:45"},
-        {"name": "uncompress", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 20480, "mtime": "1995-10-15 10:27:00"},
-        {"name": "chmod", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 14336, "mtime": "1995-10-15 10:27:15"},
-        {"name": "chown", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 13312, "mtime": "1995-10-15 10:27:30"},
-        {"name": "chgrp", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 12288, "mtime": "1995-10-15 10:27:45"},
-        {"name": "ln", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 11264, "mtime": "1995-10-15 10:28:00"},
-        {"name": "df", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-15 10:28:15"},
-        {"name": "du", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 18432, "mtime": "1995-10-15 10:28:30"},
-        {"name": "ps", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 32768, "mtime": "1995-10-15 10:28:45"},
-        {"name": "kill", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 10240, "mtime": "1995-10-15 10:29:00"},
-        {"name": "date", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 14336, "mtime": "1995-10-15 10:29:15"},
-        {"name": "who", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-15 10:29:30"},
-        {"name": "w", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 18432, "mtime": "1995-10-15 10:29:45"},
-        {"name": "login", "is_dir": false, "permissions": "rwsr-xr-x", "owner": "root", "group": "sys", "size": 24576, "mtime": "1995-10-15 10:30:00"},
-        {"name": "su", "is_dir": false, "permissions": "rwsr-xr-x", "owner": "root", "group": "sys", "size": 20480, "mtime": "1995-10-15 10:30:15"},
-        {"name": "stty", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 22528, "mtime": "1995-10-15 10:30:30"},
-        {"name": "test", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-15 10:30:45"},
-        {"name": "expr", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 18432, "mtime": "1995-10-15 10:31:00"},
-        {"name": "true", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 4096, "mtime": "1995-10-15 10:31:15"},
-        {"name": "false", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 4096, "mtime": "1995-10-15 10:31:30"}
+        {
+          "name": "sh",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 45056,
+          "mtime": "1995-10-15 10:20:00"
+        },
+        {
+          "name": "ksh",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 98304,
+          "mtime": "1995-10-15 10:20:15"
+        },
+        {
+          "name": "csh",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 76800,
+          "mtime": "1995-10-15 10:20:30"
+        },
+        {
+          "name": "ls",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 24576,
+          "mtime": "1995-10-15 10:21:00"
+        },
+        {
+          "name": "cat",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 12288,
+          "mtime": "1995-10-15 10:21:15"
+        },
+        {
+          "name": "cp",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 16384,
+          "mtime": "1995-10-15 10:21:30"
+        },
+        {
+          "name": "mv",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 14336,
+          "mtime": "1995-10-15 10:21:45"
+        },
+        {
+          "name": "rm",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 13312,
+          "mtime": "1995-10-15 10:22:00"
+        },
+        {
+          "name": "mkdir",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 10240,
+          "mtime": "1995-10-15 10:22:15"
+        },
+        {
+          "name": "rmdir",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 10240,
+          "mtime": "1995-10-15 10:22:30"
+        },
+        {
+          "name": "pwd",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 8192,
+          "mtime": "1995-10-15 10:22:45"
+        },
+        {
+          "name": "cd",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 8192,
+          "mtime": "1995-10-15 10:23:00"
+        },
+        {
+          "name": "echo",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 9216,
+          "mtime": "1995-10-15 10:23:15"
+        },
+        {
+          "name": "grep",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 32768,
+          "mtime": "1995-10-15 10:23:30"
+        },
+        {
+          "name": "sed",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 40960,
+          "mtime": "1995-10-15 10:23:45"
+        },
+        {
+          "name": "awk",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 49152,
+          "mtime": "1995-10-15 10:24:00"
+        },
+        {
+          "name": "find",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 28672,
+          "mtime": "1995-10-15 10:24:15"
+        },
+        {
+          "name": "sort",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 20480,
+          "mtime": "1995-10-15 10:24:30"
+        },
+        {
+          "name": "uniq",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 12288,
+          "mtime": "1995-10-15 10:24:45"
+        },
+        {
+          "name": "wc",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 11264,
+          "mtime": "1995-10-15 10:25:00"
+        },
+        {
+          "name": "head",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 10240,
+          "mtime": "1995-10-15 10:25:15"
+        },
+        {
+          "name": "tail",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 12288,
+          "mtime": "1995-10-15 10:25:30"
+        },
+        {
+          "name": "more",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 18432,
+          "mtime": "1995-10-15 10:25:45"
+        },
+        {
+          "name": "pg",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 20480,
+          "mtime": "1995-10-15 10:26:00"
+        },
+        {
+          "name": "tar",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 36864,
+          "mtime": "1995-10-15 10:26:15"
+        },
+        {
+          "name": "cpio",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 32768,
+          "mtime": "1995-10-15 10:26:30"
+        },
+        {
+          "name": "compress",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 24576,
+          "mtime": "1995-10-15 10:26:45"
+        },
+        {
+          "name": "uncompress",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 20480,
+          "mtime": "1995-10-15 10:27:00"
+        },
+        {
+          "name": "chmod",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 14336,
+          "mtime": "1995-10-15 10:27:15"
+        },
+        {
+          "name": "chown",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 13312,
+          "mtime": "1995-10-15 10:27:30"
+        },
+        {
+          "name": "chgrp",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 12288,
+          "mtime": "1995-10-15 10:27:45"
+        },
+        {
+          "name": "ln",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 11264,
+          "mtime": "1995-10-15 10:28:00"
+        },
+        {
+          "name": "df",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 16384,
+          "mtime": "1995-10-15 10:28:15"
+        },
+        {
+          "name": "du",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 18432,
+          "mtime": "1995-10-15 10:28:30"
+        },
+        {
+          "name": "ps",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 32768,
+          "mtime": "1995-10-15 10:28:45"
+        },
+        {
+          "name": "kill",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 10240,
+          "mtime": "1995-10-15 10:29:00"
+        },
+        {
+          "name": "date",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 14336,
+          "mtime": "1995-10-15 10:29:15"
+        },
+        {
+          "name": "who",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 16384,
+          "mtime": "1995-10-15 10:29:30"
+        },
+        {
+          "name": "w",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 18432,
+          "mtime": "1995-10-15 10:29:45"
+        },
+        {
+          "name": "login",
+          "is_dir": false,
+          "permissions": "rwsr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 24576,
+          "mtime": "1995-10-15 10:30:00"
+        },
+        {
+          "name": "su",
+          "is_dir": false,
+          "permissions": "rwsr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 20480,
+          "mtime": "1995-10-15 10:30:15"
+        },
+        {
+          "name": "stty",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 22528,
+          "mtime": "1995-10-15 10:30:30"
+        },
+        {
+          "name": "test",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 16384,
+          "mtime": "1995-10-15 10:30:45"
+        },
+        {
+          "name": "expr",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 18432,
+          "mtime": "1995-10-15 10:31:00"
+        },
+        {
+          "name": "true",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 4096,
+          "mtime": "1995-10-15 10:31:15"
+        },
+        {
+          "name": "false",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 4096,
+          "mtime": "1995-10-15 10:31:30"
+        }
       ]
     },
     {
@@ -196,40 +564,312 @@
           "group": "sys",
           "mtime": "1995-11-18 10:20:00",
           "children": [
-            {"name": "vi", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 163840, "mtime": "1995-10-16 09:00:00"},
-            {"name": "ex", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 163840, "mtime": "1995-10-16 09:00:15"},
-            {"name": "ed", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 32768, "mtime": "1995-10-16 09:00:30"},
-            {"name": "mail", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 40960, "mtime": "1995-10-16 09:00:45"},
-            {"name": "mailx", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 49152, "mtime": "1995-10-16 09:01:00"},
-            {"name": "cc", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 98304, "mtime": "1995-10-16 09:01:15"},
-            {"name": "make", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 73728, "mtime": "1995-10-16 09:01:30"},
-            {"name": "ld", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 81920, "mtime": "1995-10-16 09:01:45"},
-            {"name": "ar", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 28672, "mtime": "1995-10-16 09:02:00"},
-            {"name": "nm", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 24576, "mtime": "1995-10-16 09:02:15"},
-            {"name": "strip", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 20480, "mtime": "1995-10-16 09:02:30"},
-            {"name": "size", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-16 09:02:45"},
-            {"name": "file", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 32768, "mtime": "1995-10-16 09:03:00"},
-            {"name": "strings", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 18432, "mtime": "1995-10-16 09:03:15"},
-            {"name": "od", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 22528, "mtime": "1995-10-16 09:03:30"},
-            {"name": "bc", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 36864, "mtime": "1995-10-16 09:03:45"},
-            {"name": "dc", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 28672, "mtime": "1995-10-16 09:04:00"},
-            {"name": "man", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 40960, "mtime": "1995-10-16 09:04:15"},
-            {"name": "banner", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-16 09:04:30"},
-            {"name": "calendar", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 20480, "mtime": "1995-10-16 09:04:45"},
-            {"name": "cal", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 14336, "mtime": "1995-10-16 09:05:00"},
-            {"name": "diff", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 40960, "mtime": "1995-10-16 09:05:15"},
-            {"name": "cmp", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-16 09:05:30"},
-            {"name": "split", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 14336, "mtime": "1995-10-16 09:05:45"},
-            {"name": "cut", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-16 09:06:00"},
-            {"name": "paste", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 18432, "mtime": "1995-10-16 09:06:15"},
-            {"name": "join", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 20480, "mtime": "1995-10-16 09:06:30"},
-            {"name": "tr", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 14336, "mtime": "1995-10-16 09:06:45"},
-            {"name": "dd", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 24576, "mtime": "1995-10-16 09:07:00"},
-            {"name": "touch", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 12288, "mtime": "1995-10-16 09:07:15"},
-            {"name": "sleep", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 8192, "mtime": "1995-10-16 09:07:30"},
-            {"name": "tee", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 12288, "mtime": "1995-10-16 09:07:45"},
-            {"name": "uuencode", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-16 09:08:00"},
-            {"name": "uudecode", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 18432, "mtime": "1995-10-16 09:08:15"}
+            {
+              "name": "vi",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 163840,
+              "mtime": "1995-10-16 09:00:00"
+            },
+            {
+              "name": "ex",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 163840,
+              "mtime": "1995-10-16 09:00:15"
+            },
+            {
+              "name": "ed",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 32768,
+              "mtime": "1995-10-16 09:00:30"
+            },
+            {
+              "name": "mail",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 40960,
+              "mtime": "1995-10-16 09:00:45"
+            },
+            {
+              "name": "mailx",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 49152,
+              "mtime": "1995-10-16 09:01:00"
+            },
+            {
+              "name": "cc",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 98304,
+              "mtime": "1995-10-16 09:01:15"
+            },
+            {
+              "name": "make",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 73728,
+              "mtime": "1995-10-16 09:01:30"
+            },
+            {
+              "name": "ld",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 81920,
+              "mtime": "1995-10-16 09:01:45"
+            },
+            {
+              "name": "ar",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 28672,
+              "mtime": "1995-10-16 09:02:00"
+            },
+            {
+              "name": "nm",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 24576,
+              "mtime": "1995-10-16 09:02:15"
+            },
+            {
+              "name": "strip",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 20480,
+              "mtime": "1995-10-16 09:02:30"
+            },
+            {
+              "name": "size",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 16384,
+              "mtime": "1995-10-16 09:02:45"
+            },
+            {
+              "name": "file",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 32768,
+              "mtime": "1995-10-16 09:03:00"
+            },
+            {
+              "name": "strings",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 18432,
+              "mtime": "1995-10-16 09:03:15"
+            },
+            {
+              "name": "od",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 22528,
+              "mtime": "1995-10-16 09:03:30"
+            },
+            {
+              "name": "bc",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 36864,
+              "mtime": "1995-10-16 09:03:45"
+            },
+            {
+              "name": "dc",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 28672,
+              "mtime": "1995-10-16 09:04:00"
+            },
+            {
+              "name": "man",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 40960,
+              "mtime": "1995-10-16 09:04:15"
+            },
+            {
+              "name": "banner",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 16384,
+              "mtime": "1995-10-16 09:04:30"
+            },
+            {
+              "name": "calendar",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 20480,
+              "mtime": "1995-10-16 09:04:45"
+            },
+            {
+              "name": "cal",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 14336,
+              "mtime": "1995-10-16 09:05:00"
+            },
+            {
+              "name": "diff",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 40960,
+              "mtime": "1995-10-16 09:05:15"
+            },
+            {
+              "name": "cmp",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 16384,
+              "mtime": "1995-10-16 09:05:30"
+            },
+            {
+              "name": "split",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 14336,
+              "mtime": "1995-10-16 09:05:45"
+            },
+            {
+              "name": "cut",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 16384,
+              "mtime": "1995-10-16 09:06:00"
+            },
+            {
+              "name": "paste",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 18432,
+              "mtime": "1995-10-16 09:06:15"
+            },
+            {
+              "name": "join",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 20480,
+              "mtime": "1995-10-16 09:06:30"
+            },
+            {
+              "name": "tr",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 14336,
+              "mtime": "1995-10-16 09:06:45"
+            },
+            {
+              "name": "dd",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 24576,
+              "mtime": "1995-10-16 09:07:00"
+            },
+            {
+              "name": "touch",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 12288,
+              "mtime": "1995-10-16 09:07:15"
+            },
+            {
+              "name": "sleep",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 8192,
+              "mtime": "1995-10-16 09:07:30"
+            },
+            {
+              "name": "tee",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 12288,
+              "mtime": "1995-10-16 09:07:45"
+            },
+            {
+              "name": "uuencode",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 16384,
+              "mtime": "1995-10-16 09:08:00"
+            },
+            {
+              "name": "uudecode",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 18432,
+              "mtime": "1995-10-16 09:08:15"
+            }
           ]
         },
         {
@@ -240,11 +880,51 @@
           "group": "sys",
           "mtime": "1995-11-18 10:25:00",
           "children": [
-            {"name": "libc.so.1", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 524288, "mtime": "1995-10-16 10:00:00"},
-            {"name": "libm.so.1", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 163840, "mtime": "1995-10-16 10:00:30"},
-            {"name": "libcurses.so.1", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 98304, "mtime": "1995-10-16 10:01:00"},
-            {"name": "libsocket.so.1", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 73728, "mtime": "1995-10-16 10:01:30"},
-            {"name": "sendmail", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 245760, "mtime": "1995-10-16 10:02:00"},
+            {
+              "name": "libc.so.1",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 524288,
+              "mtime": "1995-10-16 10:00:00"
+            },
+            {
+              "name": "libm.so.1",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 163840,
+              "mtime": "1995-10-16 10:00:30"
+            },
+            {
+              "name": "libcurses.so.1",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 98304,
+              "mtime": "1995-10-16 10:01:00"
+            },
+            {
+              "name": "libsocket.so.1",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 73728,
+              "mtime": "1995-10-16 10:01:30"
+            },
+            {
+              "name": "sendmail",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 245760,
+              "mtime": "1995-10-16 10:02:00"
+            },
             {
               "name": "uucp",
               "is_dir": true,
@@ -263,12 +943,60 @@
           "group": "sys",
           "mtime": "1995-11-18 10:30:00",
           "children": [
-            {"name": "stdio.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 8192, "mtime": "1995-10-16 11:00:00"},
-            {"name": "stdlib.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 6144, "mtime": "1995-10-16 11:00:15"},
-            {"name": "string.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 4096, "mtime": "1995-10-16 11:00:30"},
-            {"name": "unistd.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 7168, "mtime": "1995-10-16 11:00:45"},
-            {"name": "fcntl.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 3072, "mtime": "1995-10-16 11:01:00"},
-            {"name": "errno.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 5120, "mtime": "1995-10-16 11:01:15"},
+            {
+              "name": "stdio.h",
+              "is_dir": false,
+              "permissions": "rw-r--r--",
+              "owner": "root",
+              "group": "sys",
+              "size": 8192,
+              "mtime": "1995-10-16 11:00:00"
+            },
+            {
+              "name": "stdlib.h",
+              "is_dir": false,
+              "permissions": "rw-r--r--",
+              "owner": "root",
+              "group": "sys",
+              "size": 6144,
+              "mtime": "1995-10-16 11:00:15"
+            },
+            {
+              "name": "string.h",
+              "is_dir": false,
+              "permissions": "rw-r--r--",
+              "owner": "root",
+              "group": "sys",
+              "size": 4096,
+              "mtime": "1995-10-16 11:00:30"
+            },
+            {
+              "name": "unistd.h",
+              "is_dir": false,
+              "permissions": "rw-r--r--",
+              "owner": "root",
+              "group": "sys",
+              "size": 7168,
+              "mtime": "1995-10-16 11:00:45"
+            },
+            {
+              "name": "fcntl.h",
+              "is_dir": false,
+              "permissions": "rw-r--r--",
+              "owner": "root",
+              "group": "sys",
+              "size": 3072,
+              "mtime": "1995-10-16 11:01:00"
+            },
+            {
+              "name": "errno.h",
+              "is_dir": false,
+              "permissions": "rw-r--r--",
+              "owner": "root",
+              "group": "sys",
+              "size": 5120,
+              "mtime": "1995-10-16 11:01:15"
+            },
             {
               "name": "sys",
               "is_dir": true,
@@ -277,9 +1005,33 @@
               "group": "sys",
               "mtime": "1995-11-18 10:32:00",
               "children": [
-                {"name": "types.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 6144, "mtime": "1995-10-16 11:05:00"},
-                {"name": "stat.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 4096, "mtime": "1995-10-16 11:05:15"},
-                {"name": "socket.h", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 7168, "mtime": "1995-10-16 11:05:30"}
+                {
+                  "name": "types.h",
+                  "is_dir": false,
+                  "permissions": "rw-r--r--",
+                  "owner": "root",
+                  "group": "sys",
+                  "size": 6144,
+                  "mtime": "1995-10-16 11:05:00"
+                },
+                {
+                  "name": "stat.h",
+                  "is_dir": false,
+                  "permissions": "rw-r--r--",
+                  "owner": "root",
+                  "group": "sys",
+                  "size": 4096,
+                  "mtime": "1995-10-16 11:05:15"
+                },
+                {
+                  "name": "socket.h",
+                  "is_dir": false,
+                  "permissions": "rw-r--r--",
+                  "owner": "root",
+                  "group": "sys",
+                  "size": 7168,
+                  "mtime": "1995-10-16 11:05:30"
+                }
               ]
             }
           ]
@@ -310,9 +1062,33 @@
           "group": "sys",
           "mtime": "1995-11-18 10:35:00",
           "children": [
-            {"name": "inetd", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 49152, "mtime": "1995-10-16 12:00:00"},
-            {"name": "syslogd", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 40960, "mtime": "1995-10-16 12:00:30"},
-            {"name": "cron", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 32768, "mtime": "1995-10-16 12:01:00"}
+            {
+              "name": "inetd",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 49152,
+              "mtime": "1995-10-16 12:00:00"
+            },
+            {
+              "name": "syslogd",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 40960,
+              "mtime": "1995-10-16 12:00:30"
+            },
+            {
+              "name": "cron",
+              "is_dir": false,
+              "permissions": "rwxr-xr-x",
+              "owner": "root",
+              "group": "sys",
+              "size": 32768,
+              "mtime": "1995-10-16 12:01:00"
+            }
           ]
         },
         {
@@ -333,26 +1109,186 @@
       "group": "sys",
       "mtime": "1995-11-18 09:45:00",
       "children": [
-        {"name": "console", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
-        {"name": "null", "is_dir": false, "permissions": "rw-rw-rw-", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
-        {"name": "zero", "is_dir": false, "permissions": "rw-rw-rw-", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
-        {"name": "tty", "is_dir": false, "permissions": "rw-rw-rw-", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
-        {"name": "tty1", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "tty", "size": 0, "mtime": "1995-11-18 09:00:00"},
-        {"name": "tty1a", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "tty", "size": 0, "mtime": "1995-12-11 01:00:00"},
-        {"name": "tty2", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "tty", "size": 0, "mtime": "1995-12-10 23:15:00"},
-        {"name": "tty3", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "tty", "size": 0, "mtime": "1995-12-11 00:22:00"},
-        {"name": "ttyS0", "is_dir": false, "permissions": "rw-rw----", "owner": "root", "group": "uucp", "size": 0, "mtime": "1995-11-18 09:00:00"},
-        {"name": "ttyS1", "is_dir": false, "permissions": "rw-rw----", "owner": "root", "group": "uucp", "size": 0, "mtime": "1995-11-18 09:00:00"},
-        {"name": "hd0", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
-        {"name": "hd1", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
-        {"name": "fd0", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
-        {"name": "fd1", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
-        {"name": "lp", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
-        {"name": "mem", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "kmem", "size": 0, "mtime": "1995-11-18 09:00:00"},
-        {"name": "kmem", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "kmem", "size": 0, "mtime": "1995-11-18 09:00:00"},
-        {"name": "root", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
-        {"name": "swap", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"},
-        {"name": "u", "is_dir": false, "permissions": "rw-------", "owner": "root", "group": "sys", "size": 0, "mtime": "1995-11-18 09:00:00"}
+        {
+          "name": "console",
+          "is_dir": false,
+          "permissions": "rw-------",
+          "owner": "root",
+          "group": "sys",
+          "size": 0,
+          "mtime": "1995-11-18 09:00:00"
+        },
+        {
+          "name": "null",
+          "is_dir": false,
+          "permissions": "rw-rw-rw-",
+          "owner": "root",
+          "group": "sys",
+          "size": 0,
+          "mtime": "1995-11-18 09:00:00"
+        },
+        {
+          "name": "zero",
+          "is_dir": false,
+          "permissions": "rw-rw-rw-",
+          "owner": "root",
+          "group": "sys",
+          "size": 0,
+          "mtime": "1995-11-18 09:00:00"
+        },
+        {
+          "name": "tty",
+          "is_dir": false,
+          "permissions": "rw-rw-rw-",
+          "owner": "root",
+          "group": "sys",
+          "size": 0,
+          "mtime": "1995-11-18 09:00:00"
+        },
+        {
+          "name": "tty1",
+          "is_dir": false,
+          "permissions": "rw-------",
+          "owner": "root",
+          "group": "tty",
+          "size": 0,
+          "mtime": "1995-11-18 09:00:00"
+        },
+        {
+          "name": "tty1a",
+          "is_dir": false,
+          "permissions": "rw-------",
+          "owner": "root",
+          "group": "tty",
+          "size": 0,
+          "mtime": "1995-12-11 01:00:00"
+        },
+        {
+          "name": "tty2",
+          "is_dir": false,
+          "permissions": "rw-------",
+          "owner": "root",
+          "group": "tty",
+          "size": 0,
+          "mtime": "1995-12-10 23:15:00"
+        },
+        {
+          "name": "tty3",
+          "is_dir": false,
+          "permissions": "rw-------",
+          "owner": "root",
+          "group": "tty",
+          "size": 0,
+          "mtime": "1995-12-11 00:22:00"
+        },
+        {
+          "name": "ttyS0",
+          "is_dir": false,
+          "permissions": "rw-rw----",
+          "owner": "root",
+          "group": "uucp",
+          "size": 0,
+          "mtime": "1995-11-18 09:00:00"
+        },
+        {
+          "name": "ttyS1",
+          "is_dir": false,
+          "permissions": "rw-rw----",
+          "owner": "root",
+          "group": "uucp",
+          "size": 0,
+          "mtime": "1995-11-18 09:00:00"
+        },
+        {
+          "name": "hd0",
+          "is_dir": false,
+          "permissions": "rw-------",
+          "owner": "root",
+          "group": "sys",
+          "size": 0,
+          "mtime": "1995-11-18 09:00:00"
+        },
+        {
+          "name": "hd1",
+          "is_dir": false,
+          "permissions": "rw-------",
+          "owner": "root",
+          "group": "sys",
+          "size": 0,
+          "mtime": "1995-11-18 09:00:00"
+        },
+        {
+          "name": "fd0",
+          "is_dir": false,
+          "permissions": "rw-------",
+          "owner": "root",
+          "group": "sys",
+          "size": 0,
+          "mtime": "1995-11-18 09:00:00"
+        },
+        {
+          "name": "fd1",
+          "is_dir": false,
+          "permissions": "rw-------",
+          "owner": "root",
+          "group": "sys",
+          "size": 0,
+          "mtime": "1995-11-18 09:00:00"
+        },
+        {
+          "name": "lp",
+          "is_dir": false,
+          "permissions": "rw-------",
+          "owner": "root",
+          "group": "sys",
+          "size": 0,
+          "mtime": "1995-11-18 09:00:00"
+        },
+        {
+          "name": "mem",
+          "is_dir": false,
+          "permissions": "rw-------",
+          "owner": "root",
+          "group": "kmem",
+          "size": 0,
+          "mtime": "1995-11-18 09:00:00"
+        },
+        {
+          "name": "kmem",
+          "is_dir": false,
+          "permissions": "rw-------",
+          "owner": "root",
+          "group": "kmem",
+          "size": 0,
+          "mtime": "1995-11-18 09:00:00"
+        },
+        {
+          "name": "root",
+          "is_dir": false,
+          "permissions": "rw-------",
+          "owner": "root",
+          "group": "sys",
+          "size": 0,
+          "mtime": "1995-11-18 09:00:00"
+        },
+        {
+          "name": "swap",
+          "is_dir": false,
+          "permissions": "rw-------",
+          "owner": "root",
+          "group": "sys",
+          "size": 0,
+          "mtime": "1995-11-18 09:00:00"
+        },
+        {
+          "name": "u",
+          "is_dir": false,
+          "permissions": "rw-------",
+          "owner": "root",
+          "group": "sys",
+          "size": 0,
+          "mtime": "1995-11-18 09:00:00"
+        }
       ]
     },
     {
@@ -363,12 +1299,60 @@
       "group": "sys",
       "mtime": "1995-11-18 10:00:00",
       "children": [
-        {"name": "libc.a", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 1048576, "mtime": "1995-10-15 14:00:00"},
-        {"name": "libm.a", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 262144, "mtime": "1995-10-15 14:00:30"},
-        {"name": "libcurses.a", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 131072, "mtime": "1995-10-15 14:01:00"},
-        {"name": "libtermcap.a", "is_dir": false, "permissions": "rw-r--r--", "owner": "root", "group": "sys", "size": 49152, "mtime": "1995-10-15 14:01:30"},
-        {"name": "ld.so", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 40960, "mtime": "1995-10-15 14:02:00"},
-        {"name": "cpp", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 98304, "mtime": "1995-10-15 14:02:30"}
+        {
+          "name": "libc.a",
+          "is_dir": false,
+          "permissions": "rw-r--r--",
+          "owner": "root",
+          "group": "sys",
+          "size": 1048576,
+          "mtime": "1995-10-15 14:00:00"
+        },
+        {
+          "name": "libm.a",
+          "is_dir": false,
+          "permissions": "rw-r--r--",
+          "owner": "root",
+          "group": "sys",
+          "size": 262144,
+          "mtime": "1995-10-15 14:00:30"
+        },
+        {
+          "name": "libcurses.a",
+          "is_dir": false,
+          "permissions": "rw-r--r--",
+          "owner": "root",
+          "group": "sys",
+          "size": 131072,
+          "mtime": "1995-10-15 14:01:00"
+        },
+        {
+          "name": "libtermcap.a",
+          "is_dir": false,
+          "permissions": "rw-r--r--",
+          "owner": "root",
+          "group": "sys",
+          "size": 49152,
+          "mtime": "1995-10-15 14:01:30"
+        },
+        {
+          "name": "ld.so",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 40960,
+          "mtime": "1995-10-15 14:02:00"
+        },
+        {
+          "name": "cpp",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 98304,
+          "mtime": "1995-10-15 14:02:30"
+        }
       ]
     },
     {
@@ -379,18 +1363,114 @@
       "group": "sys",
       "mtime": "1995-11-18 10:05:00",
       "children": [
-        {"name": "init", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 32768, "mtime": "1995-10-15 15:00:00"},
-        {"name": "getty", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 24576, "mtime": "1995-10-15 15:00:30"},
-        {"name": "halt", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-15 15:01:00"},
-        {"name": "reboot", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 16384, "mtime": "1995-10-15 15:01:30"},
-        {"name": "shutdown", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 20480, "mtime": "1995-10-15 15:02:00"},
-        {"name": "mount", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 28672, "mtime": "1995-10-15 15:02:30"},
-        {"name": "umount", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 24576, "mtime": "1995-10-15 15:03:00"},
-        {"name": "fsck", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 73728, "mtime": "1995-10-15 15:03:30"},
-        {"name": "mkfs", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 49152, "mtime": "1995-10-15 15:04:00"},
-        {"name": "sync", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 8192, "mtime": "1995-10-15 15:04:30"},
-        {"name": "ifconfig", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 32768, "mtime": "1995-10-15 15:05:00"},
-        {"name": "route", "is_dir": false, "permissions": "rwxr-xr-x", "owner": "root", "group": "sys", "size": 28672, "mtime": "1995-10-15 15:05:30"}
+        {
+          "name": "init",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 32768,
+          "mtime": "1995-10-15 15:00:00"
+        },
+        {
+          "name": "getty",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 24576,
+          "mtime": "1995-10-15 15:00:30"
+        },
+        {
+          "name": "halt",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 16384,
+          "mtime": "1995-10-15 15:01:00"
+        },
+        {
+          "name": "reboot",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 16384,
+          "mtime": "1995-10-15 15:01:30"
+        },
+        {
+          "name": "shutdown",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 20480,
+          "mtime": "1995-10-15 15:02:00"
+        },
+        {
+          "name": "mount",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 28672,
+          "mtime": "1995-10-15 15:02:30"
+        },
+        {
+          "name": "umount",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 24576,
+          "mtime": "1995-10-15 15:03:00"
+        },
+        {
+          "name": "fsck",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 73728,
+          "mtime": "1995-10-15 15:03:30"
+        },
+        {
+          "name": "mkfs",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 49152,
+          "mtime": "1995-10-15 15:04:00"
+        },
+        {
+          "name": "sync",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 8192,
+          "mtime": "1995-10-15 15:04:30"
+        },
+        {
+          "name": "ifconfig",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 32768,
+          "mtime": "1995-10-15 15:05:00"
+        },
+        {
+          "name": "route",
+          "is_dir": false,
+          "permissions": "rwxr-xr-x",
+          "owner": "root",
+          "group": "sys",
+          "size": 28672,
+          "mtime": "1995-10-15 15:05:30"
+        }
       ]
     },
     {
@@ -748,7 +1828,609 @@
                       "permissions": "rwxr-xr-x",
                       "owner": "dxmail",
                       "group": "mail",
-                      "mtime": "1995-11-28 09:15:10"
+                      "mtime": "1995-11-28 09:15:10",
+                      "children": [
+                        {
+                          "name": "msg0001.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 11434,
+                          "content": "Message-ID: 199512050001.AA001\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Contract Details4331\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050001.AA001\n",
+                          "mtime": "1995-12-06 06:29:00"
+                        },
+                        {
+                          "name": "msg0002.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 16977,
+                          "content": "Message-ID: 199512050002.AA002\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Invoice 5533\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050002.AA002\n",
+                          "mtime": "1995-12-05 11:58:00"
+                        },
+                        {
+                          "name": "msg0003.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 11461,
+                          "content": "Message-ID: 199512050003.AA003\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Status Report4312\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050003.AA003\n",
+                          "mtime": "1995-12-05 11:08:00"
+                        },
+                        {
+                          "name": "msg0004.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 7147,
+                          "content": "Message-ID: 199512050004.AA004\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Invoice 1429\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050004.AA004\n",
+                          "mtime": "1995-12-06 22:22:00"
+                        },
+                        {
+                          "name": "msg0005.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 1903,
+                          "content": "Message-ID: 199512050005.AA005\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Order Confirmation #1428\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050005.AA005\n",
+                          "mtime": "1995-12-06 21:18:00"
+                        },
+                        {
+                          "name": "msg0006.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 20348,
+                          "content": "Message-ID: 199512050006.AA006\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=FR/ADMD=ATLAS/PRMD=FRENCH/O=SOCIETE/S=Martin/\nSubject: Contract Details3342\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050006.AA006\n",
+                          "mtime": "1995-12-08 00:15:00"
+                        },
+                        {
+                          "name": "msg0007.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 10109,
+                          "content": "Message-ID: 199512050007.AA007\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Invoice 9557\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050007.AA007\n",
+                          "mtime": "1995-12-06 07:41:00"
+                        },
+                        {
+                          "name": "msg0008.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 9586,
+                          "content": "Message-ID: 199512050008.AA008\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Meeting Request - 7221\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050008.AA008\n",
+                          "mtime": "1995-12-07 22:29:00"
+                        },
+                        {
+                          "name": "msg0009.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 16831,
+                          "content": "Message-ID: 199512050009.AA009\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Contract Details5208\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050009.AA009\n",
+                          "mtime": "1995-12-06 13:32:00"
+                        },
+                        {
+                          "name": "msg0010.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 15801,
+                          "content": "Message-ID: 199512050010.AA010\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Product Information7627\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050010.AA010\n",
+                          "mtime": "1995-12-07 15:27:00"
+                        },
+                        {
+                          "name": "msg0011.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 16694,
+                          "content": "Message-ID: 199512050011.AA011\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Technical Documentation8525\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050011.AA011\n",
+                          "mtime": "1995-12-06 19:12:00"
+                        },
+                        {
+                          "name": "msg0012.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 18516,
+                          "content": "Message-ID: 199512050012.AA012\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Status Report1747\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050012.AA012\n",
+                          "mtime": "1995-12-07 14:37:00"
+                        },
+                        {
+                          "name": "msg0013.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 7638,
+                          "content": "Message-ID: 199512050013.AA013\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Technical Documentation4743\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050013.AA013\n",
+                          "mtime": "1995-12-07 02:52:00"
+                        },
+                        {
+                          "name": "msg0014.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 18961,
+                          "content": "Message-ID: 199512050014.AA014\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Status Report3575\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050014.AA014\n",
+                          "mtime": "1995-12-08 04:23:00"
+                        },
+                        {
+                          "name": "msg0015.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 12188,
+                          "content": "Message-ID: 199512050015.AA015\nX400-Originator: /C=GB/ADMD=BT/PRMD=UK-CORP/O=BRITISH/S=Smith/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Order Confirmation #5052\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050015.AA015\n",
+                          "mtime": "1995-12-06 07:10:00"
+                        },
+                        {
+                          "name": "msg0016.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 13371,
+                          "content": "Message-ID: 199512050016.AA016\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Contract Details5682\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050016.AA016\n",
+                          "mtime": "1995-12-05 15:48:00"
+                        },
+                        {
+                          "name": "msg0017.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 11302,
+                          "content": "Message-ID: 199512050017.AA017\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Meeting Request - 8790\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050017.AA017\n",
+                          "mtime": "1995-12-08 03:48:00"
+                        },
+                        {
+                          "name": "msg0018.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 12869,
+                          "content": "Message-ID: 199512050018.AA018\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Product Information7786\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050018.AA018\n",
+                          "mtime": "1995-12-05 10:04:00"
+                        },
+                        {
+                          "name": "msg0019.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 12378,
+                          "content": "Message-ID: 199512050019.AA019\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Technical Documentation9870\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050019.AA019\n",
+                          "mtime": "1995-12-05 23:42:00"
+                        },
+                        {
+                          "name": "msg0020.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 11278,
+                          "content": "Message-ID: 199512050020.AA020\nX400-Originator: /C=GB/ADMD=BT/PRMD=UK-CORP/O=BRITISH/S=Smith/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Contract Details6992\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050020.AA020\n",
+                          "mtime": "1995-12-05 10:14:00"
+                        },
+                        {
+                          "name": "msg0021.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 18948,
+                          "content": "Message-ID: 199512050021.AA021\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Invoice 4390\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050021.AA021\n",
+                          "mtime": "1995-12-05 15:46:00"
+                        },
+                        {
+                          "name": "msg0022.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 13276,
+                          "content": "Message-ID: 199512050022.AA022\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Meeting Request - 2022\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050022.AA022\n",
+                          "mtime": "1995-12-05 22:38:00"
+                        },
+                        {
+                          "name": "msg0023.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 5660,
+                          "content": "Message-ID: 199512050023.AA023\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Invoice 4022\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050023.AA023\n",
+                          "mtime": "1995-12-07 22:58:00"
+                        },
+                        {
+                          "name": "msg0024.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 18173,
+                          "content": "Message-ID: 199512050024.AA024\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Invoice 9888\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050024.AA024\n",
+                          "mtime": "1995-12-06 15:47:00"
+                        },
+                        {
+                          "name": "msg0025.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 5776,
+                          "content": "Message-ID: 199512050025.AA025\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Order Confirmation #9494\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050025.AA025\n",
+                          "mtime": "1995-12-06 03:09:00"
+                        },
+                        {
+                          "name": "msg0026.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 18150,
+                          "content": "Message-ID: 199512050026.AA026\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=FR/ADMD=ATLAS/PRMD=FRENCH/O=SOCIETE/S=Martin/\nSubject: Technical Documentation7044\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050026.AA026\n",
+                          "mtime": "1995-12-06 22:42:00"
+                        },
+                        {
+                          "name": "msg0027.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 14213,
+                          "content": "Message-ID: 199512050027.AA027\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Technical Documentation8796\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050027.AA027\n",
+                          "mtime": "1995-12-05 11:14:00"
+                        },
+                        {
+                          "name": "msg0028.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 18028,
+                          "content": "Message-ID: 199512050028.AA028\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Order Confirmation #2361\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050028.AA028\n",
+                          "mtime": "1995-12-07 07:39:00"
+                        },
+                        {
+                          "name": "msg0029.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 7601,
+                          "content": "Message-ID: 199512050029.AA029\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Invoice 8262\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050029.AA029\n",
+                          "mtime": "1995-12-07 01:40:00"
+                        },
+                        {
+                          "name": "msg0030.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 14147,
+                          "content": "Message-ID: 199512050030.AA030\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Invoice 1646\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050030.AA030\n",
+                          "mtime": "1995-12-05 10:35:00"
+                        },
+                        {
+                          "name": "msg0031.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 4875,
+                          "content": "Message-ID: 199512050031.AA031\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=FR/ADMD=ATLAS/PRMD=FRENCH/O=SOCIETE/S=Martin/\nSubject: Meeting Request - 9944\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050031.AA031\n",
+                          "mtime": "1995-12-07 00:18:00"
+                        },
+                        {
+                          "name": "msg0032.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 18391,
+                          "content": "Message-ID: 199512050032.AA032\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=FR/ADMD=ATLAS/PRMD=FRENCH/O=SOCIETE/S=Martin/\nSubject: Product Information2548\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050032.AA032\n",
+                          "mtime": "1995-12-05 10:39:00"
+                        },
+                        {
+                          "name": "msg0033.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 19488,
+                          "content": "Message-ID: 199512050033.AA033\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Product Information4672\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050033.AA033\n",
+                          "mtime": "1995-12-06 10:27:00"
+                        },
+                        {
+                          "name": "msg0034.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 20346,
+                          "content": "Message-ID: 199512050034.AA034\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Invoice 8938\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050034.AA034\n",
+                          "mtime": "1995-12-05 22:42:00"
+                        },
+                        {
+                          "name": "msg0035.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 19559,
+                          "content": "Message-ID: 199512050035.AA035\nX400-Originator: /C=GB/ADMD=BT/PRMD=UK-CORP/O=BRITISH/S=Smith/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Invoice 1286\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050035.AA035\n",
+                          "mtime": "1995-12-05 15:05:00"
+                        },
+                        {
+                          "name": "msg0036.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 18652,
+                          "content": "Message-ID: 199512050036.AA036\nX400-Originator: /C=GB/ADMD=BT/PRMD=UK-CORP/O=BRITISH/S=Smith/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Contract Details4168\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050036.AA036\n",
+                          "mtime": "1995-12-05 11:01:00"
+                        },
+                        {
+                          "name": "msg0037.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 6026,
+                          "content": "Message-ID: 199512050037.AA037\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Delivery Notice7123\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050037.AA037\n",
+                          "mtime": "1995-12-06 18:57:00"
+                        },
+                        {
+                          "name": "msg0038.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 12890,
+                          "content": "Message-ID: 199512050038.AA038\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Status Report4410\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050038.AA038\n",
+                          "mtime": "1995-12-05 13:40:00"
+                        },
+                        {
+                          "name": "msg0039.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 16172,
+                          "content": "Message-ID: 199512050039.AA039\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=FR/ADMD=ATLAS/PRMD=FRENCH/O=SOCIETE/S=Martin/\nSubject: Status Report5851\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050039.AA039\n",
+                          "mtime": "1995-12-07 03:32:00"
+                        },
+                        {
+                          "name": "msg0040.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 9334,
+                          "content": "Message-ID: 199512050040.AA040\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Product Information5615\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050040.AA040\n",
+                          "mtime": "1995-12-06 05:50:00"
+                        },
+                        {
+                          "name": "msg0041.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 8217,
+                          "content": "Message-ID: 199512050041.AA041\nX400-Originator: /C=GB/ADMD=BT/PRMD=UK-CORP/O=BRITISH/S=Smith/\nX400-Recipient: /C=FR/ADMD=ATLAS/PRMD=FRENCH/O=SOCIETE/S=Martin/\nSubject: Technical Documentation1015\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050041.AA041\n",
+                          "mtime": "1995-12-08 02:57:00"
+                        },
+                        {
+                          "name": "msg0042.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 7641,
+                          "content": "Message-ID: 199512050042.AA042\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Delivery Notice8997\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050042.AA042\n",
+                          "mtime": "1995-12-06 06:50:00"
+                        },
+                        {
+                          "name": "msg0043.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 14836,
+                          "content": "Message-ID: 199512050043.AA043\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=FR/ADMD=ATLAS/PRMD=FRENCH/O=SOCIETE/S=Martin/\nSubject: Product Information3221\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050043.AA043\n",
+                          "mtime": "1995-12-06 19:40:00"
+                        },
+                        {
+                          "name": "msg0044.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 13605,
+                          "content": "Message-ID: 199512050044.AA044\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Status Report6418\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050044.AA044\n",
+                          "mtime": "1995-12-06 15:07:00"
+                        },
+                        {
+                          "name": "msg0045.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 15815,
+                          "content": "Message-ID: 199512050045.AA045\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Order Confirmation #2397\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050045.AA045\n",
+                          "mtime": "1995-12-05 08:38:00"
+                        },
+                        {
+                          "name": "msg0046.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 16828,
+                          "content": "Message-ID: 199512050046.AA046\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Invoice 3232\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050046.AA046\n",
+                          "mtime": "1995-12-05 21:05:00"
+                        },
+                        {
+                          "name": "msg0047.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 17829,
+                          "content": "Message-ID: 199512050047.AA047\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=FR/ADMD=ATLAS/PRMD=FRENCH/O=SOCIETE/S=Martin/\nSubject: Product Information6493\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050047.AA047\n",
+                          "mtime": "1995-12-07 15:13:00"
+                        },
+                        {
+                          "name": "msg0048.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 12701,
+                          "content": "Message-ID: 199512050048.AA048\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Invoice 2598\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050048.AA048\n",
+                          "mtime": "1995-12-07 03:48:00"
+                        },
+                        {
+                          "name": "msg0049.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 16770,
+                          "content": "Message-ID: 199512050049.AA049\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Product Information1436\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050049.AA049\n",
+                          "mtime": "1995-12-06 00:15:00"
+                        },
+                        {
+                          "name": "msg0050.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 15060,
+                          "content": "Message-ID: 199512050050.AA050\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Technical Documentation5934\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050050.AA050\n",
+                          "mtime": "1995-12-07 09:27:00"
+                        },
+                        {
+                          "name": "msg0051.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 10803,
+                          "content": "Message-ID: 199512050051.AA051\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Delivery Notice2124\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050051.AA051\n",
+                          "mtime": "1995-12-06 16:11:00"
+                        },
+                        {
+                          "name": "msg0052.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 9379,
+                          "content": "Message-ID: 199512050052.AA052\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Meeting Request - 9169\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050052.AA052\n",
+                          "mtime": "1995-12-07 06:27:00"
+                        },
+                        {
+                          "name": "msg0053.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 9545,
+                          "content": "Message-ID: 199512050053.AA053\nX400-Originator: /C=GB/ADMD=BT/PRMD=UK-CORP/O=BRITISH/S=Smith/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Status Report4290\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050053.AA053\n",
+                          "mtime": "1995-12-07 23:54:00"
+                        },
+                        {
+                          "name": "msg0054.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 11126,
+                          "content": "Message-ID: 199512050054.AA054\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Technical Documentation1020\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050054.AA054\n",
+                          "mtime": "1995-12-07 07:20:00"
+                        },
+                        {
+                          "name": "msg0055.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 1913,
+                          "content": "Message-ID: 199512050055.AA055\nX400-Originator: /C=GB/ADMD=BT/PRMD=UK-CORP/O=BRITISH/S=Smith/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Delivery Notice2098\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050055.AA055\n",
+                          "mtime": "1995-12-05 13:50:00"
+                        },
+                        {
+                          "name": "msg0056.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 1652,
+                          "content": "Message-ID: 199512050056.AA056\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=FR/ADMD=ATLAS/PRMD=FRENCH/O=SOCIETE/S=Martin/\nSubject: Technical Documentation3198\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050056.AA056\n",
+                          "mtime": "1995-12-05 15:44:00"
+                        },
+                        {
+                          "name": "msg0057.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 15916,
+                          "content": "Message-ID: 199512050057.AA057\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Product Information8850\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050057.AA057\n",
+                          "mtime": "1995-12-08 02:22:00"
+                        },
+                        {
+                          "name": "msg0058.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 16811,
+                          "content": "Message-ID: 199512050058.AA058\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Invoice 3435\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050058.AA058\n",
+                          "mtime": "1995-12-07 23:21:00"
+                        },
+                        {
+                          "name": "msg0059.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 4271,
+                          "content": "Message-ID: 199512050059.AA059\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Invoice 8833\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050059.AA059\n",
+                          "mtime": "1995-12-08 02:57:00"
+                        },
+                        {
+                          "name": "msg0060.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 15837,
+                          "content": "Message-ID: 199512050060.AA060\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Contract Details8003\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050060.AA060\n",
+                          "mtime": "1995-12-05 10:46:00"
+                        }
+                      ]
                     },
                     {
                       "name": "out",
@@ -756,7 +2438,409 @@
                       "permissions": "rwxr-xr-x",
                       "owner": "dxmail",
                       "group": "mail",
-                      "mtime": "1995-11-28 09:15:15"
+                      "mtime": "1995-11-28 09:15:15",
+                      "children": [
+                        {
+                          "name": "msg0061.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 1407,
+                          "content": "Message-ID: 199512050061.AA061\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Meeting Request - 9111\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050061.AA061\n",
+                          "mtime": "1995-12-08 02:56:00"
+                        },
+                        {
+                          "name": "msg0062.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 4752,
+                          "content": "Message-ID: 199512050062.AA062\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Product Information1701\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050062.AA062\n",
+                          "mtime": "1995-12-06 16:32:00"
+                        },
+                        {
+                          "name": "msg0063.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 10226,
+                          "content": "Message-ID: 199512050063.AA063\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Delivery Notice1654\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050063.AA063\n",
+                          "mtime": "1995-12-07 14:35:00"
+                        },
+                        {
+                          "name": "msg0064.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 14713,
+                          "content": "Message-ID: 199512050064.AA064\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Delivery Notice4382\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050064.AA064\n",
+                          "mtime": "1995-12-05 18:31:00"
+                        },
+                        {
+                          "name": "msg0065.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 5580,
+                          "content": "Message-ID: 199512050065.AA065\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Status Report9276\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050065.AA065\n",
+                          "mtime": "1995-12-07 18:18:00"
+                        },
+                        {
+                          "name": "msg0066.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 13861,
+                          "content": "Message-ID: 199512050066.AA066\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=FR/ADMD=ATLAS/PRMD=FRENCH/O=SOCIETE/S=Martin/\nSubject: Delivery Notice5605\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050066.AA066\n",
+                          "mtime": "1995-12-08 06:27:00"
+                        },
+                        {
+                          "name": "msg0067.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 7110,
+                          "content": "Message-ID: 199512050067.AA067\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=FR/ADMD=ATLAS/PRMD=FRENCH/O=SOCIETE/S=Martin/\nSubject: Meeting Request - 2740\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050067.AA067\n",
+                          "mtime": "1995-12-05 13:25:00"
+                        },
+                        {
+                          "name": "msg0068.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 7291,
+                          "content": "Message-ID: 199512050068.AA068\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Order Confirmation #9202\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050068.AA068\n",
+                          "mtime": "1995-12-06 17:59:00"
+                        },
+                        {
+                          "name": "msg0069.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 6490,
+                          "content": "Message-ID: 199512050069.AA069\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Status Report8640\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050069.AA069\n",
+                          "mtime": "1995-12-08 06:31:00"
+                        },
+                        {
+                          "name": "msg0070.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 12509,
+                          "content": "Message-ID: 199512050070.AA070\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Contract Details7740\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050070.AA070\n",
+                          "mtime": "1995-12-07 01:23:00"
+                        },
+                        {
+                          "name": "msg0071.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 3652,
+                          "content": "Message-ID: 199512050071.AA071\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Delivery Notice4844\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050071.AA071\n",
+                          "mtime": "1995-12-05 08:38:00"
+                        },
+                        {
+                          "name": "msg0072.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 13392,
+                          "content": "Message-ID: 199512050072.AA072\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Product Information5603\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050072.AA072\n",
+                          "mtime": "1995-12-06 13:59:00"
+                        },
+                        {
+                          "name": "msg0073.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 19585,
+                          "content": "Message-ID: 199512050073.AA073\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Technical Documentation5029\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050073.AA073\n",
+                          "mtime": "1995-12-07 18:32:00"
+                        },
+                        {
+                          "name": "msg0074.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 12499,
+                          "content": "Message-ID: 199512050074.AA074\nX400-Originator: /C=GB/ADMD=BT/PRMD=UK-CORP/O=BRITISH/S=Smith/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Product Information2863\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050074.AA074\n",
+                          "mtime": "1995-12-06 05:06:00"
+                        },
+                        {
+                          "name": "msg0075.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 15826,
+                          "content": "Message-ID: 199512050075.AA075\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Invoice 7438\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050075.AA075\n",
+                          "mtime": "1995-12-07 05:31:00"
+                        },
+                        {
+                          "name": "msg0076.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 5353,
+                          "content": "Message-ID: 199512050076.AA076\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Order Confirmation #3949\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050076.AA076\n",
+                          "mtime": "1995-12-07 23:39:00"
+                        },
+                        {
+                          "name": "msg0077.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 19228,
+                          "content": "Message-ID: 199512050077.AA077\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Order Confirmation #3473\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050077.AA077\n",
+                          "mtime": "1995-12-08 06:58:00"
+                        },
+                        {
+                          "name": "msg0078.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 1364,
+                          "content": "Message-ID: 199512050078.AA078\nX400-Originator: /C=GB/ADMD=BT/PRMD=UK-CORP/O=BRITISH/S=Smith/\nX400-Recipient: /C=FR/ADMD=ATLAS/PRMD=FRENCH/O=SOCIETE/S=Martin/\nSubject: Technical Documentation6925\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050078.AA078\n",
+                          "mtime": "1995-12-08 07:24:00"
+                        },
+                        {
+                          "name": "msg0079.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 16983,
+                          "content": "Message-ID: 199512050079.AA079\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Order Confirmation #8115\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050079.AA079\n",
+                          "mtime": "1995-12-08 02:19:00"
+                        },
+                        {
+                          "name": "msg0080.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 6253,
+                          "content": "Message-ID: 199512050080.AA080\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Product Information7346\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050080.AA080\n",
+                          "mtime": "1995-12-07 17:07:00"
+                        },
+                        {
+                          "name": "msg0081.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 8904,
+                          "content": "Message-ID: 199512050081.AA081\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Invoice 3592\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050081.AA081\n",
+                          "mtime": "1995-12-07 00:29:00"
+                        },
+                        {
+                          "name": "msg0082.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 6764,
+                          "content": "Message-ID: 199512050082.AA082\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Contract Details8155\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050082.AA082\n",
+                          "mtime": "1995-12-08 05:12:00"
+                        },
+                        {
+                          "name": "msg0083.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 5217,
+                          "content": "Message-ID: 199512050083.AA083\nX400-Originator: /C=GB/ADMD=BT/PRMD=UK-CORP/O=BRITISH/S=Smith/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Invoice 2559\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050083.AA083\n",
+                          "mtime": "1995-12-07 09:30:00"
+                        },
+                        {
+                          "name": "msg0084.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 19915,
+                          "content": "Message-ID: 199512050084.AA084\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Invoice 9614\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050084.AA084\n",
+                          "mtime": "1995-12-05 18:56:00"
+                        },
+                        {
+                          "name": "msg0085.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 2288,
+                          "content": "Message-ID: 199512050085.AA085\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=FR/ADMD=ATLAS/PRMD=FRENCH/O=SOCIETE/S=Martin/\nSubject: Delivery Notice8876\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050085.AA085\n",
+                          "mtime": "1995-12-08 06:58:00"
+                        },
+                        {
+                          "name": "msg0086.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 19270,
+                          "content": "Message-ID: 199512050086.AA086\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=FR/ADMD=ATLAS/PRMD=FRENCH/O=SOCIETE/S=Martin/\nSubject: Contract Details4902\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050086.AA086\n",
+                          "mtime": "1995-12-07 21:40:00"
+                        },
+                        {
+                          "name": "msg0087.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 18709,
+                          "content": "Message-ID: 199512050087.AA087\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Meeting Request - 5369\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050087.AA087\n",
+                          "mtime": "1995-12-07 01:45:00"
+                        },
+                        {
+                          "name": "msg0088.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 11077,
+                          "content": "Message-ID: 199512050088.AA088\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Status Report5788\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050088.AA088\n",
+                          "mtime": "1995-12-07 11:25:00"
+                        },
+                        {
+                          "name": "msg0089.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 10687,
+                          "content": "Message-ID: 199512050089.AA089\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Delivery Notice5301\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050089.AA089\n",
+                          "mtime": "1995-12-05 17:59:00"
+                        },
+                        {
+                          "name": "msg0090.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 16821,
+                          "content": "Message-ID: 199512050090.AA090\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Invoice 4013\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050090.AA090\n",
+                          "mtime": "1995-12-08 01:40:00"
+                        },
+                        {
+                          "name": "msg0091.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 13277,
+                          "content": "Message-ID: 199512050091.AA091\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Meeting Request - 4401\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050091.AA091\n",
+                          "mtime": "1995-12-08 08:29:00"
+                        },
+                        {
+                          "name": "msg0092.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 14957,
+                          "content": "Message-ID: 199512050092.AA092\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Meeting Request - 2262\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050092.AA092\n",
+                          "mtime": "1995-12-05 22:47:00"
+                        },
+                        {
+                          "name": "msg0093.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 10591,
+                          "content": "Message-ID: 199512050093.AA093\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Technical Documentation8815\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050093.AA093\n",
+                          "mtime": "1995-12-08 06:46:00"
+                        },
+                        {
+                          "name": "msg0094.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 10157,
+                          "content": "Message-ID: 199512050094.AA094\nX400-Originator: /C=US/ADMD=ATT/PRMD=ACME/O=CORP/S=Johnson/\nX400-Recipient: /C=FR/ADMD=ATLAS/PRMD=FRENCH/O=SOCIETE/S=Martin/\nSubject: Invoice 2143\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050094.AA094\n",
+                          "mtime": "1995-12-07 17:23:00"
+                        },
+                        {
+                          "name": "msg0095.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 13126,
+                          "content": "Message-ID: 199512050095.AA095\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=SALES/S=Mueller/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=SUPPLIER/O=VENDOR/S=Wagner/\nSubject: Meeting Request - 7728\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050095.AA095\n",
+                          "mtime": "1995-12-05 10:56:00"
+                        },
+                        {
+                          "name": "msg0096.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 7770,
+                          "content": "Message-ID: 199512050096.AA096\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=DE/ADMD=DBP/PRMD=PARTNER/O=CUSTOMER/S=Fischer/\nSubject: Product Information5619\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050096.AA096\n",
+                          "mtime": "1995-12-06 05:30:00"
+                        },
+                        {
+                          "name": "msg0097.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 14459,
+                          "content": "Message-ID: 199512050097.AA097\nX400-Originator: /C=GB/ADMD=BT/PRMD=UK-CORP/O=BRITISH/S=Smith/\nX400-Recipient: /C=FR/ADMD=ATLAS/PRMD=FRENCH/O=SOCIETE/S=Martin/\nSubject: Product Information7202\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050097.AA097\n",
+                          "mtime": "1995-12-07 12:52:00"
+                        },
+                        {
+                          "name": "msg0098.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 4438,
+                          "content": "Message-ID: 199512050098.AA098\nX400-Originator: /C=GB/ADMD=BT/PRMD=UK-CORP/O=BRITISH/S=Smith/\nX400-Recipient: /C=US/ADMD=ATT/PRMD=CLIENT/O=BUSINESS/S=Williams/\nSubject: Delivery Notice9239\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050098.AA098\n",
+                          "mtime": "1995-12-07 20:30:00"
+                        },
+                        {
+                          "name": "msg0099.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 5129,
+                          "content": "Message-ID: 199512050099.AA099\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=IT/S=Schmidt/\nX400-Recipient: /C=GB/ADMD=BT/PRMD=TRADE/O=PARTNER/S=Brown/\nSubject: Technical Documentation5525\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050099.AA099\n",
+                          "mtime": "1995-12-07 09:33:00"
+                        },
+                        {
+                          "name": "msg0100.x400",
+                          "is_dir": false,
+                          "permissions": "rw-r--r--",
+                          "owner": "dxmail",
+                          "group": "mail",
+                          "size": 14920,
+                          "content": "Message-ID: 199512050100.AA100\nX400-Originator: /C=DE/ADMD=DBP/PRMD=COMPANY/O=EXAMPLE/OU=HR/S=Weber/\nX400-Recipient: /C=FR/ADMD=ATLAS/PRMD=FRENCH/O=SOCIETE/S=Martin/\nSubject: Product Information5911\nDate: 2025-11-20 09:02:54\nContent-Type: text/plain\n\nThis is a sample X.400 message for testing purposes.\nMessage ID: 199512050100.AA100\n",
+                          "mtime": "1995-12-06 15:02:00"
+                        }
+                      ]
                     },
                     {
                       "name": "defer",

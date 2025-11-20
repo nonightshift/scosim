@@ -99,6 +99,13 @@
       "usage": "ps [-ef|-aux]"
     },
     {
+      "name": "kill",
+      "module": "commands.process_ops",
+      "function": "execute_kill",
+      "description": "Send signal to a process",
+      "usage": "kill [-sig] <pid>"
+    },
+    {
       "name": "uname",
       "module": "commands.info",
       "function": "execute_uname",

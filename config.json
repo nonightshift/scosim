@@ -1,0 +1,12 @@
+{
+  "command_delays": {
+    "tar": {
+      "description": "Delay per file when creating or extracting tar archives (in seconds)",
+      "delay": 0.02
+    },
+    "rm": {
+      "description": "Delay per file when removing files (in seconds)",
+      "delay": 0.1
+    }
+  }
+}

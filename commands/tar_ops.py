@@ -4,6 +4,7 @@ Implements tar archive creation and extraction
 """
 
 import io
+import time
 import tarfile
 from vfs import VNode
 from argparse_unix import parse_unix_args
@@ -152,6 +153,9 @@ def _print_tar_contents(node, print_func, prefix="a", path=""):
 
     print_func(f"{prefix} {current_path}")
 
+    # Add delay to simulate real tar processing (approximately 100ms per file)
+    time.sleep(0.1)
+
     if node.is_dir:
         for child_name, child_node in sorted(node.children.items()):
             _print_tar_contents(child_node, print_func, prefix, current_path)
@@ -200,6 +204,9 @@ def _extract_tar(vfs, tar_content, print_func, verbose=True):
                     new_file.content = content
                     new_file.size = len(content)
                     parent.add_child(new_file)
+
+                # Add delay to simulate real tar processing (approximately 100ms per file)
+                time.sleep(0.1)
 
     except Exception as e:
         print_func(f"tar: Error extracting archive: {e}")

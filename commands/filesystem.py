@@ -3,6 +3,7 @@ Filesystem Commands Module
 Implements directory navigation and listing commands
 """
 
+import time
 from argparse_unix import parse_unix_args
 
 
@@ -114,3 +115,6 @@ def execute_rm(vfs, args, print_func):
         success, error = vfs.remove(path, recursive, force)
         if not success and not force:
             print_func(error)
+
+        # Add delay to simulate real file deletion (approximately 100ms per file)
+        time.sleep(0.1)

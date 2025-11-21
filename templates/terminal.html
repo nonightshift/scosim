@@ -1048,6 +1048,27 @@
         // Initialize skull animation
         const skullAnimation = new SkullAnimation(terminal);
 
+        // Easter egg trigger: Triple ESC press within 1 second
+        let escPressCount = 0;
+        let escPressTimer = null;
+
+        function handleEscapePress() {
+            escPressCount++;
+            if (escPressCount === 3) {
+                console.log('💀 Triple ESC detected - triggering skull animation!');
+                if (!skullAnimation.isRunning) {
+                    skullAnimation.start();
+                }
+                escPressCount = 0;
+                clearTimeout(escPressTimer);
+            } else {
+                clearTimeout(escPressTimer);
+                escPressTimer = setTimeout(() => {
+                    escPressCount = 0;
+                }, 1000);
+            }
+        }
+
         // Update status
         function setStatus(status, text) {
             statusEl.className = status;
@@ -1093,12 +1114,21 @@
 
         // Keyboard input handling
         terminalScreen.addEventListener('keydown', (e) => {
-            // Check for skull animation trigger (Ctrl+Shift+K)
-            if (e.ctrlKey && e.shiftKey && e.key === 'K') {
+            // Check for skull animation trigger (multiple options for compatibility)
+            // Ctrl+Shift+K or Ctrl+Alt+S (Skull)
+            const isSkullShortcut = (
+                (e.ctrlKey && e.shiftKey && (e.key === 'K' || e.key === 'k' || e.keyCode === 75)) ||
+                (e.ctrlKey && e.altKey && (e.key === 'S' || e.key === 's' || e.keyCode === 83))
+            );
+
+            if (isSkullShortcut) {
                 e.preventDefault();
+                e.stopPropagation();
                 if (!skullAnimation.isRunning) {
-                    console.log('Skull animation triggered!');
+                    console.log('💀 Skull animation triggered!');
                     skullAnimation.start();
+                } else {
+                    console.log('⚠️ Animation already running...');
                 }
                 return;
             }
@@ -1115,6 +1145,7 @@
             } else if (e.key === 'Tab') {
                 data = '\t';
             } else if (e.key === 'Escape') {
+                handleEscapePress(); // Check for triple ESC easter egg
                 data = '\x1b';
             } else if (e.key === 'ArrowUp') {
                 data = '\x1b[A';
@@ -1171,7 +1202,7 @@
         console.log('VT100 Terminal Emulator initialized');
         console.log('80x24 character display');
         console.log('Full ANSI escape sequence support');
-        console.log('🎃 Secret Easter Egg: Press Ctrl+Shift+K for a special animation!');
+        console.log('💀 Secret Easter Egg: Press Ctrl+Shift+K, Ctrl+Alt+S, or ESC 3 times for a special animation!');
     </script>
 </body>
 </html>

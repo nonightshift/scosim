@@ -192,6 +192,48 @@
             height: 1px;
             opacity: 0;
         }
+
+        /* Skull Animation Styles */
+        #animation-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .flying-char {
+            position: absolute;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            line-height: 1.2;
+            color: #00ff00;
+            pointer-events: none;
+            transition: all 0.05s linear;
+            will-change: transform;
+        }
+
+        .flying-char.wild {
+            animation: wildFly 0.1s infinite;
+        }
+
+        @keyframes wildFly {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(2px, -2px) rotate(5deg); }
+            50% { transform: translate(-2px, 2px) rotate(-5deg); }
+            75% { transform: translate(2px, 2px) rotate(3deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        .flying-char.forming {
+            transition: all 2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .flying-char.returning {
+            transition: all 2s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
     </style>
 </head>
 <body>
@@ -213,6 +255,9 @@
         <div id="terminal-screen" tabindex="0"></div>
         <input type="text" id="hidden-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
     </div>
+
+    <!-- Animation Overlay -->
+    <div id="animation-overlay"></div>
 
     <!-- Socket.IO -->
     <script src="{{ url_for('static', filename='js/socket.io.min.js') }}"></script>
@@ -619,6 +664,379 @@
             }
         }
 
+        /**
+         * Skull Animation System
+         * Creates a spectacular animation where terminal characters fly around
+         * and form a skull in the center of the screen
+         */
+        class SkullAnimation {
+            constructor(terminal) {
+                this.terminal = terminal;
+                this.overlay = document.getElementById('animation-overlay');
+                this.isRunning = false;
+                this.characters = [];
+                this.savedBuffer = null;
+
+                // Skull ASCII art (centered, approximately 20 lines)
+                this.skullArt = [
+                    "                    _______________                    ",
+                    "                 .-'    _____    `-.                   ",
+                    "              .'      .'     `.      `.                ",
+                    "            .'      .'         `.      `.              ",
+                    "           /       /   .     .   \\       \\            ",
+                    "          /       /    |     |    \\       \\           ",
+                    "         ;       ;    .'     `.    ;       ;           ",
+                    "        ;        ;   /  o   o  \\   ;        ;          ",
+                    "        |        |  ;           ;  |        |          ",
+                    "        |        |  |           |  |        |          ",
+                    "        |        |  |  .------.  |  |        |         ",
+                    "        ;        ;  | (  ----  ) |  ;        ;         ",
+                    "         ;       ;  |  `------'  |  ;       ;          ",
+                    "         \\       \\  \\   _____   /  /       /          ",
+                    "          \\       \\  `._____.'  /       /            ",
+                    "           `.      `.           .'      .'             ",
+                    "             `.      `.       .'      .'               ",
+                    "               `-.     `-----'     .-'                 ",
+                    "                  `---------------'                    "
+                ];
+            }
+
+            /**
+             * Start the skull animation
+             */
+            async start() {
+                if (this.isRunning) return;
+
+                this.isRunning = true;
+                console.log('Starting skull animation...');
+
+                // Save current terminal state
+                this.saveTerminalState();
+
+                // Phase 1: Extract and create flying characters (2s)
+                await this.extractCharacters();
+
+                // Phase 2: Wild flying animation (3s)
+                await this.wildFlyingPhase();
+
+                // Phase 3: Form skull (2s)
+                await this.formSkullPhase();
+
+                // Phase 4: Hold skull (10s)
+                await this.holdSkullPhase();
+
+                // Phase 5: Disintegrate (2s)
+                await this.disintegratePhase();
+
+                // Phase 6: Return to original positions (2s)
+                await this.returnToOriginalPhase();
+
+                // Phase 7: Cleanup and restore
+                this.cleanup();
+
+                this.isRunning = false;
+                console.log('Skull animation completed');
+            }
+
+            /**
+             * Save the current terminal buffer
+             */
+            saveTerminalState() {
+                this.savedBuffer = [];
+                for (let y = 0; y < this.terminal.rows; y++) {
+                    this.savedBuffer[y] = [];
+                    for (let x = 0; x < this.terminal.cols; x++) {
+                        this.savedBuffer[y][x] = Object.assign({}, this.terminal.buffer[y][x]);
+                    }
+                }
+            }
+
+            /**
+             * Extract all characters from terminal and create animated elements
+             */
+            async extractCharacters() {
+                this.characters = [];
+                const terminalRect = this.terminal.container.getBoundingClientRect();
+
+                // Calculate character dimensions
+                const charWidth = terminalRect.width / this.terminal.cols;
+                const charHeight = terminalRect.height / this.terminal.rows;
+
+                // Extract each character
+                for (let y = 0; y < this.terminal.rows; y++) {
+                    for (let x = 0; x < this.terminal.cols; x++) {
+                        const cell = this.terminal.buffer[y][x];
+
+                        // Skip empty spaces (but keep some for effect)
+                        if (cell.char === ' ' && Math.random() > 0.1) continue;
+
+                        // Create animated character element
+                        const charEl = document.createElement('span');
+                        charEl.className = 'flying-char';
+                        charEl.textContent = cell.char;
+
+                        // Apply styles
+                        if (cell.style.fg !== 'green') {
+                            charEl.style.color = this.getColorValue(cell.style.fg);
+                        }
+                        if (cell.style.bold) {
+                            charEl.style.fontWeight = 'bold';
+                        }
+
+                        // Calculate position
+                        const originalX = terminalRect.left + (x * charWidth);
+                        const originalY = terminalRect.top + (y * charHeight);
+
+                        charEl.style.left = originalX + 'px';
+                        charEl.style.top = originalY + 'px';
+
+                        // Store character data
+                        this.characters.push({
+                            element: charEl,
+                            originalX: originalX,
+                            originalY: originalY,
+                            currentX: originalX,
+                            currentY: originalY,
+                            char: cell.char,
+                            terminalX: x,
+                            terminalY: y
+                        });
+
+                        // Add to overlay
+                        this.overlay.appendChild(charEl);
+                    }
+                }
+
+                // Small delay to let DOM update
+                await this.delay(100);
+            }
+
+            /**
+             * Phase 1: Characters fly around wildly
+             */
+            async wildFlyingPhase() {
+                console.log('Wild flying phase...');
+
+                // Make characters fly to random positions
+                this.characters.forEach(char => {
+                    char.element.classList.add('wild');
+
+                    // Random velocity for each character
+                    const vx = (Math.random() - 0.5) * 1000;
+                    const vy = (Math.random() - 0.5) * 1000;
+
+                    // Animate over 3 seconds
+                    const animate = () => {
+                        const newX = char.currentX + vx * 0.016; // 60fps
+                        const newY = char.currentY + vy * 0.016;
+
+                        // Wrap around screen edges
+                        char.currentX = (newX + window.innerWidth) % window.innerWidth;
+                        char.currentY = (newY + window.innerHeight) % window.innerHeight;
+
+                        char.element.style.left = char.currentX + 'px';
+                        char.element.style.top = char.currentY + 'px';
+                    };
+
+                    // Store animation interval
+                    char.flyInterval = setInterval(animate, 16);
+                });
+
+                await this.delay(3000);
+
+                // Stop wild flying
+                this.characters.forEach(char => {
+                    clearInterval(char.flyInterval);
+                    char.element.classList.remove('wild');
+                });
+            }
+
+            /**
+             * Phase 2: Form skull in the center
+             */
+            async formSkullPhase() {
+                console.log('Forming skull...');
+
+                // Calculate skull position (centered on screen)
+                const skullWidth = 56; // Width of skull art
+                const skullHeight = this.skullArt.length;
+
+                const screenCenterX = window.innerWidth / 2;
+                const screenCenterY = window.innerHeight / 2;
+
+                const charWidth = 9.6; // Approximate character width in pixels
+                const charHeight = 19.2; // Approximate character height in pixels
+
+                const skullStartX = screenCenterX - (skullWidth * charWidth / 2);
+                const skullStartY = screenCenterY - (skullHeight * charHeight / 2);
+
+                // Collect all skull characters
+                const skullChars = [];
+                for (let y = 0; y < this.skullArt.length; y++) {
+                    for (let x = 0; x < this.skullArt[y].length; x++) {
+                        const char = this.skullArt[y][x];
+                        if (char !== ' ') {
+                            skullChars.push({
+                                char: char,
+                                x: skullStartX + (x * charWidth),
+                                y: skullStartY + (y * charHeight)
+                            });
+                        }
+                    }
+                }
+
+                // Assign each flying character to a skull position
+                this.characters.forEach((char, index) => {
+                    char.element.classList.add('forming');
+
+                    // Assign to skull position (cycle through if more chars than skull positions)
+                    const skullPos = skullChars[index % skullChars.length];
+
+                    char.targetX = skullPos.x;
+                    char.targetY = skullPos.y;
+                    char.element.textContent = skullPos.char;
+
+                    // Animate to position
+                    char.element.style.left = char.targetX + 'px';
+                    char.element.style.top = char.targetY + 'px';
+                });
+
+                await this.delay(2000);
+            }
+
+            /**
+             * Phase 3: Hold skull for 10 seconds
+             */
+            async holdSkullPhase() {
+                console.log('Holding skull...');
+                await this.delay(10000);
+            }
+
+            /**
+             * Phase 4: Disintegrate the skull
+             */
+            async disintegratePhase() {
+                console.log('Disintegrating...');
+
+                // Remove forming class and make characters fly apart again
+                this.characters.forEach(char => {
+                    char.element.classList.remove('forming');
+                    char.element.classList.add('wild');
+
+                    // Random velocity away from center
+                    const centerX = window.innerWidth / 2;
+                    const centerY = window.innerHeight / 2;
+
+                    const dx = char.targetX - centerX;
+                    const dy = char.targetY - centerY;
+
+                    const angle = Math.atan2(dy, dx);
+                    const speed = 500;
+
+                    const vx = Math.cos(angle) * speed;
+                    const vy = Math.sin(angle) * speed;
+
+                    // Animate explosion
+                    const animate = () => {
+                        char.currentX = char.currentX + vx * 0.016;
+                        char.currentY = char.currentY + vy * 0.016;
+
+                        char.element.style.left = char.currentX + 'px';
+                        char.element.style.top = char.currentY + 'px';
+                    };
+
+                    char.currentX = char.targetX;
+                    char.currentY = char.targetY;
+                    char.explodeInterval = setInterval(animate, 16);
+                });
+
+                await this.delay(2000);
+
+                // Stop explosion
+                this.characters.forEach(char => {
+                    clearInterval(char.explodeInterval);
+                    char.element.classList.remove('wild');
+                });
+            }
+
+            /**
+             * Phase 5: Return to original positions
+             */
+            async returnToOriginalPhase() {
+                console.log('Returning to original positions...');
+
+                this.characters.forEach(char => {
+                    char.element.classList.add('returning');
+
+                    // Restore original character
+                    const originalCell = this.savedBuffer[char.terminalY][char.terminalX];
+                    char.element.textContent = originalCell.char;
+
+                    // Animate back to original position
+                    char.element.style.left = char.originalX + 'px';
+                    char.element.style.top = char.originalY + 'px';
+                });
+
+                await this.delay(2000);
+            }
+
+            /**
+             * Cleanup and restore terminal
+             */
+            cleanup() {
+                console.log('Cleaning up...');
+
+                // Remove all character elements
+                this.characters.forEach(char => {
+                    char.element.remove();
+                });
+
+                this.characters = [];
+
+                // Restore terminal buffer
+                if (this.savedBuffer) {
+                    for (let y = 0; y < this.terminal.rows; y++) {
+                        for (let x = 0; x < this.terminal.cols; x++) {
+                            this.terminal.buffer[y][x] = this.savedBuffer[y][x];
+                        }
+                    }
+                    this.terminal.render();
+                }
+            }
+
+            /**
+             * Get CSS color value from ANSI color name
+             */
+            getColorValue(colorName) {
+                const colors = {
+                    'black': '#000000',
+                    'red': '#ff0000',
+                    'green': '#00ff00',
+                    'yellow': '#ffff00',
+                    'blue': '#0000ff',
+                    'magenta': '#ff00ff',
+                    'cyan': '#00ffff',
+                    'white': '#ffffff',
+                    'bright-black': '#555555',
+                    'bright-red': '#ff5555',
+                    'bright-green': '#55ff55',
+                    'bright-yellow': '#ffff55',
+                    'bright-blue': '#5555ff',
+                    'bright-magenta': '#ff55ff',
+                    'bright-cyan': '#55ffff',
+                    'bright-white': '#ffffff'
+                };
+                return colors[colorName] || '#00ff00';
+            }
+
+            /**
+             * Delay helper
+             */
+            delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+        }
+
         // Initialize terminal
         const terminalScreen = document.getElementById('terminal-screen');
         const statusEl = document.getElementById('status');
@@ -626,6 +1044,9 @@
         const hiddenInput = document.getElementById('hidden-input');
 
         const terminal = new VT100Terminal(terminalScreen);
+
+        // Initialize skull animation
+        const skullAnimation = new SkullAnimation(terminal);
 
         // Update status
         function setStatus(status, text) {
@@ -672,6 +1093,16 @@
 
         // Keyboard input handling
         terminalScreen.addEventListener('keydown', (e) => {
+            // Check for skull animation trigger (Ctrl+Shift+K)
+            if (e.ctrlKey && e.shiftKey && e.key === 'K') {
+                e.preventDefault();
+                if (!skullAnimation.isRunning) {
+                    console.log('Skull animation triggered!');
+                    skullAnimation.start();
+                }
+                return;
+            }
+
             let data = null;
 
             // Prevent default for most keys
@@ -740,6 +1171,7 @@
         console.log('VT100 Terminal Emulator initialized');
         console.log('80x24 character display');
         console.log('Full ANSI escape sequence support');
+        console.log('🎃 Secret Easter Egg: Press Ctrl+Shift+K for a special animation!');
     </script>
 </body>
 </html>

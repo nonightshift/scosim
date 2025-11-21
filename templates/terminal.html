@@ -676,6 +676,8 @@
                 this.isRunning = false;
                 this.characters = [];
                 this.savedBuffer = null;
+                this.abortRequested = false;
+                this.abortHandler = null;
 
                 // Skull ASCII art (centered)
                 this.skullArt = [
@@ -715,7 +717,19 @@
                 if (this.isRunning) return;
 
                 this.isRunning = true;
+                this.abortRequested = false;
                 console.log('Starting skull animation...');
+
+                // Set up abort handler (Backspace to exit)
+                this.abortHandler = (e) => {
+                    if (e.key === 'Backspace') {
+                        console.log('💀 Backspace pressed - aborting skull animation!');
+                        this.abortRequested = true;
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                };
+                document.addEventListener('keydown', this.abortHandler, true);
 
                 // Save current terminal state
                 this.saveTerminalState();
@@ -729,7 +743,7 @@
                 // Phase 3: Form skull (2s)
                 await this.formSkullPhase();
 
-                // Phase 4: Hold skull (10s)
+                // Phase 4: Hold skull (up to 10s, can be aborted with Backspace)
                 await this.holdSkullPhase();
 
                 // Phase 5: Disintegrate (2s)
@@ -765,9 +779,19 @@
                 this.characters = [];
                 const terminalRect = this.terminal.container.getBoundingClientRect();
 
-                // Calculate character dimensions
-                const charWidth = terminalRect.width / this.terminal.cols;
-                const charHeight = terminalRect.height / this.terminal.rows;
+                // Create a temporary span to measure exact character dimensions
+                const tempSpan = document.createElement('span');
+                tempSpan.style.fontFamily = 'Courier New, Courier, monospace';
+                tempSpan.style.fontSize = '16px';
+                tempSpan.style.lineHeight = '1.2';
+                tempSpan.style.position = 'absolute';
+                tempSpan.style.visibility = 'hidden';
+                tempSpan.textContent = 'X';
+                document.body.appendChild(tempSpan);
+                const charMetrics = tempSpan.getBoundingClientRect();
+                const exactCharWidth = charMetrics.width;
+                const exactCharHeight = charMetrics.height;
+                document.body.removeChild(tempSpan);
 
                 // Extract each character
                 for (let y = 0; y < this.terminal.rows; y++) {
@@ -790,9 +814,9 @@
                             charEl.style.fontWeight = 'bold';
                         }
 
-                        // Calculate position
-                        const originalX = terminalRect.left + (x * charWidth);
-                        const originalY = terminalRect.top + (y * charHeight);
+                        // Calculate exact position using measured character dimensions
+                        const originalX = terminalRect.left + (x * exactCharWidth);
+                        const originalY = terminalRect.top + (y * exactCharHeight);
 
                         charEl.style.left = originalX + 'px';
                         charEl.style.top = originalY + 'px';
@@ -814,11 +838,12 @@
                     }
                 }
 
-                // Hide the terminal screen (characters are now in overlay)
+                // Hide the terminal screen smoothly (characters are now in overlay)
+                this.terminal.container.style.transition = 'opacity 0.3s';
                 this.terminal.container.style.opacity = '0';
 
                 // Small delay to let DOM update
-                await this.delay(100);
+                await this.delay(300);
             }
 
             /**
@@ -915,11 +940,22 @@
             }
 
             /**
-             * Phase 3: Hold skull for 10 seconds
+             * Phase 3: Hold skull for up to 10 seconds (or until Backspace)
              */
             async holdSkullPhase() {
-                console.log('Holding skull...');
-                await this.delay(10000);
+                console.log('Holding skull... (Press Backspace to skip)');
+
+                // Check every 100ms if abort was requested
+                const startTime = Date.now();
+                const holdDuration = 10000;
+
+                while (Date.now() - startTime < holdDuration) {
+                    if (this.abortRequested) {
+                        console.log('Hold phase aborted by user');
+                        break;
+                    }
+                    await this.delay(100);
+                }
             }
 
             /**
@@ -987,7 +1023,23 @@
                     char.element.style.top = char.originalY + 'px';
                 });
 
-                await this.delay(2000);
+                // Wait for most of the animation
+                await this.delay(1500);
+
+                // Start fading in terminal while characters are still visible
+                this.terminal.container.style.transition = 'opacity 0.5s';
+                this.terminal.container.style.opacity = '1';
+
+                // Continue waiting for animation to complete
+                await this.delay(500);
+
+                // Fade out overlay characters
+                this.characters.forEach(char => {
+                    char.element.style.transition = 'opacity 0.3s';
+                    char.element.style.opacity = '0';
+                });
+
+                await this.delay(300);
             }
 
             /**
@@ -995,6 +1047,12 @@
              */
             cleanup() {
                 console.log('Cleaning up...');
+
+                // Remove abort handler
+                if (this.abortHandler) {
+                    document.removeEventListener('keydown', this.abortHandler, true);
+                    this.abortHandler = null;
+                }
 
                 // Remove all character elements
                 this.characters.forEach(char => {
@@ -1013,8 +1071,11 @@
                     this.terminal.render();
                 }
 
-                // Show the terminal screen again
+                // Show the terminal screen again with smooth transition
+                this.terminal.container.style.transition = 'opacity 0.3s';
                 this.terminal.container.style.opacity = '1';
+
+                this.abortRequested = false;
             }
 
             /**

@@ -234,24 +234,96 @@
         .flying-char.returning {
             transition: all 2s cubic-bezier(0.4, 0.0, 0.2, 1);
         }
+
+        /* Intro Animation Styles */
+        #intro-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s;
+        }
+
+        #intro-animation.fade-out {
+            opacity: 0;
+        }
+
+        /* Digital Clock Display */
+        .digital-clock {
+            font-family: 'Courier New', Courier, monospace;
+            color: #00ff00;
+            text-align: center;
+            text-shadow: 0 0 20px #00ff00, 0 0 40px #00ff00;
+            user-select: none;
+        }
+
+        .clock-time {
+            font-size: 20vw;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .clock-date {
+            font-size: 6vw;
+            margin-top: 2vh;
+            letter-spacing: 0.15em;
+            opacity: 0.9;
+        }
+
+        .clock-instruction {
+            position: absolute;
+            bottom: 10vh;
+            font-size: 2vw;
+            opacity: 0.7;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Blur effect for time travel */
+        .time-blur {
+            filter: blur(15px);
+            transition: filter 0.5s;
+        }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div id="loading">
+    <!-- Intro Animation -->
+    <div id="intro-animation">
+        <div class="digital-clock">
+            <div class="clock-time" id="clock-time">00:00:00</div>
+            <div class="clock-date" id="clock-date">01.01.2025</div>
+        </div>
+        <div class="clock-instruction" id="clock-instruction">Press any key to start time travel</div>
+    </div>
+    <!-- Loading Screen (initially hidden) -->
+    <div id="loading" class="hidden">
         <h2>SCO UNIX SYSTEM V/386</h2>
         <div class="spinner"></div>
         <p>Initializing VT100 terminal...</p>
     </div>
 
-    <!-- Header -->
-    <div id="header">
+    <!-- Header (initially hidden) -->
+    <div id="header" style="display: none;">
         <h1>SCO Unix System V/386 - VT100 Terminal Emulator</h1>
         <div id="status" class="connecting">● Connecting...</div>
     </div>
 
-    <!-- Terminal -->
-    <div id="terminal-container">
+    <!-- Terminal (initially hidden) -->
+    <div id="terminal-container" style="display: none;">
         <div id="terminal-screen" tabindex="0"></div>
         <input type="text" id="hidden-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
     </div>
@@ -661,6 +733,328 @@
                 // TODO: Implement terminal resizing
                 this.cols = cols;
                 this.rows = rows;
+            }
+        }
+
+        /**
+         * Intro Animation System
+         * Time travel animation from present to 1995
+         */
+        class IntroAnimation {
+            constructor() {
+                this.container = document.getElementById('intro-animation');
+                this.timeElement = document.getElementById('clock-time');
+                this.dateElement = document.getElementById('clock-date');
+                this.instructionElement = document.getElementById('clock-instruction');
+
+                // Target time in the past
+                this.targetDate = new Date(1995, 11, 11, 1, 45, 0); // Dec 11, 1995, 01:45:00
+
+                // Current display time
+                this.currentDisplayTime = new Date();
+
+                // Animation state
+                this.isRunning = false;
+                this.animationPhase = 'present'; // present, slowing, stopped, rewinding, approaching, past, transition
+                this.updateInterval = null;
+                this.keyHandler = null;
+            }
+
+            /**
+             * Format time as HH:MM:SS
+             */
+            formatTime(date) {
+                const hours = String(date.getHours()).padStart(2, '0');
+                const minutes = String(date.getMinutes()).padStart(2, '0');
+                const seconds = String(date.getSeconds()).padStart(2, '0');
+                return `${hours}:${minutes}:${seconds}`;
+            }
+
+            /**
+             * Format date as DD.MM.YYYY
+             */
+            formatDate(date) {
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                return `${day}.${month}.${year}`;
+            }
+
+            /**
+             * Update clock display
+             */
+            updateDisplay() {
+                this.timeElement.textContent = this.formatTime(this.currentDisplayTime);
+                this.dateElement.textContent = this.formatDate(this.currentDisplayTime);
+            }
+
+            /**
+             * Start the intro animation
+             */
+            async start() {
+                if (this.isRunning) return;
+
+                this.isRunning = true;
+                console.log('Starting intro animation...');
+
+                // Phase 1: Show current time (present)
+                await this.presentPhase();
+
+                // Wait for user input
+                await this.waitForKeyPress();
+
+                // Phase 2: Slow down (5 seconds)
+                await this.slowDownPhase();
+
+                // Phase 3: Stop (3 seconds)
+                await this.stopPhase();
+
+                // Phase 4: Rewind fast (20 seconds)
+                await this.rewindPhase();
+
+                // Phase 5: Approach target slowly (5 seconds)
+                await this.approachPhase();
+
+                // Phase 6: Stop at target (3 seconds)
+                await this.stopAtTargetPhase();
+
+                // Phase 7: Run clock normally in the past
+                await this.pastPhase();
+
+                // Wait for user input to transform to terminal
+                await this.waitForKeyPressToTerminal();
+
+                // Phase 8: Transform to terminal
+                await this.transformToTerminal();
+
+                this.isRunning = false;
+                console.log('Intro animation completed');
+            }
+
+            /**
+             * Phase 1: Present - Show current time
+             */
+            async presentPhase() {
+                console.log('Phase: Present');
+                this.animationPhase = 'present';
+                this.instructionElement.textContent = 'Press any key to start time travel';
+
+                // Update clock every second
+                this.updateInterval = setInterval(() => {
+                    this.currentDisplayTime = new Date();
+                    this.updateDisplay();
+                }, 1000);
+
+                // Initial display
+                this.currentDisplayTime = new Date();
+                this.updateDisplay();
+            }
+
+            /**
+             * Wait for key press
+             */
+            waitForKeyPress() {
+                return new Promise((resolve) => {
+                    this.keyHandler = (e) => {
+                        e.preventDefault();
+                        document.removeEventListener('keydown', this.keyHandler);
+                        this.keyHandler = null;
+                        resolve();
+                    };
+                    document.addEventListener('keydown', this.keyHandler);
+                });
+            }
+
+            /**
+             * Phase 2: Slow down (5 seconds)
+             */
+            async slowDownPhase() {
+                console.log('Phase: Slowing down');
+                this.animationPhase = 'slowing';
+                this.instructionElement.textContent = '';
+
+                clearInterval(this.updateInterval);
+
+                const duration = 5000; // 5 seconds
+                const startTime = Date.now();
+                const startDisplayTime = this.currentDisplayTime.getTime();
+
+                return new Promise((resolve) => {
+                    const animate = () => {
+                        const elapsed = Date.now() - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+
+                        // Slow down from 1x speed to 0x speed
+                        const speed = 1 - progress;
+
+                        // Update time
+                        const timeOffset = speed * elapsed;
+                        this.currentDisplayTime = new Date(startDisplayTime + timeOffset);
+                        this.updateDisplay();
+
+                        if (progress < 1) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            resolve();
+                        }
+                    };
+                    animate();
+                });
+            }
+
+            /**
+             * Phase 3: Stop (3 seconds)
+             */
+            async stopPhase() {
+                console.log('Phase: Stopped');
+                this.animationPhase = 'stopped';
+
+                await this.delay(3000);
+            }
+
+            /**
+             * Phase 4: Rewind fast (20 seconds)
+             */
+            async rewindPhase() {
+                console.log('Phase: Rewinding');
+                this.animationPhase = 'rewinding';
+
+                // Add blur effect for ultra-fast rewind
+                this.timeElement.classList.add('time-blur');
+                this.dateElement.classList.add('time-blur');
+
+                const duration = 20000; // 20 seconds
+                const startTime = Date.now();
+                const startDisplayTime = this.currentDisplayTime.getTime();
+                const targetTime = this.targetDate.getTime() + (5 * 1000); // Stop 5 seconds before target
+                const totalTimeDiff = targetTime - startDisplayTime;
+
+                return new Promise((resolve) => {
+                    const animate = () => {
+                        const elapsed = Date.now() - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+
+                        // Exponential acceleration for dramatic effect
+                        const easedProgress = Math.pow(progress, 0.5);
+
+                        // Update time (going backwards)
+                        const currentTime = startDisplayTime + (totalTimeDiff * easedProgress);
+                        this.currentDisplayTime = new Date(currentTime);
+                        this.updateDisplay();
+
+                        if (progress < 1) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            // Remove blur effect
+                            this.timeElement.classList.remove('time-blur');
+                            this.dateElement.classList.remove('time-blur');
+                            resolve();
+                        }
+                    };
+                    animate();
+                });
+            }
+
+            /**
+             * Phase 5: Approach target slowly (5 seconds)
+             */
+            async approachPhase() {
+                console.log('Phase: Approaching target');
+                this.animationPhase = 'approaching';
+
+                const duration = 5000; // 5 seconds
+                const startTime = Date.now();
+                const startDisplayTime = this.currentDisplayTime.getTime();
+                const targetTime = this.targetDate.getTime();
+                const timeDiff = targetTime - startDisplayTime;
+
+                return new Promise((resolve) => {
+                    const animate = () => {
+                        const elapsed = Date.now() - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+
+                        // Smooth deceleration
+                        const easedProgress = 1 - Math.pow(1 - progress, 3);
+
+                        // Update time
+                        const currentTime = startDisplayTime + (timeDiff * easedProgress);
+                        this.currentDisplayTime = new Date(currentTime);
+                        this.updateDisplay();
+
+                        if (progress < 1) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            // Ensure we're exactly at target
+                            this.currentDisplayTime = new Date(this.targetDate);
+                            this.updateDisplay();
+                            resolve();
+                        }
+                    };
+                    animate();
+                });
+            }
+
+            /**
+             * Phase 6: Stop at target (3 seconds)
+             */
+            async stopAtTargetPhase() {
+                console.log('Phase: Stopped at target');
+                this.animationPhase = 'stopped_at_target';
+
+                await this.delay(3000);
+            }
+
+            /**
+             * Phase 7: Run clock normally in the past
+             */
+            async pastPhase() {
+                console.log('Phase: Past');
+                this.animationPhase = 'past';
+                this.instructionElement.textContent = 'Press any key to continue';
+
+                // Update clock every second from 1995
+                this.updateInterval = setInterval(() => {
+                    this.currentDisplayTime = new Date(this.currentDisplayTime.getTime() + 1000);
+                    this.updateDisplay();
+                }, 1000);
+            }
+
+            /**
+             * Wait for key press to transform to terminal
+             */
+            waitForKeyPressToTerminal() {
+                return new Promise((resolve) => {
+                    this.keyHandler = (e) => {
+                        e.preventDefault();
+                        document.removeEventListener('keydown', this.keyHandler);
+                        this.keyHandler = null;
+                        clearInterval(this.updateInterval);
+                        resolve();
+                    };
+                    document.addEventListener('keydown', this.keyHandler);
+                });
+            }
+
+            /**
+             * Phase 8: Transform to terminal
+             */
+            async transformToTerminal() {
+                console.log('Phase: Transform to terminal');
+                this.animationPhase = 'transition';
+
+                // Fade out
+                this.container.classList.add('fade-out');
+                await this.delay(500);
+
+                // Hide intro animation
+                this.container.style.display = 'none';
+            }
+
+            /**
+             * Delay helper
+             */
+            delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
             }
         }
 
@@ -1263,9 +1657,27 @@
             terminalScreen.focus();
         });
 
-        // Focus terminal on load
-        window.addEventListener('load', () => {
+        // Initialize intro animation
+        const introAnimation = new IntroAnimation();
+
+        // Start intro animation and then show terminal
+        window.addEventListener('load', async () => {
+            console.log('Starting intro animation...');
+
+            // Run intro animation
+            await introAnimation.start();
+
+            // Show header and terminal container
+            document.getElementById('header').style.display = 'flex';
+            document.getElementById('terminal-container').style.display = 'flex';
+
+            // Show loading screen for socket connection
+            loadingEl.classList.remove('hidden');
+
+            // Focus terminal
             terminalScreen.focus();
+
+            console.log('Intro animation completed, terminal ready');
         });
 
         // Prevent context menu

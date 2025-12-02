@@ -295,7 +295,9 @@
             height: 100%;
             pointer-events: none;
             opacity: 0;
-            transition: opacity 0.5s;
+            transition: opacity 1s ease-in-out;
+            overflow: hidden;
+            perspective: 1000px;
         }
 
         #warp-tunnel.active {
@@ -304,26 +306,102 @@
 
         .warp-line {
             position: absolute;
-            background: linear-gradient(90deg, transparent, #00ff00, transparent);
-            height: 2px;
-            width: 100%;
             left: 50%;
             top: 50%;
-            transform-origin: left center;
-            opacity: 0.6;
-            animation: warpMove 0.5s linear infinite;
+            width: 200%;
+            height: 3px;
+            transform-origin: 0 50%;
+            will-change: transform, opacity;
+            pointer-events: none;
         }
 
-        @keyframes warpMove {
+        .warp-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg,
+                rgba(0, 255, 0, 0) 0%,
+                rgba(0, 255, 0, 0.8) 30%,
+                rgba(0, 255, 0, 1) 50%,
+                rgba(0, 255, 0, 0.8) 70%,
+                rgba(0, 255, 0, 0) 100%
+            );
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.8),
+                        0 0 20px rgba(0, 255, 0, 0.4);
+        }
+
+        /* Dynamic warp speed classes */
+        #warp-tunnel.speed-slow .warp-line {
+            animation: warpMoveSlow 2s ease-out infinite;
+        }
+
+        #warp-tunnel.speed-medium .warp-line {
+            animation: warpMoveMedium 0.8s ease-in-out infinite;
+        }
+
+        #warp-tunnel.speed-fast .warp-line {
+            animation: warpMoveFast 0.3s linear infinite;
+        }
+
+        #warp-tunnel.speed-stopping .warp-line {
+            animation: warpMoveStopping 3s ease-out infinite;
+        }
+
+        @keyframes warpMoveSlow {
             0% {
                 transform: translateX(0) scaleX(0);
                 opacity: 0;
             }
-            50% {
+            20% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateX(80vw) scaleX(1.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes warpMoveMedium {
+            0% {
+                transform: translateX(0) scaleX(0);
+                opacity: 0;
+            }
+            30% {
                 opacity: 0.8;
             }
             100% {
                 transform: translateX(100vw) scaleX(2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes warpMoveFast {
+            0% {
+                transform: translateX(0) scaleX(0);
+                opacity: 0;
+            }
+            40% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(120vw) scaleX(3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes warpMoveStopping {
+            0% {
+                transform: translateX(0) scaleX(0);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateX(60vw) scaleX(1);
                 opacity: 0;
             }
         }
@@ -905,6 +983,11 @@
 
                 clearInterval(this.updateInterval);
 
+                // Activate warp tunnel with slow speed
+                this.createWarpTunnel();
+                this.setWarpSpeed('slow');
+                this.warpTunnel.classList.add('active');
+
                 const duration = 3000; // 3 seconds
                 const startTime = Date.now();
                 const startDisplayTime = this.currentDisplayTime.getTime();
@@ -940,20 +1023,20 @@
                 console.log('Phase: Stopped');
                 this.animationPhase = 'stopped';
 
+                // Keep warp effect but at stopping speed
+                this.setWarpSpeed('stopping');
+
                 await this.delay(2000);
             }
 
             /**
-             * Phase 4: Rewind fast (10 seconds) with warp tunnel effect
+             * Phase 4: Rewind fast (10 seconds) with dynamic warp tunnel effect
              */
             async rewindPhase() {
                 console.log('Phase: Rewinding');
                 this.animationPhase = 'rewinding';
 
-                // Activate warp tunnel effect
-                this.createWarpTunnel();
-                this.warpTunnel.classList.add('active');
-
+                // Warp tunnel is already active from previous phase
                 // Add blur effect for ultra-fast rewind
                 this.timeElement.classList.add('time-blur');
                 this.dateElement.classList.add('time-blur');
@@ -976,14 +1059,19 @@
                             // Ease in (accelerate)
                             const t = progress / 0.3;
                             easedProgress = Math.pow(t, 2) * 0.3;
+                            // Gradually increase warp speed
+                            this.setWarpSpeed('medium');
                         } else if (progress < 0.7) {
-                            // Linear middle section
+                            // Linear middle section - maximum speed
                             const t = (progress - 0.3) / 0.4;
                             easedProgress = 0.3 + (t * 0.4);
+                            this.setWarpSpeed('fast');
                         } else {
                             // Ease out (decelerate)
                             const t = (progress - 0.7) / 0.3;
                             easedProgress = 0.7 + (1 - Math.pow(1 - t, 2)) * 0.3;
+                            // Gradually decrease warp speed
+                            this.setWarpSpeed('medium');
                         }
 
                         // Update time (going backwards)
@@ -994,10 +1082,9 @@
                         if (progress < 1) {
                             requestAnimationFrame(animate);
                         } else {
-                            // Remove effects
+                            // Remove blur effect but keep warp tunnel
                             this.timeElement.classList.remove('time-blur');
                             this.dateElement.classList.remove('time-blur');
-                            this.warpTunnel.classList.remove('active');
                             resolve();
                         }
                     };
@@ -1009,17 +1096,17 @@
              * Create warp tunnel effect with animated lines
              */
             createWarpTunnel() {
-                // Clear existing lines
-                this.warpTunnel.innerHTML = '';
+                // Only create if not already created
+                if (this.warpTunnel.children.length > 0) return;
 
-                // Create 30 lines at different angles
-                for (let i = 0; i < 30; i++) {
+                // Create 40 lines at different angles for better coverage
+                for (let i = 0; i < 40; i++) {
                     const line = document.createElement('div');
                     line.className = 'warp-line';
 
-                    // Random angle and position
-                    const angle = (i / 30) * 360;
-                    const delay = (i / 30) * 0.5;
+                    // Evenly distributed angles
+                    const angle = (i / 40) * 360;
+                    const delay = (i / 40) * 0.5;
 
                     line.style.transform = `rotate(${angle}deg)`;
                     line.style.animationDelay = `${delay}s`;
@@ -1029,11 +1116,27 @@
             }
 
             /**
+             * Set warp tunnel speed
+             */
+            setWarpSpeed(speed) {
+                // Remove all speed classes
+                this.warpTunnel.classList.remove('speed-slow', 'speed-medium', 'speed-fast', 'speed-stopping');
+
+                // Add new speed class
+                if (speed) {
+                    this.warpTunnel.classList.add(`speed-${speed}`);
+                }
+            }
+
+            /**
              * Phase 5: Approach target slowly (3 seconds)
              */
             async approachPhase() {
                 console.log('Phase: Approaching target');
                 this.animationPhase = 'approaching';
+
+                // Slow down warp tunnel
+                this.setWarpSpeed('slow');
 
                 const duration = 3000; // 3 seconds
                 const startTime = Date.now();
@@ -1074,7 +1177,15 @@
                 console.log('Phase: Stopped at target');
                 this.animationPhase = 'stopped_at_target';
 
-                await this.delay(2000);
+                // Very slow warp effect
+                this.setWarpSpeed('stopping');
+
+                await this.delay(1000);
+
+                // Fade out warp tunnel
+                this.warpTunnel.classList.remove('active');
+
+                await this.delay(1000);
             }
 
             /**
@@ -1110,28 +1221,38 @@
             }
 
             /**
-             * Phase 8: Morph clock into terminal
+             * Phase 8: Morph clock into terminal with smooth fade
              */
             async transformToTerminal() {
                 console.log('Phase: Morphing to terminal');
                 this.animationPhase = 'transition';
 
-                // Step 1: Shrink and move to top-left corner (1 second)
-                this.clockElement.style.transition = 'all 1s cubic-bezier(0.4, 0.0, 0.2, 1)';
-                this.clockElement.style.transform = 'translate(-40vw, -40vh) scale(0.3)';
-                this.clockElement.style.opacity = '0.7';
-                await this.delay(1000);
+                // Step 1: Start shrinking and moving (1.5 seconds)
+                this.clockElement.style.transition = 'all 1.5s cubic-bezier(0.25, 0.1, 0.25, 1)';
+                this.clockElement.style.transform = 'translate(-35vw, -35vh) scale(0.4)';
+                this.clockElement.style.opacity = '0.8';
+                await this.delay(800);
 
-                // Step 2: Fade out completely (0.5 seconds)
-                this.clockElement.style.transition = 'opacity 0.5s';
+                // Step 2: Continue shrinking and fade (1 second)
+                this.clockElement.style.transition = 'all 1s cubic-bezier(0.25, 0.1, 0.25, 1)';
+                this.clockElement.style.transform = 'translate(-42vw, -40vh) scale(0.2)';
+                this.clockElement.style.opacity = '0.3';
+                await this.delay(700);
+
+                // Step 3: Final fade out (0.8 seconds)
+                this.clockElement.style.transition = 'opacity 0.8s ease-out';
                 this.clockElement.style.opacity = '0';
-                await this.delay(500);
 
-                // Step 3: Hide intro animation
+                // Step 4: Fade out intro container simultaneously
+                this.container.style.transition = 'opacity 0.8s ease-out';
+                this.container.style.opacity = '0';
+                await this.delay(800);
+
+                // Step 5: Hide intro animation
                 this.container.style.display = 'none';
 
                 // Small delay to prevent keypress from leaking to terminal
-                await this.delay(100);
+                await this.delay(150);
             }
 
             /**

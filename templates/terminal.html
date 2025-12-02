@@ -265,7 +265,7 @@
         }
 
         .clock-time {
-            font-size: 20vw;
+            font-size: 12vw;
             font-weight: bold;
             letter-spacing: 0.1em;
             line-height: 1;
@@ -274,7 +274,7 @@
         }
 
         .clock-date {
-            font-size: 6vw;
+            font-size: 3.6vw;
             margin-top: 2vh;
             letter-spacing: 0.15em;
             opacity: 0.9;
@@ -295,8 +295,8 @@
 
         /* Blur effect for time travel */
         .time-blur {
-            filter: blur(15px);
-            transition: filter 0.5s;
+            filter: blur(3px);
+            transition: filter 0.3s;
         }
     </style>
 </head>
@@ -857,16 +857,18 @@
                 return new Promise((resolve) => {
                     this.keyHandler = (e) => {
                         e.preventDefault();
-                        document.removeEventListener('keydown', this.keyHandler);
+                        e.stopPropagation();
+                        e.stopImmediatePropagation();
+                        document.removeEventListener('keydown', this.keyHandler, true);
                         this.keyHandler = null;
                         resolve();
                     };
-                    document.addEventListener('keydown', this.keyHandler);
+                    document.addEventListener('keydown', this.keyHandler, true);
                 });
             }
 
             /**
-             * Phase 2: Slow down (5 seconds)
+             * Phase 2: Slow down (3 seconds)
              */
             async slowDownPhase() {
                 console.log('Phase: Slowing down');
@@ -875,7 +877,7 @@
 
                 clearInterval(this.updateInterval);
 
-                const duration = 5000; // 5 seconds
+                const duration = 3000; // 3 seconds
                 const startTime = Date.now();
                 const startDisplayTime = this.currentDisplayTime.getTime();
 
@@ -903,17 +905,17 @@
             }
 
             /**
-             * Phase 3: Stop (3 seconds)
+             * Phase 3: Stop (2 seconds)
              */
             async stopPhase() {
                 console.log('Phase: Stopped');
                 this.animationPhase = 'stopped';
 
-                await this.delay(3000);
+                await this.delay(2000);
             }
 
             /**
-             * Phase 4: Rewind fast (20 seconds)
+             * Phase 4: Rewind fast (10 seconds)
              */
             async rewindPhase() {
                 console.log('Phase: Rewinding');
@@ -923,10 +925,10 @@
                 this.timeElement.classList.add('time-blur');
                 this.dateElement.classList.add('time-blur');
 
-                const duration = 20000; // 20 seconds
+                const duration = 10000; // 10 seconds
                 const startTime = Date.now();
                 const startDisplayTime = this.currentDisplayTime.getTime();
-                const targetTime = this.targetDate.getTime() + (5 * 1000); // Stop 5 seconds before target
+                const targetTime = this.targetDate.getTime() + (3 * 1000); // Stop 3 seconds before target
                 const totalTimeDiff = targetTime - startDisplayTime;
 
                 return new Promise((resolve) => {
@@ -956,13 +958,13 @@
             }
 
             /**
-             * Phase 5: Approach target slowly (5 seconds)
+             * Phase 5: Approach target slowly (3 seconds)
              */
             async approachPhase() {
                 console.log('Phase: Approaching target');
                 this.animationPhase = 'approaching';
 
-                const duration = 5000; // 5 seconds
+                const duration = 3000; // 3 seconds
                 const startTime = Date.now();
                 const startDisplayTime = this.currentDisplayTime.getTime();
                 const targetTime = this.targetDate.getTime();
@@ -995,13 +997,13 @@
             }
 
             /**
-             * Phase 6: Stop at target (3 seconds)
+             * Phase 6: Stop at target (2 seconds)
              */
             async stopAtTargetPhase() {
                 console.log('Phase: Stopped at target');
                 this.animationPhase = 'stopped_at_target';
 
-                await this.delay(3000);
+                await this.delay(2000);
             }
 
             /**
@@ -1026,12 +1028,14 @@
                 return new Promise((resolve) => {
                     this.keyHandler = (e) => {
                         e.preventDefault();
-                        document.removeEventListener('keydown', this.keyHandler);
+                        e.stopPropagation();
+                        e.stopImmediatePropagation();
+                        document.removeEventListener('keydown', this.keyHandler, true);
                         this.keyHandler = null;
                         clearInterval(this.updateInterval);
                         resolve();
                     };
-                    document.addEventListener('keydown', this.keyHandler);
+                    document.addEventListener('keydown', this.keyHandler, true);
                 });
             }
 
@@ -1048,6 +1052,9 @@
 
                 // Hide intro animation
                 this.container.style.display = 'none';
+
+                // Small delay to prevent keypress from leaking to terminal
+                await this.delay(100);
             }
 
             /**
@@ -1671,10 +1678,7 @@
             document.getElementById('header').style.display = 'flex';
             document.getElementById('terminal-container').style.display = 'flex';
 
-            // Show loading screen for socket connection
-            loadingEl.classList.remove('hidden');
-
-            // Focus terminal
+            // Focus terminal (no loading screen needed)
             terminalScreen.focus();
 
             console.log('Intro animation completed, terminal ready');

@@ -72,15 +72,18 @@
             font-size: 16px;
             line-height: 1.2;
             white-space: pre;
+            word-break: keep-all;
+            overflow-wrap: normal;
             color: #00ff00;
             background-color: #000;
             flex: 1;
-            overflow-y: auto;
+            overflow-y: scroll;
             overflow-x: hidden;
             position: relative;
             cursor: default;
             user-select: none;
             min-height: 0;
+            box-sizing: border-box;
         }
 
         /* Custom scrollbar styling for terminal */
@@ -944,7 +947,9 @@
 
                 return {
                     cols: Math.max(minCols, cols),
-                    rows: Math.max(minRows, rows)
+                    rows: Math.max(minRows, rows),
+                    charWidth: charWidth,
+                    charHeight: charHeight
                 };
             }
 
@@ -952,9 +957,31 @@
              * Fit terminal to current container size
              */
             fitToContainer() {
-                const { cols, rows } = this.calculateOptimalDimensions();
+                const { cols, rows, charWidth, charHeight } = this.calculateOptimalDimensions();
                 console.log(`Resizing terminal to ${cols}x${rows} (container fit)`);
+
+                // Set explicit width on terminal to prevent text wrapping
+                // Width = cols * charWidth
+                const terminalWidth = cols * charWidth;
+
+                // Remove flex grow to allow fixed width, but keep flex-shrink: 0
+                this.container.style.flex = '0 0 auto';
+                this.container.style.width = `${terminalWidth}px`;
+                this.container.style.maxWidth = `${terminalWidth}px`;
+
+                console.log(`Setting terminal width to ${terminalWidth}px (${cols} cols × ${charWidth}px)`);
+
                 this.resize(cols, rows);
+
+                // Verify the actual rendered width
+                setTimeout(() => {
+                    const actualWidth = this.container.clientWidth;
+                    console.log(`Actual terminal width after resize: ${actualWidth}px`);
+                    console.log(`Expected ${cols} cols × ${charWidth}px = ${terminalWidth}px`);
+                    if (Math.abs(actualWidth - terminalWidth) > 5) {
+                        console.warn(`Width mismatch! Expected ${terminalWidth}px but got ${actualWidth}px`);
+                    }
+                }, 100);
             }
         }
 

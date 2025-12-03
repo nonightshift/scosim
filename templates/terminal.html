@@ -75,10 +75,36 @@
             color: #00ff00;
             background-color: #000;
             flex: 1;
-            overflow: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
             position: relative;
             cursor: default;
             user-select: none;
+            min-height: 0;
+        }
+
+        /* Custom scrollbar styling for terminal */
+        #terminal-screen::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        #terminal-screen::-webkit-scrollbar-track {
+            background: #000;
+        }
+
+        #terminal-screen::-webkit-scrollbar-thumb {
+            background: #00ff00;
+            border: 2px solid #000;
+        }
+
+        #terminal-screen::-webkit-scrollbar-thumb:hover {
+            background: #00dd00;
+        }
+
+        /* Firefox scrollbar styling */
+        #terminal-screen {
+            scrollbar-width: thin;
+            scrollbar-color: #00ff00 #000;
         }
 
         /* Cursor styles */
@@ -888,6 +914,7 @@
                 tempSpan.style.fontSize = '16px';
                 tempSpan.style.lineHeight = '1.2';
                 tempSpan.style.visibility = 'hidden';
+                tempSpan.style.position = 'absolute';
                 tempSpan.textContent = 'X';
                 document.body.appendChild(tempSpan);
 
@@ -896,10 +923,20 @@
                 const charHeight = charMetrics.height;
                 document.body.removeChild(tempSpan);
 
+                console.log(`Character metrics: ${charWidth}px width, ${charHeight}px height`);
+                console.log(`Container size: ${containerWidth}px x ${containerHeight}px`);
+
                 // Calculate how many characters fit
-                // Subtract some padding to ensure we don't overflow
-                const cols = Math.floor((containerWidth - 20) / charWidth);
-                const rows = Math.floor((containerHeight - 20) / charHeight);
+                // Account for scrollbar width (~17px) and some safety margin
+                const scrollbarWidth = 20;
+                const safetyMargin = 4; // Small margin to prevent wrapping
+                const availableWidth = containerWidth - scrollbarWidth - safetyMargin;
+                const availableHeight = containerHeight - safetyMargin;
+
+                const cols = Math.floor(availableWidth / charWidth);
+                const rows = Math.floor(availableHeight / charHeight);
+
+                console.log(`Calculated dimensions: ${cols} cols x ${rows} rows`);
 
                 // Ensure minimum dimensions
                 const minCols = 40;

@@ -837,9 +837,87 @@
             }
 
             resize(cols, rows) {
-                // TODO: Implement terminal resizing
+                // Don't resize if dimensions are the same
+                if (this.cols === cols && this.rows === rows) {
+                    return;
+                }
+
+                // Create new buffer with new dimensions
+                const newBuffer = [];
+                for (let i = 0; i < rows; i++) {
+                    newBuffer[i] = [];
+                    for (let j = 0; j < cols; j++) {
+                        // Copy existing content if within bounds, otherwise use default
+                        if (i < this.buffer.length && j < this.buffer[i].length) {
+                            newBuffer[i][j] = this.buffer[i][j];
+                        } else {
+                            newBuffer[i][j] = { char: ' ', style: this.defaultStyle() };
+                        }
+                    }
+                }
+
+                // Update dimensions and buffer
                 this.cols = cols;
                 this.rows = rows;
+                this.buffer = newBuffer;
+
+                // Adjust cursor position if needed
+                if (this.cursorX >= cols) this.cursorX = cols - 1;
+                if (this.cursorY >= rows) this.cursorY = rows - 1;
+
+                // Adjust scroll region
+                this.scrollTop = 0;
+                this.scrollBottom = rows - 1;
+
+                // Re-render with new dimensions
+                this.render();
+            }
+
+            /**
+             * Calculate optimal terminal dimensions based on container size
+             */
+            calculateOptimalDimensions() {
+                // Get container dimensions
+                const containerRect = this.container.getBoundingClientRect();
+                const containerWidth = containerRect.width;
+                const containerHeight = containerRect.height;
+
+                // Create a temporary span to measure character dimensions
+                const tempSpan = document.createElement('span');
+                tempSpan.style.fontFamily = 'Courier New, Courier, monospace';
+                tempSpan.style.fontSize = '16px';
+                tempSpan.style.lineHeight = '1.2';
+                tempSpan.style.visibility = 'hidden';
+                tempSpan.textContent = 'X';
+                document.body.appendChild(tempSpan);
+
+                const charMetrics = tempSpan.getBoundingClientRect();
+                const charWidth = charMetrics.width;
+                const charHeight = charMetrics.height;
+                document.body.removeChild(tempSpan);
+
+                // Calculate how many characters fit
+                // Subtract some padding to ensure we don't overflow
+                const cols = Math.floor((containerWidth - 20) / charWidth);
+                const rows = Math.floor((containerHeight - 20) / charHeight);
+
+                // Ensure minimum dimensions
+                const minCols = 40;
+                const minRows = 12;
+
+                return {
+                    cols: Math.max(minCols, cols),
+                    rows: Math.max(minRows, rows)
+                };
+            }
+
+            /**
+             * Fit terminal to current container size
+             */
+            fitToContainer() {
+                const { cols, rows } = this.calculateOptimalDimensions();
+                console.log(`Resizing terminal to ${cols}x${rows} (container fit)`);
+                this.resize(cols, rows);
             }
         }
 
@@ -1876,10 +1954,27 @@
             document.getElementById('header').style.display = 'flex';
             document.getElementById('terminal-container').style.display = 'flex';
 
+            // Wait for layout to complete, then resize terminal to fit viewport
+            await new Promise(resolve => requestAnimationFrame(resolve));
+            terminal.fitToContainer();
+
             // Focus terminal (no loading screen needed)
             terminalScreen.focus();
 
             console.log('Intro animation completed, terminal ready');
+        });
+
+        // Handle window resize (including zoom changes)
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            // Debounce resize to avoid too many operations
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                if (document.getElementById('terminal-container').style.display !== 'none') {
+                    console.log('Window resized, refitting terminal to new dimensions');
+                    terminal.fitToContainer();
+                }
+            }, 250);
         });
 
         // Prevent context menu
@@ -1888,7 +1983,7 @@
         });
 
         console.log('VT100 Terminal Emulator initialized');
-        console.log('80x24 character display');
+        console.log('Dynamic character display with viewport-adaptive sizing');
         console.log('Full ANSI escape sequence support');
         console.log('💀 Secret Easter Egg: Press Ctrl+Shift+K, Ctrl+Alt+S, or ESC 3 times for a special animation!');
     </script>

@@ -1008,6 +1008,77 @@
                 this.animationPhase = 'present'; // present, slowing, stopped, rewinding, approaching, past, transition
                 this.updateInterval = null;
                 this.keyHandler = null;
+                this.skipRequested = false;
+
+                // Setup global ESC handler to skip animation
+                this.setupSkipHandler();
+            }
+
+            /**
+             * Setup ESC key handler to skip animation
+             */
+            setupSkipHandler() {
+                this.skipHandler = (e) => {
+                    if (e.key === 'Escape' && this.isRunning && !this.skipRequested) {
+                        console.log('ESC pressed - skipping intro animation');
+                        this.skip();
+                    }
+                };
+                document.addEventListener('keydown', this.skipHandler, true);
+            }
+
+            /**
+             * Skip the entire intro animation and jump directly to terminal
+             */
+            skip() {
+                if (!this.isRunning || this.skipRequested) return;
+
+                this.skipRequested = true;
+                console.log('Skipping intro animation...');
+
+                // Clear any running intervals or timers
+                if (this.updateInterval) {
+                    clearInterval(this.updateInterval);
+                    this.updateInterval = null;
+                }
+
+                // Remove any active key handlers
+                if (this.keyHandler) {
+                    document.removeEventListener('keydown', this.keyHandler, true);
+                    this.keyHandler = null;
+                }
+
+                // Deactivate warp tunnel effects
+                if (this.warpTunnel) {
+                    this.warpTunnel.classList.remove('active', 'speed-slow', 'speed-medium', 'speed-fast', 'speed-stopping');
+                }
+
+                // Remove time blur effects
+                if (this.timeElement) {
+                    this.timeElement.classList.remove('time-blur');
+                }
+                if (this.dateElement) {
+                    this.dateElement.classList.remove('time-blur');
+                }
+
+                // Immediately hide intro animation
+                this.container.style.transition = 'opacity 0.3s ease-out';
+                this.container.style.opacity = '0';
+
+                setTimeout(() => {
+                    this.container.style.display = 'none';
+                    this.isRunning = false;
+                }, 300);
+            }
+
+            /**
+             * Cleanup skip handler
+             */
+            cleanup() {
+                if (this.skipHandler) {
+                    document.removeEventListener('keydown', this.skipHandler, true);
+                    this.skipHandler = null;
+                }
             }
 
             /**
@@ -1047,38 +1118,55 @@
                 this.isRunning = true;
                 console.log('Starting intro animation...');
 
-                // Phase 1: Show current time (present)
-                await this.presentPhase();
+                try {
+                    // Phase 1: Show current time (present)
+                    await this.presentPhase();
+                    if (this.skipRequested) return;
 
-                // Wait for user input
-                await this.waitForKeyPress();
+                    // Wait for user input
+                    await this.waitForKeyPress();
+                    if (this.skipRequested) return;
 
-                // Phase 2: Slow down (5 seconds)
-                await this.slowDownPhase();
+                    // Phase 2: Slow down (5 seconds)
+                    await this.slowDownPhase();
+                    if (this.skipRequested) return;
 
-                // Phase 3: Stop (3 seconds)
-                await this.stopPhase();
+                    // Phase 3: Stop (3 seconds)
+                    await this.stopPhase();
+                    if (this.skipRequested) return;
 
-                // Phase 4: Rewind fast (20 seconds)
-                await this.rewindPhase();
+                    // Phase 4: Rewind fast (20 seconds)
+                    await this.rewindPhase();
+                    if (this.skipRequested) return;
 
-                // Phase 5: Approach target slowly (5 seconds)
-                await this.approachPhase();
+                    // Phase 5: Approach target slowly (5 seconds)
+                    await this.approachPhase();
+                    if (this.skipRequested) return;
 
-                // Phase 6: Stop at target (3 seconds)
-                await this.stopAtTargetPhase();
+                    // Phase 6: Stop at target (3 seconds)
+                    await this.stopAtTargetPhase();
+                    if (this.skipRequested) return;
 
-                // Phase 7: Run clock normally in the past
-                await this.pastPhase();
+                    // Phase 7: Run clock normally in the past
+                    await this.pastPhase();
+                    if (this.skipRequested) return;
 
-                // Wait for user input to transform to terminal
-                await this.waitForKeyPressToTerminal();
+                    // Wait for user input to transform to terminal
+                    await this.waitForKeyPressToTerminal();
+                    if (this.skipRequested) return;
 
-                // Phase 8: Transform to terminal
-                await this.transformToTerminal();
+                    // Phase 8: Transform to terminal
+                    await this.transformToTerminal();
 
-                this.isRunning = false;
-                console.log('Intro animation completed');
+                    this.isRunning = false;
+                    console.log('Intro animation completed');
+                } finally {
+                    // Ensure cleanup happens even if skipped
+                    if (this.skipRequested) {
+                        console.log('Intro animation was skipped');
+                    }
+                    this.cleanup();
+                }
             }
 
             /**
@@ -2030,16 +2118,33 @@
 
         // Handle window resize (including zoom changes)
         let resizeTimeout;
-        window.addEventListener('resize', () => {
+        const handleResize = () => {
             // Debounce resize to avoid too many operations
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
                 if (document.getElementById('terminal-container').style.display !== 'none') {
-                    console.log('Window resized, refitting terminal to new dimensions');
+                    console.log('Window resized/zoomed, refitting terminal to new dimensions');
                     terminal.fitToContainer();
                 }
             }, 250);
-        });
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        // Also listen to visual viewport changes (better zoom detection)
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', handleResize);
+        }
+
+        // Additional safeguard: detect zoom changes via media queries
+        // This catches cases where browser zoom doesn't fire resize events
+        if (window.matchMedia) {
+            const mediaQueryList = window.matchMedia('screen');
+            mediaQueryList.addEventListener('change', () => {
+                console.log('Media query changed (possible zoom), refitting terminal');
+                handleResize();
+            });
+        }
 
         // Prevent context menu
         document.addEventListener('contextmenu', (e) => {
@@ -2049,6 +2154,7 @@
         console.log('VT100 Terminal Emulator initialized');
         console.log('Dynamic character display with viewport-adaptive sizing');
         console.log('Full ANSI escape sequence support');
+        console.log('⏭️  Press ESC to skip the time-travel animation');
         console.log('💀 Secret Easter Egg: Press Ctrl+Shift+K, Ctrl+Alt+S, or ESC 3 times for a special animation!');
     </script>
 </body>

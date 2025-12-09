@@ -337,10 +337,10 @@
             position: absolute;
             left: 50%;
             top: 50%;
-            width: 200%;
+            width: 0;
             height: 3px;
-            transform-origin: 0 50%;
-            will-change: transform, opacity;
+            transform-origin: 0% 50%;
+            will-change: width, opacity;
             pointer-events: none;
         }
 
@@ -349,13 +349,14 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
+            width: 150vw;
+            height: 100%;
             background: linear-gradient(90deg,
                 rgba(0, 255, 0, 0) 0%,
+                rgba(0, 255, 0, 0.3) 10%,
                 rgba(0, 255, 0, 0.8) 30%,
-                rgba(0, 255, 0, 1) 50%,
-                rgba(0, 255, 0, 0.8) 70%,
+                rgba(0, 255, 0, 1) 40%,
+                rgba(0, 255, 0, 0.8) 60%,
                 rgba(0, 255, 0, 0) 100%
             );
             box-shadow: 0 0 10px rgba(0, 255, 0, 0.8),
@@ -381,56 +382,56 @@
 
         @keyframes warpMoveSlow {
             0% {
-                transform: translateX(0) scaleX(0);
+                width: 0;
                 opacity: 0;
             }
-            20% {
+            10% {
                 opacity: 0.6;
             }
             100% {
-                transform: translateX(80vw) scaleX(1.5);
+                width: 150vw;
                 opacity: 0;
             }
         }
 
         @keyframes warpMoveMedium {
             0% {
-                transform: translateX(0) scaleX(0);
+                width: 0;
                 opacity: 0;
             }
-            30% {
+            15% {
                 opacity: 0.8;
             }
             100% {
-                transform: translateX(100vw) scaleX(2);
+                width: 150vw;
                 opacity: 0;
             }
         }
 
         @keyframes warpMoveFast {
             0% {
-                transform: translateX(0) scaleX(0);
+                width: 0;
                 opacity: 0;
             }
-            40% {
+            20% {
                 opacity: 1;
             }
             100% {
-                transform: translateX(120vw) scaleX(3);
+                width: 150vw;
                 opacity: 0;
             }
         }
 
         @keyframes warpMoveStopping {
             0% {
-                transform: translateX(0) scaleX(0);
+                width: 0;
                 opacity: 0;
             }
-            15% {
+            8% {
                 opacity: 0.4;
             }
             100% {
-                transform: translateX(60vw) scaleX(1);
+                width: 150vw;
                 opacity: 0;
             }
         }
@@ -1435,6 +1436,11 @@
             async presentPhase() {
                 console.log('Phase: Present');
                 this.animationPhase = 'present';
+
+                // Ensure clock is centered and fully visible
+                this.clockElement.style.transition = 'none';
+                this.clockElement.style.transform = 'translate(0, 0) scale(1)';
+                this.clockElement.style.opacity = '1';
 
                 // Update clock every second
                 this.updateInterval = setInterval(() => {

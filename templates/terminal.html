@@ -1024,6 +1024,7 @@
 
                 // Animation state
                 this.isRunning = false;
+                this.isForwardTraveling = false;
                 this.animationPhase = 'present'; // present, slowing, stopped, rewinding, approaching, past, transition
                 this.updateInterval = null;
                 this.keyHandler = null;
@@ -1087,6 +1088,241 @@
                 this.container.style.display = 'none';
 
                 this.isRunning = false;
+            }
+
+            /**
+             * Forward time travel animation back to present
+             * Called when CTRL-C is pressed
+             */
+            async forwardTimeTravel() {
+                if (this.isForwardTraveling) {
+                    console.log('Forward time travel already in progress');
+                    return;
+                }
+
+                this.isForwardTraveling = true;
+                console.log('CTRL-C pressed - Starting time travel back to present');
+
+                try {
+                    // Clear any running intervals
+                    if (this.updateInterval) {
+                        clearInterval(this.updateInterval);
+                        this.updateInterval = null;
+                    }
+
+                    // Remove any active key handlers
+                    if (this.keyHandler) {
+                        document.removeEventListener('keydown', this.keyHandler, true);
+                        this.keyHandler = null;
+                    }
+
+                    // Show the clock container if hidden
+                    this.container.style.display = 'flex';
+                    this.container.style.transition = 'opacity 0.3s ease';
+                    this.container.style.opacity = '1';
+
+                    // Phase 1: Slow down (2 seconds)
+                    await this.forwardSlowDownPhase();
+
+                    // Phase 2: Stop (1.5 seconds)
+                    await this.forwardStopPhase();
+
+                    // Phase 3: Fast forward to present (8 seconds)
+                    await this.fastForwardPhase();
+
+                    // Phase 4: Approach present (2 seconds)
+                    await this.approachPresentPhase();
+
+                    // Phase 5: Arrive at present and continue normally
+                    await this.arriveAtPresentPhase();
+
+                    console.log('Time travel to present completed');
+                } finally {
+                    this.isForwardTraveling = false;
+                }
+            }
+
+            /**
+             * Phase 1: Slow down before forward travel
+             */
+            async forwardSlowDownPhase() {
+                console.log('Forward Phase: Slowing down');
+                this.animationPhase = 'forward_slowing';
+
+                // Activate warp tunnel with slow speed
+                this.createWarpTunnel();
+                this.setWarpSpeed('slow');
+                this.warpTunnel.classList.add('active');
+
+                const duration = 2000; // 2 seconds
+                const startTime = Date.now();
+                const startDisplayTime = this.currentDisplayTime.getTime();
+
+                return new Promise((resolve) => {
+                    const animate = () => {
+                        const elapsed = Date.now() - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+
+                        // Progressive deceleration (ease-out cubic)
+                        const easedProgress = 1 - Math.pow(1 - progress, 3);
+                        const speed = 1 - easedProgress;
+
+                        // Update time (slowing down)
+                        const timeOffset = speed * elapsed;
+                        this.currentDisplayTime = new Date(startDisplayTime + timeOffset);
+                        this.updateDisplay();
+
+                        if (progress < 1) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            resolve();
+                        }
+                    };
+                    animate();
+                });
+            }
+
+            /**
+             * Phase 2: Stop before forward travel
+             */
+            async forwardStopPhase() {
+                console.log('Forward Phase: Stopped');
+                this.animationPhase = 'forward_stopped';
+
+                // Keep warp effect but at stopping speed
+                this.setWarpSpeed('stopping');
+
+                await this.delay(1500);
+            }
+
+            /**
+             * Phase 3: Fast forward to present (8 seconds)
+             */
+            async fastForwardPhase() {
+                console.log('Forward Phase: Fast forwarding to present');
+                this.animationPhase = 'fast_forwarding';
+
+                // Add blur effect for ultra-fast forward
+                this.timeElement.classList.add('time-blur');
+                this.dateElement.classList.add('time-blur');
+
+                const duration = 8000; // 8 seconds
+                const startTime = Date.now();
+                const startDisplayTime = this.currentDisplayTime.getTime();
+                const presentTime = new Date();
+                const targetTime = presentTime.getTime() - (2 * 1000); // Stop 2 seconds before present
+                const totalTimeDiff = targetTime - startDisplayTime;
+
+                return new Promise((resolve) => {
+                    const animate = () => {
+                        const elapsed = Date.now() - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+
+                        // Progressive acceleration and deceleration (ease-in-out)
+                        let easedProgress;
+                        if (progress < 0.3) {
+                            // Ease in (accelerate)
+                            const t = progress / 0.3;
+                            easedProgress = Math.pow(t, 2) * 0.3;
+                            this.setWarpSpeed('medium');
+                        } else if (progress < 0.7) {
+                            // Linear middle section - maximum speed
+                            const t = (progress - 0.3) / 0.4;
+                            easedProgress = 0.3 + (t * 0.4);
+                            this.setWarpSpeed('fast');
+                        } else {
+                            // Ease out (decelerate)
+                            const t = (progress - 0.7) / 0.3;
+                            easedProgress = 0.7 + (1 - Math.pow(1 - t, 2)) * 0.3;
+                            this.setWarpSpeed('medium');
+                        }
+
+                        // Update time (going forwards)
+                        const currentTime = startDisplayTime + (totalTimeDiff * easedProgress);
+                        this.currentDisplayTime = new Date(currentTime);
+                        this.updateDisplay();
+
+                        if (progress < 1) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            // Remove blur effect but keep warp tunnel
+                            this.timeElement.classList.remove('time-blur');
+                            this.dateElement.classList.remove('time-blur');
+                            resolve();
+                        }
+                    };
+                    animate();
+                });
+            }
+
+            /**
+             * Phase 4: Approach present slowly
+             */
+            async approachPresentPhase() {
+                console.log('Forward Phase: Approaching present');
+                this.animationPhase = 'approaching_present';
+
+                // Slow down warp tunnel
+                this.setWarpSpeed('slow');
+
+                const duration = 2000; // 2 seconds
+                const startTime = Date.now();
+                const startDisplayTime = this.currentDisplayTime.getTime();
+
+                return new Promise((resolve) => {
+                    const animate = () => {
+                        const elapsed = Date.now() - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+
+                        // Smooth deceleration
+                        const easedProgress = 1 - Math.pow(1 - progress, 3);
+
+                        // Calculate target as current real time
+                        const targetTime = new Date().getTime();
+                        const timeDiff = targetTime - startDisplayTime;
+
+                        // Update time
+                        const currentTime = startDisplayTime + (timeDiff * easedProgress);
+                        this.currentDisplayTime = new Date(currentTime);
+                        this.updateDisplay();
+
+                        if (progress < 1) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            // Ensure we're at present
+                            this.currentDisplayTime = new Date();
+                            this.updateDisplay();
+                            resolve();
+                        }
+                    };
+                    animate();
+                });
+            }
+
+            /**
+             * Phase 5: Arrive at present and continue normally
+             */
+            async arriveAtPresentPhase() {
+                console.log('Forward Phase: Arrived at present');
+                this.animationPhase = 'present';
+
+                // Very slow warp effect
+                this.setWarpSpeed('stopping');
+
+                await this.delay(1000);
+
+                // Fade out warp tunnel
+                this.warpTunnel.classList.remove('active');
+
+                await this.delay(500);
+
+                // Start normal time progression
+                this.updateInterval = setInterval(() => {
+                    this.currentDisplayTime = new Date();
+                    this.updateDisplay();
+                }, 1000);
+
+                console.log('Clock now running normally at present time');
             }
 
             /**
@@ -2033,6 +2269,9 @@
             }
         });
 
+        // Declare introAnimation variable for global access
+        let introAnimation = null;
+
         // Keyboard input handling
         terminalScreen.addEventListener('keydown', (e) => {
             // Check for skull animation trigger (multiple options for compatibility)
@@ -2089,6 +2328,10 @@
             } else if (e.key === 'PageDown') {
                 data = '\x1b[6~';
             } else if (e.ctrlKey && e.key === 'c') {
+                // Trigger forward time travel animation back to present
+                if (introAnimation && !introAnimation.isForwardTraveling) {
+                    introAnimation.forwardTimeTravel();
+                }
                 data = '\x03'; // Ctrl+C
             } else if (e.ctrlKey && e.key === 'd') {
                 data = '\x04'; // Ctrl+D
@@ -2111,7 +2354,7 @@
         });
 
         // Initialize intro animation
-        const introAnimation = new IntroAnimation();
+        introAnimation = new IntroAnimation();
 
         // Start intro animation and then show terminal
         window.addEventListener('load', async () => {

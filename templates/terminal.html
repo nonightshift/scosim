@@ -311,7 +311,7 @@
 
         /* Blur effect for time travel */
         .time-blur {
-            filter: blur(3px);
+            filter: blur(1.5px);
             transition: filter 0.3s;
         }
 
@@ -1121,6 +1121,12 @@
                     this.container.style.transition = 'opacity 0.3s ease';
                     this.container.style.opacity = '1';
 
+                    // Reset clock element visibility and transform
+                    this.clockElement.style.transition = 'none';
+                    this.clockElement.style.transform = 'translate(0, 0) scale(1)';
+                    this.clockElement.style.opacity = '1';
+                    this.clockElement.style.display = 'flex';
+
                     // Phase 1: Slow down (2 seconds)
                     await this.forwardSlowDownPhase();
 
@@ -1446,15 +1452,21 @@
              */
             waitForKeyPress() {
                 return new Promise((resolve) => {
-                    this.keyHandler = (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        e.stopImmediatePropagation();
-                        document.removeEventListener('keydown', this.keyHandler, true);
-                        this.keyHandler = null;
-                        resolve();
-                    };
-                    document.addEventListener('keydown', this.keyHandler, true);
+                    // Small delay to avoid capturing events from page load
+                    setTimeout(() => {
+                        this.keyHandler = (e) => {
+                            // Ignore if skip was already requested
+                            if (this.skipRequested) return;
+
+                            e.preventDefault();
+                            e.stopPropagation();
+                            e.stopImmediatePropagation();
+                            document.removeEventListener('keydown', this.keyHandler, true);
+                            this.keyHandler = null;
+                            resolve();
+                        };
+                        document.addEventListener('keydown', this.keyHandler, true);
+                    }, 100);
                 });
             }
 
@@ -1976,14 +1988,20 @@
                 console.log('Forming skull...');
 
                 // Calculate skull position (centered on screen)
-                const skullWidth = 56; // Width of skull art
+                const skullWidth = 44; // Width of skull art (using actual max width)
                 const skullHeight = this.skullArt.length;
 
                 const screenCenterX = window.innerWidth / 2;
                 const screenCenterY = window.innerHeight / 2;
 
-                const charWidth = 9.6; // Approximate character width in pixels
-                const charHeight = 19.2; // Approximate character height in pixels
+                // Calculate character dimensions from terminal cell size
+                const terminalContainer = document.getElementById('terminal-container');
+                const computedStyle = window.getComputedStyle(terminalContainer);
+                const fontSize = parseFloat(computedStyle.fontSize) || 16;
+
+                // More accurate character dimensions based on monospace font
+                const charWidth = fontSize * 0.6; // Typical monospace width ratio
+                const charHeight = fontSize * 1.2; // Typical line height ratio
 
                 const skullStartX = screenCenterX - (skullWidth * charWidth / 2);
                 const skullStartY = screenCenterY - (skullHeight * charHeight / 2);

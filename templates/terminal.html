@@ -1090,6 +1090,59 @@
             }
 
             /**
+             * Reset to present time and show clock
+             * Called when CTRL-C is pressed
+             */
+            resetToPresent() {
+                console.log('CTRL-C pressed - Resetting to present time');
+
+                // Clear any running intervals
+                if (this.updateInterval) {
+                    clearInterval(this.updateInterval);
+                    this.updateInterval = null;
+                }
+
+                // Remove any active key handlers
+                if (this.keyHandler) {
+                    document.removeEventListener('keydown', this.keyHandler, true);
+                    this.keyHandler = null;
+                }
+
+                // Deactivate warp tunnel effects
+                if (this.warpTunnel) {
+                    this.warpTunnel.classList.remove('active', 'speed-slow', 'speed-medium', 'speed-fast', 'speed-stopping');
+                }
+
+                // Remove time blur effects
+                if (this.timeElement) {
+                    this.timeElement.classList.remove('time-blur');
+                }
+                if (this.dateElement) {
+                    this.dateElement.classList.remove('time-blur');
+                }
+
+                // Show the clock container
+                this.container.style.display = 'flex';
+                this.container.style.transition = 'opacity 0.3s ease';
+                this.container.style.opacity = '1';
+
+                // Reset to current time and start updating
+                this.currentDisplayTime = new Date();
+                this.updateDisplay();
+                this.animationPhase = 'present';
+                this.isRunning = true;
+                this.skipRequested = false;
+
+                // Update clock every second
+                this.updateInterval = setInterval(() => {
+                    this.currentDisplayTime = new Date();
+                    this.updateDisplay();
+                }, 1000);
+
+                console.log('Clock reset to present time and running normally');
+            }
+
+            /**
              * Cleanup skip handler
              */
             cleanup() {
@@ -2033,6 +2086,9 @@
             }
         });
 
+        // Declare introAnimation variable for global access
+        let introAnimation = null;
+
         // Keyboard input handling
         terminalScreen.addEventListener('keydown', (e) => {
             // Check for skull animation trigger (multiple options for compatibility)
@@ -2089,6 +2145,10 @@
             } else if (e.key === 'PageDown') {
                 data = '\x1b[6~';
             } else if (e.ctrlKey && e.key === 'c') {
+                // Trigger clock reset to present time
+                if (introAnimation) {
+                    introAnimation.resetToPresent();
+                }
                 data = '\x03'; // Ctrl+C
             } else if (e.ctrlKey && e.key === 'd') {
                 data = '\x04'; // Ctrl+D
@@ -2111,7 +2171,7 @@
         });
 
         // Initialize intro animation
-        const introAnimation = new IntroAnimation();
+        introAnimation = new IntroAnimation();
 
         // Start intro animation and then show terminal
         window.addEventListener('load', async () => {
